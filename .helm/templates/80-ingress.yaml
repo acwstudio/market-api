@@ -1,0 +1,41 @@
+{{- $globals := ternary .Values.global.prod .Values.global.dev (eq .Values.global.env_name "prod") -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    {{- if ne .Values.global.mon_probe "" }}
+    synergy.ru/blackbox.probe: {{ .Values.global.mon_probe }}
+    {{- end }}
+    {{- if ne .Values.global.mon_code "" }}
+    synergy.ru/blackbox.code: {{ .Values.global.mon_code }}
+    {{- end }}
+    kubernetes.io/ingress.class: "nginx"
+    {{- if ne .Values.global.www_redirect "no" }}
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+    {{- end }}
+    {{- if eq .Values.global.env_name "dev" }}
+    nginx.ingress.kubernetes.io/auth-url: "http://dev-auth.auth.svc.cluster.local"
+    {{- end }}
+    {{- if ne .Values.global.ci_path "" }}
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      # Additional configuration snippet
+      rewrite (?i){{ .Values.global.ci_path | trimSuffix "/" }}(/|$)(.*) /$2 break;
+    {{- end }}
+  name: ingress
+spec:
+  rules:
+      - host: {{ .Values.global.ci_url }}
+        http:
+          paths:
+          - pathType: Prefix
+            {{- if ne .Values.global.ci_path "" }}
+            path: /{{ .Values.global.ci_path | trimAll "/" }}
+            {{- else }}
+            path: /
+            {{- end }}
+            backend:
+              service:
+                name: {{ .Values.global.app_name }}
+                port: 
+                  number: 80
+---
