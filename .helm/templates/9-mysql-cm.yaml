@@ -1,0 +1,9 @@
+{{- if ne .Values.global.env_name "prod" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+data:
+  {{- (.Files.Glob "conf/mysql/*").AsConfig | nindent 2 }}
+---
+{{- end }}

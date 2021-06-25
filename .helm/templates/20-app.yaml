@@ -1,0 +1,80 @@
+{{- $globals := ternary .Values.global.prod .Values.global.dev (eq .Values.global.env_name "prod") -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.global.app_name }}
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: {{ .Values.global.app_name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.global.app_name }}
+        ksync: {{ .Values.global.app_name }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/25-app-cm.yaml") . | sha256sum }}
+    spec:
+      initContainers:
+      - name: migrate
+        image: {{ .Values.werf.image.php_fpm }}
+        command: ["/migrate.sh"]
+        args: [{{ .Values.global.env_name }}]
+        env:
+{{ include "apps-env-var-values" . | indent 8 }}
+      containers:
+      - name: php-fpm
+        image: {{ .Values.werf.image.php_fpm }}
+        env:
+{{ include "apps-env-var-values" . | indent 8 }}
+        ports:
+        - name: php-fpm
+          containerPort: 9000
+        volumeMounts:
+        - name: php-fpm-config-volume-1
+          mountPath: /php-conf
+        - name: php-fpm-config-volume-2
+          mountPath: /usr/local/etc/php-fpm.d
+      - name: nginx
+        image: {{ .Values.werf.image.nginx }}
+        ports:
+        - name: http
+          containerPort: 80
+        volumeMounts:
+        - name: nginx-config-volume-1
+          mountPath: /etc/nginx
+        - name: nginx-config-volume-2
+          mountPath: /etc/nginx/conf.d
+      volumes:
+        - name: php-fpm-config-volume-1
+          configMap:
+            name: php-fpm-config-1
+        - name: php-fpm-config-volume-2
+          configMap:
+            name: php-fpm-config-2
+        - name: nginx-config-volume-1
+          configMap:
+            name: nginx-config-1
+        - name: nginx-config-volume-2
+          configMap:
+            name: nginx-config-2
+      imagePullSecrets:
+        - name: docker-registry{{- if ne .Values.global.env_name "prod" }}-dev{{- end}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.global.app_name }}
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: {{ .Values.global.app_name }}
+---
