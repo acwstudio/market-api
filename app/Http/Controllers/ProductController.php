@@ -24,7 +24,7 @@ class ProductController extends Controller
         $this->productRepository = $productRepository;
     }
 
-    public function test(Request $request)
+    public function list(Request $request)
     {
         if (!$request->isJson()) {
             return $this->errorResponse([

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\DirectionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,5 +23,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix' => '/v1'], function () {
     Route::get('test', [TestController::class, 'test']);
 
-    Route::get('products/list', [ProductController::class, 'test']);
+    Route::get('products/list', [ProductController::class, 'list']);
+    Route::get('directions/list', [DirectionController::class, 'list']);
 });
