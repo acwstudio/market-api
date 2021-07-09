@@ -54,3 +54,62 @@ curl --location --request GET 'http://mp-api.tagiev.site/api/v1/directions/list'
     "log_request_id": ""
 }
  ```
+
+## Метод получения организаций по фильтру: organizations/list 
+Адрес: https://mp.synergy.ru/api/v1/organizations/list  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| ids | array int[] | - | [11,12] | Массив идентификаторов |
+| published | bool | - | true | Опубликован |
+| name      | string  | -   | Университет | Название |
+| slug      | string  | -   | universitet | slug |
+| land      | string  | -   | - | Распределение лидов |
+| parent_id      | int  | -   | 11 | Родительский идентификатор |
+| product_ids | array int[] | - | [480, 481, 766] | Массив продуктовых идентификаторов |
+| person_ids | array int[] | - | [4, 5, 305] | Массив идентификаторов личностей |
+
+
+Пример запроса:
+```
+curl --location --request GET 'http://mp-api.tagiev.site/api/v1/organizations/list' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "ids": [11,12],
+        "published": true,
+    }
+}'
+ ```
+Пример ответа:
+```
+{
+    "success": true,
+    "data": {
+        "list": [
+            {
+                "published": 1,
+                "id": 12,
+                "name": "Арктический государственный институт культуры и искусств",
+                "slug": "arkticheskij-gosudarstvennyj-institut-kultury-i-iskusstv",
+                "preview_image": "/storage/",
+                "digital_image": "/storage/"
+            },
+            {
+                "published": 1,
+                "id": 11,
+                "name": "Московский открытый институт",
+                "slug": "moskovskij-otkrytyj-institut",
+                "preview_image": "/storage/uploads/organizations/preview/GLsx7WewkQosqRlhWoQP6NfLVX4pqC9r45VdrnuF.svg",
+                "digital_image": "/storage/uploads/organizations/preview/pgAyidtsjHHw1Ox95VKuFQZXGsGNTRd7uFxyH0GD.png"
+            }
+        ],
+        "count": 2
+    },
+    "log_request_id": ""
+}
+ ```
