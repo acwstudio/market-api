@@ -5,7 +5,6 @@ namespace App\Core\Input\Fields\Base;
 use App\Core\Error\ErrorManager;
 use App\Core\Field;
 use App\Core\IField;
-use App\Repository\ReCalc\ResultRepository;
 
 /**
  * Class BaseString
