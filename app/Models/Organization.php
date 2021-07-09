@@ -35,7 +35,8 @@ class Organization extends Model
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
 
-    const ENTITY_RELATIVE_PERSONS = 'persons';
+    const ENTITY_RELATIVE_PERSONS = 'persons',
+        ENTITY_RELATIVE_PRODUCT = 'product';
 
     public $fillable = [
         self::FIELD_ID,
