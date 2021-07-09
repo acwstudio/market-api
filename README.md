@@ -19,7 +19,7 @@
 
 Пример запроса:  
 ```
-curl --location --request GET 'http://mp-api.tagiev.site/api/v1/directions/list' \
+curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "filter": {
@@ -76,7 +76,7 @@ curl --location --request GET 'http://mp-api.tagiev.site/api/v1/directions/list'
 
 Пример запроса:
 ```
-curl --location --request GET 'http://mp-api.tagiev.site/api/v1/organizations/list' \
+curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/list' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "filter": {
