@@ -1,62 +1,115 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## Методы API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+## Метод получения направлений по фильтру: directions/list 
+Адрес: https://mp.synergy.ru/api/v1/directions/list  
+Тип: POST  
+Формат входных данных: JSON<br>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Входные параметры для фильтра
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| published | bool | - | true | Опубликован |
+| name      | string  | -   | Строительство | Название |
+| slug      | string  | -   | stroitelstvo | slug |
+| show_main      | bool  | -   | true | Показывать на главной |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Пример запроса:  
+```
+curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "published": true,
+        "name": "Гостеприимство",
+        "slug": "gostepriimstvo",
+        "show_main": true
+    },
+    "sort": {
+        "field": "sort",
+        "order": "desc"
+    }
+}'
+ ```
+Пример ответа:  
+```
+{
+    "success": true,
+    "data": {
+        "list": [
+            {
+                "published": "gostepriimstvo",
+                "id": 22,
+                "name": "Гостеприимство",
+                "slug": "gostepriimstvo",
+                "preview_image": "/storage/uploads/directions/fMUGlm2LUUb8NDedBuIItyNvsRRCMFCNf5DgImWc.jpg",
+                "show_main": 1
+            }
+        ],
+        "count": 1
+    },
+    "log_request_id": ""
+}
+ ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Метод получения организаций по фильтру: organizations/list 
+Адрес: https://mp.synergy.ru/api/v1/organizations/list  
+Тип: GET  
+Формат входных данных: JSON<br>
 
-## Laravel Sponsors
+Входные параметры для фильтра
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| ids | array int[] | - | [11,12] | Массив идентификаторов |
+| published | bool | - | true | Опубликован |
+| name      | string  | -   | Университет | Название |
+| slug      | string  | -   | universitet | slug |
+| land      | string  | -   | - | Распределение лидов |
+| parent_id      | int  | -   | 11 | Родительский идентификатор |
+| product_ids | array int[] | - | [480, 481, 766] | Массив продуктовых идентификаторов |
+| person_ids | array int[] | - | [4, 5, 305] | Массив идентификаторов личностей |
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Пример запроса:
+```
+curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/list' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "ids": [11,12],
+        "published": true,
+    }
+}'
+ ```
+Пример ответа:
+```
+{
+    "success": true,
+    "data": {
+        "list": [
+            {
+                "published": 1,
+                "id": 12,
+                "name": "Арктический государственный институт культуры и искусств",
+                "slug": "arkticheskij-gosudarstvennyj-institut-kultury-i-iskusstv",
+                "preview_image": "/storage/",
+                "digital_image": "/storage/"
+            },
+            {
+                "published": 1,
+                "id": 11,
+                "name": "Московский открытый институт",
+                "slug": "moskovskij-otkrytyj-institut",
+                "preview_image": "/storage/uploads/organizations/preview/GLsx7WewkQosqRlhWoQP6NfLVX4pqC9r45VdrnuF.svg",
+                "digital_image": "/storage/uploads/organizations/preview/pgAyidtsjHHw1Ox95VKuFQZXGsGNTRd7uFxyH0GD.png"
+            }
+        ],
+        "count": 2
+    },
+    "log_request_id": ""
+}
+ ```
