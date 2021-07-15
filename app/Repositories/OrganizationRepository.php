@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Core\Input\Fields\Organization\OrganizationGetDetail;
 use App\Core\Input\Fields\Organization\OrganizationGetList;
 use App\Models\Organization;
 use App\Models\Person;
@@ -81,6 +82,29 @@ class OrganizationRepository
         return [
             'count'         => $count,
             'organizations' => $query->get()
+        ];
+    }
+
+    public function getDetail(OrganizationGetDetail $fieldSet){
+        $filter = $fieldSet->getFilter();
+        $sort = $fieldSet->getSort();
+
+        $query = Organization::query();
+
+        if (!is_null($filter->getId()->getValue())) {
+            $query->where([
+                Organization::FIELD_ID => $filter->getId()->getValue()
+            ]);
+        }
+
+        if (!is_null($filter->getSlug()->getValue())) {
+            $query->where([
+                Organization::FIELD_SLUG => $filter->getSlug()->getValue()
+            ]);
+        }
+
+        return [
+            'organization' => $query->firstOrFail()
         ];
     }
 }

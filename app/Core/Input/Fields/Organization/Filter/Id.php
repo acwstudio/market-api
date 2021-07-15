@@ -6,17 +6,23 @@ use App\Core\Error\ErrorManager;
 use App\Core\Field;
 use App\Core\IField;
 
-class Name extends Field implements IField
+class Id extends Field implements IField
 {
     /**
      * Используется в сообщениях где нужно вывести название поля
      */
-    const FIELD_NAME = 'name';
+    const FIELD_NAME = 'id';
 
     /**
      * Используется там где нужно указать этот Field как поле в FieldSet
      */
-    const FIELD_KEY = 'name';
+    const FIELD_KEY = 'id';
+
+    /**
+     * @var string
+     */
+    protected $fieldName = 'id';
+
 
     function setValue($value)
     {
