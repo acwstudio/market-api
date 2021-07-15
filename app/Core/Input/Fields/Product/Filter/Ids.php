@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Core\Input\Fields\Organization\Filter;
+
+namespace App\Core\Input\Fields\Product\Filter;
+
 
 use App\Core\Error\ErrorManager;
 use App\Core\Error\Regex;
@@ -45,9 +47,5 @@ class Ids extends Field implements IField
                 ], new Regex(), [$this->getFieldName()]));
             }
         }
-    }
-
-    function prepare()
-    {
     }
 }

@@ -28,7 +28,4 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('products/list', [ProductController::class, 'list']);
     Route::get('directions/list', [DirectionController::class, 'list']);
     Route::get('organizations/list', [OrganizationController::class, 'list']);
-
-    Route::apiResource('courses', CourseController::class);
-//    Route::get('courses', [CourseController::class, 'index']);
 });
