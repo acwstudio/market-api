@@ -5,6 +5,7 @@ namespace App\Core\Input\Fields\Organization;
 use App\Core\FieldSet;
 use App\Core\IField;
 use App\Core\Input\Fields\Organization\Filter\IsPublished;
+use App\Core\Input\Fields\Organization\Filter\Id;
 use App\Core\Input\Fields\Organization\Filter\Name;
 use App\Core\Input\Fields\Organization\Filter\ParentId;
 use App\Core\Input\Fields\Organization\Filter\PersonIds;
@@ -23,6 +24,11 @@ class Filter extends FieldSet implements IField
      * @var IsPublished
      */
     protected $published = null;
+
+    /**
+     * @var Id
+     */
+    protected $id = null;
 
     /**
      * @var Name
@@ -65,6 +71,7 @@ class Filter extends FieldSet implements IField
      */
     protected $fields = [
         IsPublished::FIELD_KEY  => IsPublished::class,
+        Id::FIELD_KEY           => Id::class,
         Name::FIELD_KEY         => Name::class,
         Slug::FIELD_KEY         => Slug::class,
         Ids::FIELD_KEY          => Ids::class,
@@ -79,6 +86,11 @@ class Filter extends FieldSet implements IField
     public function getIsPublished(): IsPublished
     {
         return $this->published;
+    }
+
+    public function getId(): Id
+    {
+        return $this->id;
     }
 
     public function getName(): Name
