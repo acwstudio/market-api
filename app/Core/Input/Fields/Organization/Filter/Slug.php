@@ -17,6 +17,11 @@ class Slug extends Field implements IField{
      */
     const FIELD_KEY = 'slug';
 
+    /**
+     * @var string
+     */
+    protected $fieldName = 'slug';
+
     function setValue($value)
     {
         $this->field = $value;
