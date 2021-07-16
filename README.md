@@ -64,7 +64,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
 
 | Название поля | Тип | Обязательное | Пример | Комментарий
 | ------------- | ------- | --- | ---------------- | ------------------------------ |
-| ids | array int[] | - | [11,12] | Массив идентификаторов |
+| I | array int[] | - | [11,12] | Массив идентификаторов |
 | published | bool | - | true | Опубликован |
 | name      | string  | -   | Университет | Название |
 | slug      | string  | -   | universitet | slug |
@@ -80,7 +80,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/list' 
 --header 'Content-Type: application/json' \
 --data-raw '{
     "filter": {
-        "ids": [11,12],
+        "I": [11,12],
         "published": true,
     }
 }'

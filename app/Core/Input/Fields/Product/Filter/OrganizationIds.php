@@ -1,23 +1,25 @@
 <?php
 
-namespace App\Core\Input\Fields\Organization\Filter;
+
+namespace App\Core\Input\Fields\Product\Filter;
+
 
 use App\Core\Error\ErrorManager;
 use App\Core\Error\Regex;
 use App\Core\Field;
 use App\Core\IField;
 
-class Ids extends Field implements IField
+class OrganizationIds extends Field implements IField
 {
     /**
      * Используется в сообщениях где нужно вывести название поля
      */
-    const FIELD_NAME = 'ids';
+    const FIELD_NAME = 'organization_ids';
 
     /**
      * Используется там где нужно указать этот Field как поле в FieldSet
      */
-    const FIELD_KEY = 'ids';
+    const FIELD_KEY = 'organization_ids';
 
     function setValue($value)
     {
@@ -45,9 +47,5 @@ class Ids extends Field implements IField
                 ], new Regex(), [$this->getFieldName()]));
             }
         }
-    }
-
-    function prepare()
-    {
     }
 }
