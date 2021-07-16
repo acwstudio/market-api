@@ -28,6 +28,8 @@ class Subject extends Model
         self::FIELD_SLUG
     ];
 
+    const ENTITY_RELATIVE_PRODUCT = 'products';
+
     public static function getModelName()
     {
         return self::MODEL_NAME;
