@@ -6,25 +6,25 @@ namespace App\Http\Controllers;
 
 use App\Core\Error\ErrorManager;
 use App\Core\FieldSet;
-use App\Core\Input\Fields\Format\FormatGetList;
+use App\Core\Input\Fields\Subject\SubjectGetList;
 use App\Core\Response\ResponseTrait;
-use App\Models\Format;
-use App\Repositories\FormatRepository;
+use App\Models\Subject;
+use App\Repositories\SubjectRepository;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class FormatController extends Controller
+class SubjectController extends Controller
 {
     use ResponseTrait;
 
     /**
-     * @var FormatRepository
+     * @var SubjectRepository
      */
-    public $formatRepository;
+    public $subjectRepository;
 
-    public function __construct(FormatRepository $formatRepository)
+    public function __construct(SubjectRepository $subjectRepository)
     {
-        $this->formatRepository = $formatRepository;
+        $this->subjectRepository = $subjectRepository;
     }
 
     public function list(Request $request){
@@ -34,7 +34,7 @@ class FormatController extends Controller
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $requestFieldSet = new FormatGetList($request->json()->all() ? $request->json()->all() : []);
+        $requestFieldSet = new SubjectGetList($request->json()->all() ? $request->json()->all() : []);
 
         $requestFieldSet->validate();
 
@@ -46,15 +46,15 @@ class FormatController extends Controller
 
         $requestFieldSet->prepare();
 
-        $filteredResult = $this->formatRepository->getList($requestFieldSet);
+        $filteredResult = $this->subjectRepository->getList($requestFieldSet);
 
         $list = [];
-        /** @var Format $format */
-        foreach($filteredResult['formats'] as $format){
+        /** @var Subject $subjects */
+        foreach($filteredResult['subjects'] as $subjects){
             $list[] = [
-                Format::FIELD_ID      => $format->getId(),
-                Format::FIELD_NAME    => $format->getName(),
-                Format::FIELD_SLUG    => $format->getSlug(),
+                Subject::FIELD_ID      => $subjects->getId(),
+                Subject::FIELD_NAME    => $subjects->getName(),
+                Subject::FIELD_SLUG    => $subjects->getSlug(),
             ];
         }
 

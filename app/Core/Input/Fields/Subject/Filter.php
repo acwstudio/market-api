@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Core\Input\Fields\Format;
+
+namespace App\Core\Input\Fields\Subject;
+
 
 use App\Core\FieldSet;
 use App\Core\IField;
-use App\Core\Input\Fields\Format\Filter\Id;
-use App\Core\Input\Fields\Format\Filter\Ids;
-use App\Core\Input\Fields\Format\Filter\IsPublished;
-use App\Core\Input\Fields\Format\Filter\Name;
-use App\Core\Input\Fields\Format\Filter\Slug;
-use App\Core\Input\Fields\Format\Filter\ProductIds;
+use App\Core\Input\Fields\Subject\Filter\Ids;
+use App\Core\Input\Fields\Subject\Filter\IsPublished;
+use App\Core\Input\Fields\Subject\Filter\Name;
+use App\Core\Input\Fields\Subject\Filter\ProductIds;
+use App\Core\Input\Fields\Subject\Filter\Slug;
 
 class Filter extends FieldSet implements IField
 {
