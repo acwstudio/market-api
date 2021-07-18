@@ -165,3 +165,103 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/detail
     "log_request_id": ""
 }
  ```
+
+## Метод получения форматов по фильтру: formats/list
+Адрес: https://mp.synergy.ru/api/v1/formats/list  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| ids | array int[] | - | [27,26] | Массив идентификаторов |
+| published | bool | - | true | Опубликован |
+| name      | string  | -   | Очно-заочная | Название |
+| slug      | string  | -   | ochno-zaochnaya | slug |
+| product_ids | array int[] | - | [480, 481, 766] | Массив продуктовых идентификаторов |
+
+
+Пример запроса:
+```
+curl --location --request GET 'https://mp.synergy.ru/api/v1/formats/list' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "ids": [27,26],
+        "published": true
+    }
+}'
+ ```
+Пример ответа:
+```
+{
+    "success": true,
+    "data": {
+        "list": [
+            {
+                "id": 27,
+                "name": "Очно-заочная",
+                "slug": "ochno-zaochnaya"
+            },
+            {
+                "id": 26,
+                "name": "Онлайн",
+                "slug": "onlain"
+            }
+        ],
+        "count": 2
+    },
+    "log_request_id": ""
+}
+ ```
+
+## Метод получения предметов по фильтру: subjects/list
+Адрес: https://mp.synergy.ru/api/v1/subjects/list  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| ids | array int[] | - | [146,145] | Массив идентификаторов |
+| published | bool | - | true | Опубликован |
+| name      | string  | -   | Торговое дело | Название |
+| slug      | string  | -   | torgovoe-delo | slug |
+| product_ids | array int[] | - | [480, 481, 766] | Массив продуктовых идентификаторов |
+
+
+Пример запроса:
+```
+curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/list' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "ids": [146,145],
+        "published": true
+    }
+}'
+ ```
+Пример ответа:
+```
+{
+    "success": true,
+    "data": {
+        "list": [
+            {
+                "id": 146,
+                "name": "Торговое дело",
+                "slug": "torgovoe-delo"
+            },
+            {
+                "id": 145,
+                "name": "YouTube",
+                "slug": "youtube"
+            }
+        ],
+        "count": 2
+    },
+    "log_request_id": ""
+}
+ ```

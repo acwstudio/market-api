@@ -7,6 +7,9 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\OrganizationController;
+use App\Http\Controllers\FormatController;
+use App\Http\Controllers\SubjectController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,4 +32,6 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('directions/list', [DirectionController::class, 'list']);
     Route::get('organizations/list', [OrganizationController::class, 'list']);
     Route::get('organizations/detail', [OrganizationController::class, 'detail']);
+    Route::get('formats/list', [FormatController::class, 'list']);
+    Route::get('subjects/list', [SubjectController::class, 'list']);
 });
