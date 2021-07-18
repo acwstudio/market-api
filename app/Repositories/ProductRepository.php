@@ -80,14 +80,14 @@ class ProductRepository
         $formatIds = $filter->getFormatIds()->getValue();
         if (!is_null($formatIds) && is_array($formatIds)) {
             $query->whereHas(Product::ENTITY_RELATIVE_FORMATS, function ($subQuery) use ($formatIds) {
-                $subQuery->whereIn(FORMAT::FIELD_ID, $formatIds);
+                $subQuery->whereIn(Format::FIELD_ID, $formatIds);
             });
         }
 
         $levelIds = $filter->getLevelIds()->getValue();
         if (!is_null($levelIds) && is_array($levelIds)) {
             $query->whereHas(Product::ENTITY_RELATIVE_LEVELS, function ($subQuery) use ($levelIds) {
-                $subQuery->whereIn(LEVEL::FIELD_ID, $levelIds);
+                $subQuery->whereIn(Level::FIELD_ID, $levelIds);
             });
         }
 
