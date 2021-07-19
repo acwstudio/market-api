@@ -2,11 +2,10 @@
 
 namespace App\Core\Input\Fields\Product\Filter;
 
-use App\Core\Error\ErrorManager;
-use App\Core\Field;
-use App\Core\IField;
+use App\Core\Input\Fields\Base\BaseString;
+use App\Core\Input\Fields\Base\StringField;
 
-class Name extends Field implements IField
+class Name extends BaseString
 {
     /**
      * Используется в сообщениях где нужно вывести название поля
@@ -18,32 +17,4 @@ class Name extends Field implements IField
      */
     const FIELD_KEY = 'name';
 
-    protected $default = '1333';
-
-    function setValue($value)
-    {
-        $this->field = $value;
-    }
-
-    function getValue()
-    {
-        return $this->field;
-    }
-
-    function validate()
-    {
-        /**
-         * Главная проверка, если поля нет и оно обязательное то дальше нет смысла проверять
-         */
-        if ($this->required && is_null($this->field)) {
-            $this->errors->addError(ErrorManager::buildValidateError(VALIDATION_IS_REQUIRED, [
-                ':field' => self::FIELD_NAME
-            ]));
-        }
-    }
-
-
-    function prepare()
-    {
-    }
 }

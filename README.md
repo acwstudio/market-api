@@ -267,3 +267,70 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/list' \
     "log_request_id": ""
 }
  ```
+
+## Метод получения продуктов по фильтру: products/list
+Адрес: https://mp.synergy.ru/api/v1/products/list  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| ids | array int[] | - | [481,480] | Массив идентификаторов |
+| published | bool | - | true | Опубликован |
+| name      | string  | -   | Предпринимательство | Название |
+| slug      | string  | -   | predprinimatelstvo | slug |
+| expiration_date | datetime | - | 05.09.2021 00:00 | Истечение срока |
+| is_document | boolean | - | true | Наличие диплома по окончании |
+| is_installment | boolean | - | true | Наличие рассрочки |
+| is_employment | boolean | - | false | Трудоустройство после окончания |
+| organization_ids | array int[] | - | [9,10] | Массив идентификаторов организаций |
+| subject_ids | array int[] | - | [19,20] | Массив идентификаторов предметов |
+| format_ids | array int[] | - | [24,26] | Массив идентификаторов форматов |
+| level_ids | array int[] | - | [3,5] | Массив идентификаторов уровней |
+| direction_ids | array int[] | - | [19,26] | Массив идентификаторов направлений |
+| person_ids | array int[] | - | [15,19] | Массив идентификаторов персон |
+
+Пример запроса:
+```
+curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/list' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "ids": [480,481],
+        "published": true,
+        "name": "Предпринимательство",
+        "slug": "predprinimatelstvo",
+        "expiration_date": "18.07.2021 00:00",
+        "document": true,
+        "installment": true,
+        "employment": true,
+        "organization_ids": [9],
+        "subject_ids": [30],
+        "format_ids": [22,26],
+        "level_ids": [2],
+        "direction_ids": [6,8]
+    }
+}
+```
+Пример ответа:
+```json
+{
+    "success": true,
+    "data": {
+        "list": [
+            {
+                "id": 481,
+                "published": 1,
+                "name": "Предпринимательство",
+                "preview_image": "uploads/products/AcggBXTK06oO4LGm4ibI6pQRfH9OgItHeD7dSNHp.png",
+                "organization_id": 9,
+                "slug": "predprinimatelstvo"
+            }
+        ],
+        "count": 1
+    },
+    "log_request_id": ""
+}
+```
