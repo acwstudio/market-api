@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Core\Input\Fields\Direction;
+namespace App\Core\Input\Fields\Subject;
 
 use App\Core\FieldSet;
 use App\Core\IField;
 use App\Core\Input\Fields\DataProvider\Sort;
 
-class DirectionGetList extends FieldSet implements IField
+class SubjectGetList extends FieldSet implements IField
 {
-    const FIELD_KEY = 'direction_get_list';
+    const FIELD_KEY = 'subject_get_list';
 
-    protected $fieldSetName = 'direction_get_list';
+    protected $fieldSetName = 'subject_get_list';
 
     /**
      * @var Filter

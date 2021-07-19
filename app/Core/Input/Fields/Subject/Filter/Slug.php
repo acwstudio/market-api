@@ -1,22 +1,26 @@
 <?php
 
-namespace App\Core\Input\Fields\Organization\Filter;
+namespace App\Core\Input\Fields\Subject\Filter;
 
 use App\Core\Error\ErrorManager;
 use App\Core\Field;
 use App\Core\IField;
 
-class Name extends Field implements IField
-{
+class Slug extends Field implements IField{
     /**
      * Используется в сообщениях где нужно вывести название поля
      */
-    const FIELD_NAME = 'name';
+    const FIELD_NAME = 'slug';
 
     /**
      * Используется там где нужно указать этот Field как поле в FieldSet
      */
-    const FIELD_KEY = 'name';
+    const FIELD_KEY = 'slug';
+
+    /**
+     * @var string
+     */
+    protected $fieldName = 'slug';
 
     function setValue($value)
     {
@@ -34,11 +38,9 @@ class Name extends Field implements IField
          * Главная проверка, если поля нет и оно обязательное то дальше нет смысла проверять
          */
         if ($this->required && is_null($this->field)) {
-            $this->errors->addError(
-                ErrorManager::buildValidateError(VALIDATION_IS_REQUIRED, [
-                    ':field' => self::FIELD_NAME
-                ])
-            );
+            $this->errors->addError(ErrorManager::buildValidateError(VALIDATION_IS_REQUIRED, [
+                ':field' => self::FIELD_NAME
+            ]));
         }
     }
 

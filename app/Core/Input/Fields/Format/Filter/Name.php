@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\Input\Fields\Organization\Filter;
+namespace App\Core\Input\Fields\Format\Filter;
 
 use App\Core\Error\ErrorManager;
 use App\Core\Field;

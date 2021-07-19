@@ -1433,7 +1433,7 @@ session.gc_maxlifetime = 1440
 ;       setting session.gc_maxlifetime to 1440 (1440 seconds = 24 minutes):
 ;          find /path/to/sessions -cmin +24 -type f | xargs rm
 
-; Check HTTP Referer to invalidate externally stored URLs containing ids.
+; Check HTTP Referer to invalidate externally stored URLs containing I.
 ; HTTP_REFERER has to contain this substring for the session to be
 ; considered as valid.
 ; http://php.net/session.referer-check

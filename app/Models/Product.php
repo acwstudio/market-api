@@ -51,11 +51,12 @@ class Product extends Model
         FIELD_UPDATED_AT = 'updated_at';
 
     const ENTITY_RELATIVE_DIRECTIONS = 'directions',
-        ENTITY_RELATIVE_LEVELS = 'levels',
-        ENTITY_RELATIVE_FORMATS = 'formats',
-        ENTITY_RELATIVE_SUBJECTS = 'subjects',
-        ENTITY_RELATIVE_PERSONS = 'persons',
-        ENTITY_PRODUCT_SECTION = 'productsection';
+        ENTITY_RELATIVE_LEVELS       = 'levels',
+        ENTITY_RELATIVE_FORMATS      = 'formats',
+        ENTITY_RELATIVE_SUBJECTS     = 'subjects',
+        ENTITY_RELATIVE_PERSONS      = 'persons',
+        ENTITY_PRODUCT_SECTION       = 'productsection',
+        ENTITY_RELATIVE_ORGANIZATION = 'organization';
 
     const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
     const DATE_TIME_DISPLAY_FORMAT = 'd.m.Y H:i';
