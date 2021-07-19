@@ -8,9 +8,9 @@ use App\Core\Input\Fields\DataProvider\Sort;
 
 class DirectionGetList extends FieldSet implements IField
 {
-    const FIELD_KEY = 'product_get_list';
+    const FIELD_KEY = 'direction_get_list';
 
-    protected $fieldSetName = 'product_get_list';
+    protected $fieldSetName = 'direction_get_list';
 
     /**
      * @var Filter

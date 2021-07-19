@@ -25,6 +25,8 @@ class Direction extends Model
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
 
+    const ENTITY_RELATIVE_PRODUCT = 'products';
+
     public $fillable = [
         self::FIELD_PUBLISHED,
         self::FIELD_NAME,

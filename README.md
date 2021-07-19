@@ -1,7 +1,7 @@
 ## Методы API
 
 
-## Метод получения направлений по фильтру: directions/list 
+## Метод получения направлений по фильтру: directions/list
 Адрес: https://mp.synergy.ru/api/v1/directions/list  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -14,10 +14,12 @@
 | name      | string  | -   | Строительство | Название |
 | slug      | string  | -   | stroitelstvo | slug |
 | show_main      | bool  | -   | true | Показывать на главной |
+| ids | array int[] | - | [2,5] | Массив идентификаторов |
+| product_ids | array int[] | - | [659, 686] | Массив продуктовых идентификаторов |
 
 
 
-Пример запроса:  
+Пример запроса:
 ```
 curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
 --header 'Content-Type: application/json' \
@@ -34,7 +36,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
     }
 }'
  ```
-Пример ответа:  
+Пример ответа:
 ```
 {
     "success": true,
@@ -55,7 +57,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
 }
  ```
 
-## Метод получения организаций по фильтру: organizations/list 
+## Метод получения организаций по фильтру: organizations/list
 Адрес: https://mp.synergy.ru/api/v1/organizations/list  
 Тип: GET  
 Формат входных данных: JSON<br>
@@ -64,7 +66,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
 
 | Название поля | Тип | Обязательное | Пример | Комментарий
 | ------------- | ------- | --- | ---------------- | ------------------------------ |
-| I | array int[] | - | [11,12] | Массив идентификаторов |
+| ids | array int[] | - | [11,12] | Массив идентификаторов |
 | published | bool | - | true | Опубликован |
 | name      | string  | -   | Университет | Название |
 | slug      | string  | -   | universitet | slug |
@@ -80,7 +82,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/list' 
 --header 'Content-Type: application/json' \
 --data-raw '{
     "filter": {
-        "I": [11,12],
+        "ids": [11,12],
         "published": true,
     }
 }'
@@ -114,7 +116,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/list' 
 }
  ```
 
-## Метод получения конкретной организации по фильтру: organizations/detail 
+## Метод получения конкретной организации по фильтру: organizations/detail
 Адрес: https://mp.synergy.ru/api/v1/organizations/detail  
 Тип: GET  
 Формат входных данных: JSON<br>
@@ -161,106 +163,6 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/detail
         "digital_image": "/storage/uploads/organizations/preview/pgAyidtsjHHw1Ox95VKuFQZXGsGNTRd7uFxyH0GD.png",
         "created_at": "2021-06-01T14:02:16.000000Z",
         "updated_at": "2021-06-30T11:56:49.000000Z"
-    },
-    "log_request_id": ""
-}
- ```
-
-## Метод получения форматов по фильтру: formats/list
-Адрес: https://mp.synergy.ru/api/v1/formats/list  
-Тип: GET  
-Формат входных данных: JSON<br>
-
-Входные параметры для фильтра
-
-| Название поля | Тип | Обязательное | Пример | Комментарий
-| ------------- | ------- | --- | ---------------- | ------------------------------ |
-| ids | array int[] | - | [27,26] | Массив идентификаторов |
-| published | bool | - | true | Опубликован |
-| name      | string  | -   | Очно-заочная | Название |
-| slug      | string  | -   | ochno-zaochnaya | slug |
-| product_ids | array int[] | - | [480, 481, 766] | Массив продуктовых идентификаторов |
-
-
-Пример запроса:
-```
-curl --location --request GET 'https://mp.synergy.ru/api/v1/formats/list' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "filter": {
-        "ids": [27,26],
-        "published": true
-    }
-}'
- ```
-Пример ответа:
-```
-{
-    "success": true,
-    "data": {
-        "list": [
-            {
-                "id": 27,
-                "name": "Очно-заочная",
-                "slug": "ochno-zaochnaya"
-            },
-            {
-                "id": 26,
-                "name": "Онлайн",
-                "slug": "onlain"
-            }
-        ],
-        "count": 2
-    },
-    "log_request_id": ""
-}
- ```
-
-## Метод получения предметов по фильтру: subjects/list
-Адрес: https://mp.synergy.ru/api/v1/subjects/list  
-Тип: GET  
-Формат входных данных: JSON<br>
-
-Входные параметры для фильтра
-
-| Название поля | Тип | Обязательное | Пример | Комментарий
-| ------------- | ------- | --- | ---------------- | ------------------------------ |
-| ids | array int[] | - | [146,145] | Массив идентификаторов |
-| published | bool | - | true | Опубликован |
-| name      | string  | -   | Торговое дело | Название |
-| slug      | string  | -   | torgovoe-delo | slug |
-| product_ids | array int[] | - | [480, 481, 766] | Массив продуктовых идентификаторов |
-
-
-Пример запроса:
-```
-curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/list' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "filter": {
-        "ids": [146,145],
-        "published": true
-    }
-}'
- ```
-Пример ответа:
-```
-{
-    "success": true,
-    "data": {
-        "list": [
-            {
-                "id": 146,
-                "name": "Торговое дело",
-                "slug": "torgovoe-delo"
-            },
-            {
-                "id": 145,
-                "name": "YouTube",
-                "slug": "youtube"
-            }
-        ],
-        "count": 2
     },
     "log_request_id": ""
 }
