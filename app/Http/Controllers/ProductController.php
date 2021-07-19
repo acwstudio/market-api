@@ -51,9 +51,12 @@ class ProductController extends Controller
         foreach ($filteredResults['products'] as $product) {
 
             $list[] = [
-                Product::FIELD_ID => $product->getId(),
-                Product::FIELD_NAME => $product->getName(),
-                Product::FIELD_SLUG => $product->getSlug()
+                Product::FIELD_ID              => $product->getId(),
+                Product::FIELD_PUBLISHED       => $product->getPublished(),
+                Product::FIELD_NAME            => $product->getName(),
+                Product::FIELD_PREVIEW_IMAGE   => $product->getPreviewImage(),
+                Product::FIELD_ORGANIZATION_ID => $product->getOrganizationId(),
+                Product::FIELD_SLUG            => $product->getSlug(),
             ];
         }
 

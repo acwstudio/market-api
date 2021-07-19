@@ -1,7 +1,7 @@
 ## Методы API
 
 
-## Метод получения направлений по фильтру: directions/list 
+## Метод получения направлений по фильтру: directions/list
 Адрес: https://mp.synergy.ru/api/v1/directions/list  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -14,10 +14,12 @@
 | name      | string  | -   | Строительство | Название |
 | slug      | string  | -   | stroitelstvo | slug |
 | show_main      | bool  | -   | true | Показывать на главной |
+| ids | array int[] | - | [2,5] | Массив идентификаторов |
+| product_ids | array int[] | - | [659, 686] | Массив продуктовых идентификаторов |
 
 
 
-Пример запроса:  
+Пример запроса:
 ```
 curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
 --header 'Content-Type: application/json' \
@@ -34,7 +36,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
     }
 }'
  ```
-Пример ответа:  
+Пример ответа:
 ```
 {
     "success": true,
@@ -55,7 +57,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
 }
  ```
 
-## Метод получения организаций по фильтру: organizations/list 
+## Метод получения организаций по фильтру: organizations/list
 Адрес: https://mp.synergy.ru/api/v1/organizations/list  
 Тип: GET  
 Формат входных данных: JSON<br>
@@ -109,6 +111,58 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/list' 
             }
         ],
         "count": 2
+    },
+    "log_request_id": ""
+}
+ ```
+
+## Метод получения конкретной организации по фильтру: organizations/detail
+Адрес: https://mp.synergy.ru/api/v1/organizations/detail  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| id | id | - | 11 | Идентификатор |
+| slug | string | - | moskovskij-otkrytyj-institut | slug |
+
+
+Пример запроса:
+```
+curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/detail' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "id": 11,
+        "slug": "moskovskij-otkrytyj-institut",
+    }
+}'
+ ```
+Пример ответа:
+```
+{
+    "success": true,
+    "data": {
+        "id": 11,
+        "parent_id": null,
+        "published": 1,
+        "name": "Московский открытый институт",
+        "slug": "moskovskij-otkrytyj-institut",
+        "subtitle": "Образовательная автономная некоммерческая организация высшего образования \"Московский открытый институт\" (ОАНО \"МОИ\")",
+        "land": null,
+        "description": "С 1988 года  МОИ осуществляет профессиональную подготовку студентов по более 200 программам колледжа, высшего, второго высшего и дополнительного образования. На базе университета существует первая в России школа бизнеса, которая обладает 7 престижными международными аккредитациями AMBA",
+        "html_body": "<div class=\"university__table-container\">\r\n                <div class=\"university__table-wrapper\">\r\n                    <div class=\"university__table university__table--4\">\r\n                        <div class=\"university__table-left\">\r\n                            <div class=\"university__table-top\">\r\n                                <div class=\"university__table-item\">\r\n                                    <div class=\"university__table-title university__table-title--small\">Бессрочная лицензия</div>\r\n                                    <div class=\"university__table-text\">на право ведения образовательной деятельности</div>\r\n                                </div>\r\n                                <div class=\"university__table-item\">\r\n                                    <div class=\"university__table-title university__table-title--small\">Доступность</div>\r\n                                    <div class=\"university__table-text\">образовательных услуг и программ</div>\r\n                                </div>\r\n                            </div>\r\n                            <div class=\"university__table-bottom\">\r\n                                <div class=\"university__table-item\">\r\n                                    <div class=\"university__table-title university__table-title--small\">Возможность</div>\r\n                                    <div class=\"university__table-text\">совмещать работу и учебу</div>\r\n                                </div>\r\n                                <div class=\"university__table-item\">\r\n                                    <div class=\"university__table-title university__table-title--small\">Поддержка</div>\r\n                                    <div class=\"university__table-text\">персонального куратора</div>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"university__table-right\">\r\n                            <div class=\"university__table-item\">\r\n                                <div class=\"university__table-title university__table-title--small\">Государственный диплом</div>\r\n                                <div class=\"university__table-text\">о высшем образовании и общеевропейское приложение на английском языке</div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>",
+        "classes": "university--4 university-moi",
+        "color_code_titles": null,
+        "address": "125190, г. Москва, Ленинградский проспект, дом 80",
+        "type_text": "Образовательная автономная некоммерческая организация высшего образования",
+        "map_link": "https://www.google.com/maps/place/%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B3%D1%80%D0%B0%D0%B4%D1%81%D0%BA%D0%B8%D0%B9+%D0%BF%D1%80-%D1%82.,+80,+%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0,+125315/@55.8027682,37.5227886,17z/data=!3m1!4b1!4m5!3m4!1s0x46b549c9b692c3f1:0x7a94c903fe8b0996!8m2!3d55.8027682!4d37.5249773",
+        "preview_image": "/storage/uploads/organizations/preview/GLsx7WewkQosqRlhWoQP6NfLVX4pqC9r45VdrnuF.svg",
+        "digital_image": "/storage/uploads/organizations/preview/pgAyidtsjHHw1Ox95VKuFQZXGsGNTRd7uFxyH0GD.png",
+        "created_at": "2021-06-01T14:02:16.000000Z",
+        "updated_at": "2021-06-30T11:56:49.000000Z"
     },
     "log_request_id": ""
 }

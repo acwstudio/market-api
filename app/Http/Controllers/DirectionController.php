@@ -51,7 +51,6 @@ class DirectionController extends Controller
         foreach ($filteredResults['directions'] as $direction) {
 
             $list[] = [
-                Direction::FIELD_PUBLISHED     => $direction->getSlug(),
                 Direction::FIELD_ID            => $direction->getId(),
                 Direction::FIELD_NAME          => $direction->getName(),
                 Direction::FIELD_SLUG          => $direction->getSlug(),

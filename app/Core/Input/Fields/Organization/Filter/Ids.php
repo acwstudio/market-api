@@ -7,7 +7,8 @@ use App\Core\Error\Regex;
 use App\Core\Field;
 use App\Core\IField;
 
-class Ids extends Field implements IField{
+class Ids extends Field implements IField
+{
     /**
      * Используется в сообщениях где нужно вывести название поля
      */
