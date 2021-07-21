@@ -10,11 +10,11 @@ class IsEmployment extends Boolean
     /**
      * Используется в сообщениях где нужно вывести название поля
      */
-    const FIELD_NAME = 'employment';
+    const FIELD_NAME = 'is_employment';
 
     /**
      * Используется там где нужно указать этот Field как поле в FieldSet
      */
-    const FIELD_KEY = 'employment';
+    const FIELD_KEY = 'is_employment';
 
 }
