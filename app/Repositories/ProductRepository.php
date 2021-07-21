@@ -28,6 +28,12 @@ class ProductRepository
             ]);
         }
 
+        if (!is_null($filter->getSlug()->getValue())) {
+            $query->where([
+                Product::FIELD_SLUG => $filter->getSlug()->getValue()
+            ]);
+        }
+
         if (!is_null($filter->getExpirationDateTime()->getValue())) {
             $query->where([
                 Product::FIELD_EXPIRATION_DATE => date('Y-m-d H:i:s', strtotime($filter->getExpirationDateTime()->getValue()))
@@ -47,7 +53,7 @@ class ProductRepository
 
         if (!is_null($filter->getIsDocument()->getValue())) {
             $query->where([
-                Product::FIELD_DOCUMENT => $filter->getIsDocument()->getValue()
+                Product::FIELD_IS_DOCUMENT => $filter->getIsDocument()->getValue()
             ]);
         }
 

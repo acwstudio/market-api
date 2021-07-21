@@ -15,10 +15,10 @@ class IsDocument extends Boolean
     /**
      * Используется в сообщениях где нужно вывести название поля
      */
-    const FIELD_NAME = 'document';
+    const FIELD_NAME = 'is_document';
 
     /**
      * Используется там где нужно указать этот Field как поле в FieldSet
      */
-    const FIELD_KEY = 'document';
+    const FIELD_KEY = 'is_document';
 }
