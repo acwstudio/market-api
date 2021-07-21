@@ -56,14 +56,19 @@ class Filter extends FieldSet implements IField
     protected $document = null;
 
     /**
+     * @var IsDocument
+     */
+    protected $is_document = null;
+
+    /**
      * @var IsInstallment
      */
-    protected $installment = null;
+    protected $is_installment = null;
 
     /**
      * @var IsEmployment
      */
-    protected $employment = null;
+    protected $is_employment = null;
 
     /**
      * @var OrganizationIds
@@ -153,7 +158,7 @@ class Filter extends FieldSet implements IField
      */
     public function getIsDocument(): IsDocument
     {
-        return $this->document;
+        return $this->is_document;
     }
 
     /**
@@ -161,7 +166,7 @@ class Filter extends FieldSet implements IField
      */
     public function getIsInstallment(): IsInstallment
     {
-        return $this->installment;
+        return $this->is_installment;
     }
 
     /**
@@ -169,7 +174,7 @@ class Filter extends FieldSet implements IField
      */
     public function getIsEmployment(): IsEmployment
     {
-        return $this->employment;
+        return $this->is_employment;
     }
 
     /**

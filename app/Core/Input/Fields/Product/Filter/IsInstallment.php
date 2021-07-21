@@ -10,11 +10,11 @@ class IsInstallment extends Boolean
     /**
      * Используется в сообщениях где нужно вывести название поля
      */
-    const FIELD_NAME = 'installment';
+    const FIELD_NAME = 'is_installment';
 
     /**
      * Используется там где нужно указать этот Field как поле в FieldSet
      */
-    const FIELD_KEY = 'installment';
+    const FIELD_KEY = 'is_installment';
 
 }
