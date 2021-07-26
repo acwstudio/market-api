@@ -1,4 +1,3 @@
-{{- $globals := ternary .Values.global.prod .Values.global.dev (eq .Values.global.env_name "prod") -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -16,26 +15,35 @@ metadata:
     {{- if eq .Values.global.env_name "dev" }}
     nginx.ingress.kubernetes.io/auth-url: "http://dev-auth.auth.svc.cluster.local"
     {{- end }}
-    {{- if ne .Values.global.ci_path "" }}
     nginx.ingress.kubernetes.io/configuration-snippet: |
       # Additional configuration snippet
-      rewrite (?i){{ .Values.global.ci_path | trimSuffix "/" }}(/|$)(.*) /$2 break;
-    {{- end }}
+      {{- if ne (.Values.block_code|default "") "" }}
+      {{- range $index, $country := .Values.block_countries }}
+      if ($geoip2_city_country_code = {{ $country.code }}) {
+        return {{ $.Values.block_code }};
+      }
+      {{- end }}
+      {{- end }}
+
+      {{- if and (ne .Values.global.ci_path "") (ne .Values.global.ci_path "/") }}
+      #rewrite ^([^.]*[^/])$ $1/ permanent;
+      rewrite (?i)/{{ .Values.global.ci_path | trimAll "/" }}(/|$)(.*) /$2 break;
+      {{- end }}
   name: ingress
 spec:
   rules:
       - host: {{ .Values.global.ci_url }}
         http:
           paths:
-          - pathType: Prefix
-            {{- if ne .Values.global.ci_path "" }}
-            path: /{{ .Values.global.ci_path | trimAll "/" }}
-            {{- else }}
-            path: /
-            {{- end }}
-            backend:
+          - backend:
               service:
                 name: {{ .Values.global.app_name }}
                 port: 
                   number: 80
+            pathType: Prefix
+            {{- if and (ne .Values.global.ci_path "") (ne .Values.global.ci_path "/") }}
+            path: /{{ .Values.global.ci_path | trimAll "/" }}
+            {{- else }}
+            path: /
+            {{- end }}
 ---

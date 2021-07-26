@@ -43,13 +43,14 @@ shell:
   beforeSetup:
   - cd /app
   - npm run prod
+  - rm -rf /app/node_modules
 ---
 image: nginx
 from: hub.synergy.ru/common-images/nginx-brotli:v1.19.10-latest
 import:
   - artifact: public-folder
-    add: /app
-    to: /var/www/html
+    add: /app/public
+    to: /var/www/html/public
     after: install
 docker:
   WORKDIR: /var/www/html
