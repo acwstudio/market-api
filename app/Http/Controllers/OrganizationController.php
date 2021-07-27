@@ -27,6 +27,7 @@ class OrganizationController extends Controller
     }
 
     public function list(Request $request){
+
         if (!$request->isJson()) {
             return $this->errorResponse([
                 ErrorManager::buildValidateError(VALIDATION_REQUEST_JSON_EXPECTED)->toArray()

@@ -63,11 +63,15 @@ class OrganizationRepository
 
         $personIds = $filter->getPersonIds()->getValue();
         if (!is_null($personIds) && is_array($personIds)) {
-            $query->whereHas(Organization::ENTITY_RELATIVE_PRODUCT, function($subQuery) use($personIds){
-                $subQuery->whereHas(Product::ENTITY_RELATIVE_PERSONS, function ($subSubQuery) use($personIds){
-                    $subSubQuery->whereIn(Person::FIELD_ID, $personIds);
-                });
+//            $query->whereHas(Organization::ENTITY_RELATIVE_PRODUCT, function($subQuery) use($personIds){
+//                $subQuery->whereHas(Product::ENTITY_RELATIVE_PERSONS, function ($subSubQuery) use($personIds){
+//                    $subSubQuery->whereIn(Person::FIELD_ID, $personIds);
+//                });
+//            });
+            $query->whereHas(Organization::ENTITY_RELATIVE_PERSONS, function($subQuery) use($personIds){
+                $subQuery->whereIn(Person::FIELD_ID, $personIds);
             });
+
         }
 
         $count = $query->count();
