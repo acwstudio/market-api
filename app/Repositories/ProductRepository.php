@@ -35,9 +35,9 @@ class ProductRepository
         }
 
         if (!is_null($filter->getExpirationDateTime()->getValue())) {
-            $query->where([
-                Product::FIELD_EXPIRATION_DATE => date('Y-m-d H:i:s', strtotime($filter->getExpirationDateTime()->getValue()))
-            ]);
+            $query->whereDate(
+                Product::FIELD_EXPIRATION_DATE, date('Y-m-d H:i:s', strtotime($filter->getExpirationDateTime()->getValue()))
+            );
         }
 
         if (!is_null($filter->getIsPublished()->getValue())) {
@@ -132,7 +132,7 @@ class ProductRepository
 
         return [
             'count' => $count,
-            'products' => $query->get()
+            'products' => $query->get(),
         ];
     }
 }
