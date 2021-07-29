@@ -49,7 +49,6 @@ class ProductController extends Controller
         $list = [];
         /** @var Product $product */
         foreach ($filteredResults['products'] as $product) {
-
             $list[] = [
                 Product::FIELD_ID              => $product->getId(),
                 Product::FIELD_PUBLISHED       => $product->getPublished(),

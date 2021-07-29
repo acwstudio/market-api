@@ -1,0 +1,16 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Маркетплейс API",
+        "contact": {
+            "name": "Ермолаев Антон Андреевич",
+            "email": "aermolaev@synergy.ru"
+        },
+        "version": "2.0.0"
+    },
+    "paths": {
+        "/products/list": {
+            "$ref": "./paths/products/list.json#"
+        }
+    }
+}

@@ -1,0 +1,179 @@
+{
+    "get": {
+        "summary": "Получение товаров",
+        "tags": ["Товары", "v1"],
+        "servers": {
+            "$ref": "../../servers/v1.json#"
+        },
+        "requestBody": {
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "properties": {
+                            "filter": {
+                                "type": "object",
+                                "properties": {
+                                    "ids": {
+                                        "type": "array",
+                                        "description": "IDs",
+                                        "example": "[480, 481]"
+                                    },
+                                    "published": {
+                                        "type": "boolean",
+                                        "description": "Статус публикации",
+                                        "example": true
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Название",
+                                        "example": "Предпринимательство"
+                                    },
+                                    "slug": {
+                                        "type": "string",
+                                        "description": "Slug",
+                                        "example": "predprinimatelstvo"
+                                    },
+                                    "expiration_date": {
+                                        "type": "string",
+                                        "description": "Дата окончания программы",
+                                        "example": "18.07.2021 00:00"
+                                    },
+                                    "document": {
+                                        "type": "boolean",
+                                        "description": "Документ об образовании",
+                                        "example": false
+                                    },
+                                    "installment": {
+                                        "type": "boolean",
+                                        "description": "Рассрочка",
+                                        "example": false
+                                    },
+                                    "employment": {
+                                        "type": "boolean",
+                                        "description": "Трудоустройство по окончании",
+                                        "example": true
+                                    },
+                                    "organization_ids": {
+                                        "type": "array",
+                                        "description": "Список ID. Организаций",
+                                        "example": "[9]"
+                                    },
+                                    "subject_ids": {
+                                        "type": "array",
+                                        "description": "Список ID. Тематики",
+                                        "example": "[30]"
+                                    },
+                                    "format_ids": {
+                                        "type": "array",
+                                        "description": "Список ID. Форматы обучения",
+                                        "example": "[22, 26]"
+                                    },
+                                    "level_ids": {
+                                        "type": "array",
+                                        "description": "Список ID. Уровни обучения",
+                                        "example": "[2]"
+                                    },
+                                    "direction_ids": {
+                                        "type": "array",
+                                        "description": "Список ID. Направления",
+                                        "example": "[6, 8]"
+                                    }
+                                }
+                            },
+                            "sort": {
+                                "type": "object",
+                                "required": ["field", "order"],
+                                "properties": {
+                                    "field": {
+                                        "type": "integer",
+                                        "description": "Название поля для сортировки",
+                                        "example": "id"
+                                    },
+                                    "order": {
+                                        "type": "string",
+                                        "description": "Тип сортировки",
+                                        "enum": [
+                                            "asc",
+                                            "desc"
+                                        ],
+                                        "example": "desc"
+                                    }
+                                }
+                            },
+                            "pagination": {
+                                "type": "object",
+                                "required": ["page_size"],
+                                "properties": {
+                                    "page": {
+                                        "type": "integer",
+                                        "description": "Номер страницы",
+                                        "example": 1
+                                    },
+                                    "page_size": {
+                                        "type": "integer",
+                                        "description": "Количество товаров на странице",
+                                        "example": 24
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "list": {
+                                            "type": "array",
+                                            "items": [
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "published": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "preview_image": {
+                                                            "type": "string"
+                                                        },
+                                                        "organization_id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "slug": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "count": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "log_request_id": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

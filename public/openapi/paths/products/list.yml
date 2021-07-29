@@ -1,0 +1,105 @@
+paths:
+  products/list:
+    get:
+      summary: 'Получение товаров'
+      tags: ['Товары']
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                ids:
+                  type: array
+                  required: false
+                  description: 'Массив ID'
+                  example: '[480, 481]'
+                published:
+                  type: boolean
+                  required: false
+                  description: 'Статус публикации'
+                  example: '0'
+                name:
+                  type: string
+                  required: false
+                  description: 'Название'
+                  example: 'Предпринимательство'
+                slug:
+                  type: string
+                  required: false
+                  description: 'Slug'
+                  example: 'predprinimatelstvo'
+                expiration_date:
+                  type: string
+                  required: false
+                  description: 'Slug'
+                  example: '18.07.2021 00:00'
+                document:
+                  type: boolean
+                  required: false
+                  description: 'Документ об образовании'
+                  example: '0'
+                installment:
+                  type: boolean
+                  required: false
+                  description: 'Рассрочка'
+                  example: '0'
+                employment:
+                  type: boolean
+                  required: false
+                  description: 'Трудоустройство по окончании'
+                  example: '0'
+                organization_ids:
+                  type: array
+                  required: false
+                  description: 'Список ID. Организаций'
+                  example: '[9]'
+                subject_ids:
+                  type: array
+                  required: false
+                  description: 'Список ID. Тематики'
+                  example: '[30]'
+                format_ids:
+                  type: array
+                  required: false
+                  description: 'Список ID. Форматы обучения'
+                  example: '[22, 26]'
+                level_ids:
+                  type: array
+                  required: false
+                  description: 'Список ID. Уровни обучения'
+                  example: '[2]'
+                direction_ids:
+                  type: array
+                  required: false
+                  description: 'Список ID. Направления'
+                  example: '[6, 8]'
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: '../../models/user.yml#/components/schemas/User'
+        422:
+          content:
+            application/json:
+              schema:
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      email:
+                        type: array
+                        items:
+                          type: string
+                          example: 'Не указан email'
+                      password:
+                        type: array
+                        items:
+                          type: string
+                          example: 'Не указан пароль'
