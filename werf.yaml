@@ -21,6 +21,30 @@ cleanup:
     imagesPerReference:
       last: 2
 ---
+artifact: public-folder
+from: node:14-alpine
+git:
+  - add: /
+    to: /app
+    excludePaths:
+      - werf.yaml
+      - werf-giterminism.yaml
+      - .gitlab-ci.yml
+      - .helm
+    stageDependencies:
+      install:
+        - package.json
+      beforeSetup:
+        - "**/*"
+shell:
+  install:
+  - cd /app
+  - npm install
+  beforeSetup:
+  - cd /app
+  - npm run prod
+  - rm -rf /app/node_modules
+---
 image: nginx
 from: hub.synergy.ru/common-images/nginx-brotli:v1.19.10-latest
 import:
