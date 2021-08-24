@@ -246,7 +246,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/list' \
 }'
  ```
 Пример ответа:
-```
+```json
 {
     "success": true,
     "data": {
@@ -293,44 +293,228 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/list' \
 | person_ids | array int[] | - | [15,19] | Массив идентификаторов персон |
 
 Пример запроса:
-```
-curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/list' \
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/products/list' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "filter": {
-        "ids": [480,481],
+    "ids": [830,831,832,833,834,835,836,837,486],
         "published": true,
-        "name": "Предпринимательство",
-        "slug": "predprinimatelstvo",
-        "expiration_date": "18.07.2021 00:00",
-        "document": true,
-        "installment": true,
-        "employment": true,
-        "organization_ids": [9],
-        "subject_ids": [30],
-        "format_ids": [22,26],
-        "level_ids": [2],
-        "direction_ids": [6,8]
-    }
+        "name": "Веб-дизайн",
+        "slug": "veb-dizain",
+        "expiration_date": "24.08.2021 00:00",
+        "is_document": true,
+        "is_installment": true,
+        "is_employment": true,
+        "organization_ids": [9,10],
+        "subject_ids": [97,26,146],
+        "format_ids": [23,26,22],
+        "level_ids": [9,2,3],
+        "direction_ids": [3,22,11],
+        "person_ids": [59,197]
 }
 ```
 Пример ответа:
 ```json
 {
-    "success": true,
-    "data": {
-        "list": [
+    "data": [
+        {
+            "id": 486,
+            "type": "products",
+            "published": 1,
+            "name": "Веб-дизайн",
+            "preview_image": "uploads/products/ldnYcowVVXSnnfxZ7YASOpY2vqAdk5CO182rIaRY.png",
+            "organization_id": 9,
+            "slug": "veb-dizain"
+        }
+    ],
+    "links": {
+        "first": "http://localhost:8003/api/v1/products/list?page=1",
+        "last": "http://localhost:8003/api/v1/products/list?page=1",
+        "prev": null,
+        "next": null
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "links": [
             {
-                "id": 481,
-                "published": 1,
-                "name": "Предпринимательство",
-                "preview_image": "uploads/products/AcggBXTK06oO4LGm4ibI6pQRfH9OgItHeD7dSNHp.png",
-                "organization_id": 9,
-                "slug": "predprinimatelstvo"
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "http://localhost:8003/api/v1/products/list?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
             }
         ],
-        "count": 1
+        "path": "http://localhost:8003/api/v1/products/list",
+        "per_page": 10,
+        "to": 1,
+        "total": 1
     },
-    "log_request_id": ""
+    "count": 1,
+    "success": true
 }
 ```
+
+## Метод получения конкретного продукта по фильтру: products/detail
+Адрес: https://mp.synergy.ru/api/v1/products/detail  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| id | id | - | 500 | Идентификатор |
+| slug | string | - | ekonomika-i-buxgalterskii-ucet | slug |
+
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/products/detail' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "id": 500,
+        "slug": "ekonomika-i-buxgalterskii-ucet"
+    }
+}'
+ ```
+Пример ответа:
+```json
+{
+    "data": {
+        "id": 500,
+        "type": "products",
+        "is_moderated": 0,
+        "land": "KD_market",
+        "published": 1,
+        "expiration_date": null,
+        "name": "Экономика и бухгалтерский учет",
+        "slug": "ekonomika-i-buxgalterskii-ucet",
+        "preview_image": "uploads/products/msForBLhr2tXmwVDQiORsnRss8uVcaWJBvbjEuDd.png",
+        "digital_image": "uploads/products/PvaMx0ekUZIGPD5rFeiDlj4VJbfopjg1GFQvUkss.png",
+        "price": null,
+        "start_date": null,
+        "is_employment": 1,
+        "is_installment": 1,
+        "installment_month": 46,
+        "is_document": 1,
+        "document": 1,
+        "triggers": "1|3|5|6",
+        "begin_duration": null,
+        "begin_duration_format_value": null,
+        "duration": 24480,
+        "duration_format_value": 1,
+        "description": "Программа сделает из вас специалиста, способного оптимизировать финансовую деятельность организации с помощью методов бухгалтерского учета. Вы научитесь грамотно работать с информацией об имущественном положении компании и осуществлять все виды деятельности бухгалтера: учетно-контрольную, экономическую и финансово-аналитическую.",
+        "color": "#FFFBD2",
+        "organization_id": 9,
+        "category_id": 2,
+        "user_id": 5,
+        "created_at": "2021-06-04T10:19:45.000000Z",
+        "updated_at": "2021-06-16T12:45:15.000000Z"
+    },
+    "success": true,
+    "log_request_id": ""
+}
+ ```
+
+## Метод получения направлений по фильтру: persons/list
+Адрес: https://mp.synergy.ru/api/v1/persons/list  
+Тип: POST  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| published | bool | - | true | Опубликован |
+| name      | string  | -   | Марина Борисовна Позина | ФИО |
+| show_main      | bool  | -   | true | Показывать на главной |
+| ids | array int[] | - | [2,11,12,13,14,15,16,17] | Массив идентификаторов |
+| product_ids | array int[] | - | [506, 523] | Массив продуктовых идентификаторов |
+
+
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/list' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "ids": [2,11,12,13,14,15,16,17],
+        "published": true,
+        "name": "Марина Борисовна Позина",
+        "product_ids": [506, 523]
+    }
+    "sort": "position"
+}'
+ ```
+Пример ответа:
+```json
+{
+    "data": [
+        {
+            "id": 2,
+            "type": "persons",
+            "published": 1,
+            "name": "Марина Борисовна Позина",
+            "show_main": 0,
+            "getPreviewImage": "uploads/persons/IZBoJtlFPiSI7ycGK3GCbEYWGPXWCSbX.jpg"
+        }
+    ],
+    "count": 1,
+    "success": true
+}
+ ```
+
+## Метод получения конкретной персоны по фильтру: persons/detail
+Адрес: https://mp.synergy.ru/api/v1/persons/detail  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| id | id | - | 12 | Идентификатор |
+
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/detail' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "id": 12
+    }
+}'
+ ```
+Пример ответа:
+```json
+{
+    "data": {
+        "id": 12,
+        "type": "persons",
+        "published": 1,
+        "name": "Лариса Ивановна Грацианова",
+        "position": "",
+        "show_main": 0,
+        "description": "<p>Старший преподаватель кафедры Управления человеческими ресурсами, практический психолог, бизнес-тренер, специалист в области обучения и развития персонала. Стаж руководящей деятельности – более 15 лет.</p>",
+        "preview_image": "uploads/persons/7Lg0vaxpyWhsiVwpBiOdLYlkSQn3pkps.jpg",
+        "created_at": "2021-06-03T17:22:08.000000Z",
+        "updated_at": "2021-08-02T13:13:58.000000Z"
+    },
+    "success": true,
+    "log_request_id": ""
+}
+ ```
+

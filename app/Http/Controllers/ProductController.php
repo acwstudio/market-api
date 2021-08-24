@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Spatie\QueryBuilder\Exceptions\InvalidQuery;
-use Illuminate\Database\Eloquent\ModelNotFoundExceptio;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Controllers\ResponseTrait;
 use App\Http\Resources\ProductDetailResource;
 use App\Http\Resources\ProductListCollection;
@@ -16,8 +16,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class ProductController extends Controller
 {
-    use ResponseTrait;
-
     /**
      * @var ProductRepository
      */
@@ -66,13 +64,16 @@ class ProductController extends Controller
     }
 
     /**
-     * @return ProductDetailResource
+     * @return ProductDetailResource|string
      */
     public function detail()
     {
         try {
             $query = QueryBuilder::for(Product::class)
-                ->allowedFilters([AllowedFilter::exact('id')])
+                ->allowedFilters([
+                    AllowedFilter::exact('id'),
+                    AllowedFilter::exact('slug')
+                ])
                 ->firstOrFail();
         } catch (InvalidQuery $exception) {
             return $this->errorResponse([
@@ -88,5 +89,14 @@ class ProductController extends Controller
             'success'        => true,
             'log_request_id' => ''
         ]);
+    }
+
+    /**
+     * @param $error
+     * @return mixed
+     */
+    private function errorResponse($error)
+    {
+        return $error;
     }
 }
