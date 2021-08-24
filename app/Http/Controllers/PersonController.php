@@ -7,7 +7,6 @@ use App\Http\Resources\PersonListCollection;
 use App\Models\Person;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\Exceptions\InvalidQuery;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class PersonController extends Controller
@@ -41,36 +40,18 @@ class PersonController extends Controller
      */
     public function detail()
     {
-        try {
-            $query = QueryBuilder::for(Person::class)
-                ->allowedFilters([
-                    AllowedFilter::exact('id')
-                ])
-                ->firstOrFail();
-        } catch(InvalidQuery $exception) {
-            return $this->errorResponse([
-                $exception->getMessage()
-            ]);
-        } catch (\Exception $exception) {
-            return $this->errorResponse([
-                'Product not found'
-            ]);
-        }
+        $query = QueryBuilder::for(Person::class)
+            ->allowedFilters([
+                AllowedFilter::exact('id')
+            ])
+            ->firstOrFail();
 
         return (new PersonDetailResource($query))
             ->additional([
-                'success'        => true,
+                'success' => true,
                 'log_request_id' => ''
             ]);
 
     }
 
-    /**
-     * @param $error
-     * @return string
-     */
-    private function errorResponse($error)
-    {
-        return $error;
-    }
 }

@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Core\Error\ErrorManager;
-use App\Core\Input\Fields\Direction\DirectionGetList;
-use App\Core\Response\ResponseTrait;
+use App\Http\Resources\DirectionDetailResource;
+use App\Http\Resources\DirectionListCollection;
 use App\Models\Direction;
 use App\Repositories\DirectionRepository;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class DirectionController extends Controller
 {
-    use ResponseTrait;
-
     /**
      * @var DirectionRepository
      */
@@ -26,42 +24,43 @@ class DirectionController extends Controller
 
     public function list(Request $request)
     {
-        if (!$request->isJson()) {
-            return $this->errorResponse([
-                ErrorManager::buildValidateError(VALIDATION_REQUEST_JSON_EXPECTED)->toArray()
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        $query = QueryBuilder::for(Direction::class)
+            ->allowedFilters([
+                AllowedFilter::exact('ids', 'id'),
+                AllowedFilter::exact('published'),
+                AllowedFilter::exact('name'),
+                AllowedFilter::exact('slug'),
+                AllowedFilter::exact('show_main'),
+                AllowedFilter::exact('product_ids', 'products.id')
+            ])
+            ->allowedSorts(['sort', 'name', 'id'])
+            ->get();
 
-        $requestFieldSet = new DirectionGetList($request->json()->all() ? $request->json()->all() : []);
-
-        $requestFieldSet->validate();
-
-        $errors = $requestFieldSet->getErrorsArray();
-
-        if (count($errors)) {
-            return $this->errorResponse($errors, Response::HTTP_OK);
-        }
-
-        $requestFieldSet->prepare();
-
-        $filteredResults = $this->directionRepository->getList($requestFieldSet);
-
-        $list = [];
-        /** @var Direction $direction */
-        foreach ($filteredResults['directions'] as $direction) {
-
-            $list[] = [
-                Direction::FIELD_ID            => $direction->getId(),
-                Direction::FIELD_NAME          => $direction->getName(),
-                Direction::FIELD_SLUG          => $direction->getSlug(),
-                Direction::FIELD_PREVIEW_IMAGE => $direction->getPreviewImageUrl(),
-                Direction::FIELD_SHOW_MAIN     => $direction->getShowMain()
-            ];
-        }
-
-        return $this->successResponse([
-            'list'  => $list,
-            'count' => $filteredResults['count'],
-        ]);
+        return (new DirectionListCollection($query))
+            ->additional([
+                'count' => $query->count(),
+                'success' => true
+            ]);
     }
+
+    /**
+     * @return DirectionDetailResource|string
+     */
+    public function detail()
+    {
+        $query = QueryBuilder::for(Direction::class)
+            ->allowedFilters([
+                AllowedFilter::exact('id'),
+                AllowedFilter::exact('slug'),
+            ])
+            ->firstOrFail();
+
+        return (new DirectionDetailResource($query))
+            ->additional([
+                'success' => true,
+                'log_request_id' => ''
+            ]);
+
+    }
+
 }

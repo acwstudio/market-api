@@ -11,51 +11,90 @@
 | Название поля | Тип | Обязательное | Пример | Комментарий
 | ------------- | ------- | --- | ---------------- | ------------------------------ |
 | published | bool | - | true | Опубликован |
-| name      | string  | -   | Строительство | Название |
-| slug      | string  | -   | stroitelstvo | slug |
+| name      | string  | -   | Госслужба | Название |
+| slug      | string  | -   | gossluzba | slug |
 | show_main      | bool  | -   | true | Показывать на главной |
-| ids | array int[] | - | [2,5] | Массив идентификаторов |
-| product_ids | array int[] | - | [659, 686] | Массив продуктовых идентификаторов |
+| ids | array int[] | - | [8,9,10] | Массив идентификаторов |
+| product_ids | array int[] | - | [492, 686] | Массив продуктовых идентификаторов |
 
 
 
 Пример запроса:
-```
+```bash
 curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "filter": {
         "published": true,
-        "name": "Гостеприимство",
-        "slug": "gostepriimstvo",
-        "show_main": true
+        "ids": [8,9,10],
+        "name": "Госслужба",
+        "product_ids": [492]
     },
-    "sort": {
-        "field": "sort",
-        "order": "desc"
+    "sort": "sort"
+}'
+ ```
+Пример ответа:
+```json
+{
+    "data": [
+        {
+            "id": 10,
+            "type": "directions",
+            "published": 1,
+            "name": "Госслужба",
+            "show_main": 1,
+            "getPreviewImage": "uploads/directions/vjw0iGtifs5ERy2eQEasugONeLbQkPuD0OkWUNk3.png"
+        }
+    ],
+    "count": 1,
+    "success": true
+}
+ ```
+
+## Метод получения конкретного направления по фильтру: directions/detail
+Адрес: https://mp.synergy.ru/api/v1/directions/detail  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| id | id | - | 8 | Идентификатор |
+| slug | string | - | biznes | slug |
+
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/detail' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "id": 8,
+        "slug": "biznes",
     }
 }'
  ```
 Пример ответа:
-```
+```json
 {
-    "success": true,
     "data": {
-        "list": [
-            {
-                "published": "gostepriimstvo",
-                "id": 22,
-                "name": "Гостеприимство",
-                "slug": "gostepriimstvo",
-                "preview_image": "/storage/uploads/directions/fMUGlm2LUUb8NDedBuIItyNvsRRCMFCNf5DgImWc.jpg",
-                "show_main": 1
-            }
-        ],
-        "count": 1
+        "id": 8,
+        "type": "type",
+        "published": 1,
+        "name": "Бизнес",
+        "show_main": 1,
+        "sort": 4,
+        "preview_image": "uploads/directions/4XOGw13ShmuBYNdkuD5czbEUTDNU7oYFRKtHdDmj.png",
+        "slug": "biznes",
+        "created_at": "2021-05-27T15:12:21.000000Z",
+        "updated_at": "2021-07-30T11:07:20.000000Z"
     },
+    "success": true,
     "log_request_id": ""
 }
  ```
+
 
 ## Метод получения организаций по фильтру: organizations/list
 Адрес: https://mp.synergy.ru/api/v1/organizations/list  
@@ -277,20 +316,20 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/list' \
 
 | Название поля | Тип | Обязательное | Пример | Комментарий
 | ------------- | ------- | --- | ---------------- | ------------------------------ |
-| ids | array int[] | - | [481,480] | Массив идентификаторов |
+| ids | array int[] | - | [830,831,832,833,834,835,836,837,486] | Массив идентификаторов |
 | published | bool | - | true | Опубликован |
-| name      | string  | -   | Предпринимательство | Название |
-| slug      | string  | -   | predprinimatelstvo | slug |
-| expiration_date | datetime | - | 05.09.2021 00:00 | Истечение срока |
+| name      | string  | -   | Веб-дизайн | Название |
+| slug      | string  | -   | veb-dizain | slug |
+| expiration_date | datetime | - | 24.08.2021 00:00 | Истечение срока |
 | is_document | boolean | - | true | Наличие диплома по окончании |
 | is_installment | boolean | - | true | Наличие рассрочки |
-| is_employment | boolean | - | false | Трудоустройство после окончания |
+| is_employment | boolean | - | true | Трудоустройство после окончания |
 | organization_ids | array int[] | - | [9,10] | Массив идентификаторов организаций |
-| subject_ids | array int[] | - | [19,20] | Массив идентификаторов предметов |
-| format_ids | array int[] | - | [24,26] | Массив идентификаторов форматов |
-| level_ids | array int[] | - | [3,5] | Массив идентификаторов уровней |
-| direction_ids | array int[] | - | [19,26] | Массив идентификаторов направлений |
-| person_ids | array int[] | - | [15,19] | Массив идентификаторов персон |
+| subject_ids | array int[] | - | [97,26,146] | Массив идентификаторов предметов |
+| format_ids | array int[] | - | [23,26,22] | Массив идентификаторов форматов |
+| level_ids | array int[] | - | [9,2,3] | Массив идентификаторов уровней |
+| direction_ids | array int[] | - | [3,22,11] | Массив идентификаторов направлений |
+| person_ids | array int[] | - | [59,197] | Массив идентификаторов персон |
 
 Пример запроса:
 ```bash
@@ -427,7 +466,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/detail' \
 }
  ```
 
-## Метод получения направлений по фильтру: persons/list
+## Метод получения персон по фильтру: persons/list
 Адрес: https://mp.synergy.ru/api/v1/persons/list  
 Тип: POST  
 Формат входных данных: JSON<br>

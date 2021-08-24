@@ -19,13 +19,13 @@ class ProductListResource extends JsonResource
         $product = $this->resource;
 
         return [
-            'id' => $product->id,
-            'type' => 'products',
-            'published' => $product->published,
-            "name" => $product->name,
-            "preview_image" => $product->preview_image,
+            'id'              => $product->id,
+            'type'            => 'products',
+            'published'       => $product->published,
+            "name"            => $product->name,
+            "preview_image"   => $product->preview_image,
             "organization_id" => $product->organization_id,
-            "slug" => $product->slug
+            "slug"            => $product->slug
         ];
     }
 }

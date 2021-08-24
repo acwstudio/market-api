@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Spatie\QueryBuilder\Exceptions\InvalidQuery;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Http\Controllers\ResponseTrait;
 use App\Http\Resources\ProductDetailResource;
 use App\Http\Resources\ProductListCollection;
 use App\Models\Product;
@@ -57,7 +54,7 @@ class ProductController extends Controller
             $pageName = 'page',
             $pagination['page'],
         )))->additional([
-            'count'   => $query->count(),
+            'count' => $query->count(),
             'success' => true
         ]);
 
@@ -68,35 +65,17 @@ class ProductController extends Controller
      */
     public function detail()
     {
-        try {
-            $query = QueryBuilder::for(Product::class)
-                ->allowedFilters([
-                    AllowedFilter::exact('id'),
-                    AllowedFilter::exact('slug')
-                ])
-                ->firstOrFail();
-        } catch (InvalidQuery $exception) {
-            return $this->errorResponse([
-                $exception->getMessage()
-            ]);
-        } catch (\Exception $exception){
-            return $this->errorResponse([
-                'Product not found'
-            ]);
-        }
+        $query = QueryBuilder::for(Product::class)
+            ->allowedFilters([
+                AllowedFilter::exact('id'),
+                AllowedFilter::exact('slug')
+            ])
+            ->firstOrFail();
 
         return (new ProductDetailResource($query))->additional([
-            'success'        => true,
+            'success' => true,
             'log_request_id' => ''
         ]);
     }
 
-    /**
-     * @param $error
-     * @return mixed
-     */
-    private function errorResponse($error)
-    {
-        return $error;
-    }
 }

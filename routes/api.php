@@ -30,6 +30,7 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('persons/list', [PersonController::class, 'list']);
     Route::get('persons/detail', [PersonController::class, 'detail']);
     Route::get('directions/list', [DirectionController::class, 'list']);
+    Route::get('directions/detail', [DirectionController::class, 'detail']);
     Route::get('organizations/list', [OrganizationController::class, 'list']);
     Route::get('organizations/detail', [OrganizationController::class, 'detail']);
     Route::get('formats/list', [FormatController::class, 'list']);

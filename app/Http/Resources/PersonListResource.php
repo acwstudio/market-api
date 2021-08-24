@@ -19,11 +19,11 @@ class PersonListResource extends JsonResource
         $person = $this;
 
         return [
-            'id' => $person->id,
-            'type' => 'persons',
-            'published' => $person->published,
-            'name' => $person->name,
-            'show_main' => $person->show_main,
+            'id'              => $person->id,
+            'type'            => 'persons',
+            'published'       => $person->published,
+            'name'            => $person->name,
+            'show_main'       => $person->show_main,
             'getPreviewImage' => $person->preview_image,
         ];
     }
