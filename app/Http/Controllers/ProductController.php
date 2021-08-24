@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Core\Response\ResponseTrait;
+use Spatie\QueryBuilder\Exceptions\InvalidQuery;
+use Illuminate\Database\Eloquent\ModelNotFoundExceptio;
+use App\Http\Controllers\ResponseTrait;
 use App\Http\Resources\ProductDetailResource;
 use App\Http\Resources\ProductListCollection;
+use App\Models\Product;
 use App\Repositories\ProductRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
-use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -34,7 +36,7 @@ class ProductController extends Controller
                 AllowedFilter::exact('published'),
                 AllowedFilter::exact('name'),
                 AllowedFilter::exact('slug'),
-                AllowedFilter::callback('expiration_date', function (Builder $query, $value){
+                AllowedFilter::callback('expiration_date', function (Builder $query, $value) {
                     $query->whereDate('expiration_date', '<=', date('Y-m-d H:i:s', strtotime($value)));
                 }),
                 AllowedFilter::exact('is_document'),
@@ -57,7 +59,7 @@ class ProductController extends Controller
             $pageName = 'page',
             $pagination['page'],
         )))->additional([
-            'count' => $query->count(),
+            'count'   => $query->count(),
             'success' => true
         ]);
 
@@ -68,12 +70,22 @@ class ProductController extends Controller
      */
     public function detail()
     {
-        $query = QueryBuilder::for(Product::class)
-            ->allowedFilters([AllowedFilter::exact('id')])
-            ->firstOrFail();
+        try {
+            $query = QueryBuilder::for(Product::class)
+                ->allowedFilters([AllowedFilter::exact('id')])
+                ->firstOrFail();
+        } catch (InvalidQuery $exception) {
+            return $this->errorResponse([
+                $exception->getMessage()
+            ]);
+        } catch (\Exception $exception){
+            return $this->errorResponse([
+                'Product not found'
+            ]);
+        }
 
         return (new ProductDetailResource($query))->additional([
-            'success' => true,
+            'success'        => true,
             'log_request_id' => ''
         ]);
     }
