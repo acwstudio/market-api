@@ -42,5 +42,5 @@ return [
      *
      * Possible values: `query_string`, `body`
      */
-    'request_data_source' => 'query_string',
+    'request_data_source' => 'body',
 ];

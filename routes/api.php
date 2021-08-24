@@ -25,6 +25,7 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('test', [TestController::class, 'test']);
 
     Route::get('products/list', [ProductController::class, 'list']);
+    Route::get('products/detail', [ProductController::class, 'detail']);
     Route::get('directions/list', [DirectionController::class, 'list']);
     Route::get('organizations/list', [OrganizationController::class, 'list']);
     Route::get('organizations/detail', [OrganizationController::class, 'detail']);
