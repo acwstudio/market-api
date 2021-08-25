@@ -18,6 +18,7 @@ class Organization extends Model
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',
         FIELD_NAME = 'name',
+        FIELD_ABBREVIATION_NAME = 'abbreviation_name',
         FIELD_SLUG = 'slug',
         FIELD_LAND = 'land',
         FIELD_TYPE_TEXT = 'type_text',
@@ -42,6 +43,7 @@ class Organization extends Model
         self::FIELD_ID,
         self::FIELD_PUBLISHED,
         self::FIELD_NAME,
+        self::FIELD_ABBREVIATION_NAME,
         self::FIELD_SLUG,
         self::FIELD_LAND,
         self::FIELD_PREVIEW_IMAGE,
@@ -80,6 +82,11 @@ class Organization extends Model
     public function getName()
     {
         return $this->getAttribute(self::FIELD_NAME);
+    }
+
+    public function getAbbreviationName()
+    {
+        return $this->getAttribute(self::FIELD_ABBREVIATION_NAME);
     }
 
     public function getSlug()
@@ -172,9 +179,9 @@ class Organization extends Model
         return $this->getAttribute(self::FIELD_UPDATED_AT);
     }
 
-    public function product()
+    public function products()
     {
-        return $this->hasOne(Product::class);
+        return $this->hasMany(Product::class);
     }
 
     public function persons()

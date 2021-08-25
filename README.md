@@ -105,53 +105,51 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/detail' \
 
 | Название поля | Тип | Обязательное | Пример | Комментарий
 | ------------- | ------- | --- | ---------------- | ------------------------------ |
-| ids | array int[] | - | [11,12] | Массив идентификаторов |
+| ids | array int[] | - | [10,11,12,13,14,15,16,17] | Массив идентификаторов |
 | published | bool | - | true | Опубликован |
-| name      | string  | -   | Университет | Название |
-| slug      | string  | -   | universitet | slug |
-| land      | string  | -   | - | Распределение лидов |
-| parent_id      | int  | -   | 11 | Родительский идентификатор |
-| product_ids | array int[] | - | [480, 481, 766] | Массив продуктовых идентификаторов |
-| person_ids | array int[] | - | [4, 5, 305] | Массив идентификаторов личностей |
+| name      | string  | -   | Томский институт бизнеса" | Название |
+| slug      | string  | -   | tomskij-institut-biznesa | slug |
+| land      | string  | -   | null | Распределение лидов |
+| parent_id      | int  | -   | null | Родительский идентификатор |
+| product_ids | array int[] | - | [806] | Массив продуктовых идентификаторов |
+| person_ids | array int[] | - | [425] | Массив идентификаторов личностей |
 
 
 Пример запроса:
-```
+```bash
 curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/list' \
 --header 'Content-Type: application/json' \
 --data-raw '{
+    {
     "filter": {
-        "ids": [11,12],
+        "ids": [10,11,12,13,14,15,16,17],
         "published": true,
+        "name": "Томский институт бизнеса",
+        "slug": "tomskij-institut-biznesa",
+        "land": null,
+        "parent_id": null,
+        "product_ids": [806],
+        "person_ids": [425]
     }
+}
 }'
  ```
 Пример ответа:
-```
+```json
 {
-    "success": true,
-    "data": {
-        "list": [
-            {
-                "published": 1,
-                "id": 12,
-                "name": "Арктический государственный институт культуры и искусств",
-                "slug": "arkticheskij-gosudarstvennyj-institut-kultury-i-iskusstv",
-                "preview_image": "/storage/",
-                "digital_image": "/storage/"
-            },
-            {
-                "published": 1,
-                "id": 11,
-                "name": "Московский открытый институт",
-                "slug": "moskovskij-otkrytyj-institut",
-                "preview_image": "/storage/uploads/organizations/preview/GLsx7WewkQosqRlhWoQP6NfLVX4pqC9r45VdrnuF.svg",
-                "digital_image": "/storage/uploads/organizations/preview/pgAyidtsjHHw1Ox95VKuFQZXGsGNTRd7uFxyH0GD.png"
-            }
-        ],
-        "count": 2
-    },
-    "log_request_id": ""
+    "data": [
+        {
+            "id": 17,
+            "type": "organizations",
+            "published": 1,
+            "name": "Томский институт бизнеса",
+            "slug": "tomskij-institut-biznesa",
+            "preview_image": "uploads/organizations/preview/SOS3UalFrXLhpcmAYpGm1c1emf2tjZa3Ft2wqD0I.jpg",
+            "digital_image": "uploads/organizations/preview/KdBCwqzNvq3SYY8Oes8tvYSrISpv3z0ojjel0BbV.png"
+        }
+    ],
+    "count": 1,
+    "success": true
 }
  ```
 
@@ -164,45 +162,47 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/list' 
 
 | Название поля | Тип | Обязательное | Пример | Комментарий
 | ------------- | ------- | --- | ---------------- | ------------------------------ |
-| id | id | - | 11 | Идентификатор |
-| slug | string | - | moskovskij-otkrytyj-institut | slug |
+| id | id | - | 17 | Идентификатор |
+| slug | string | - | tomskij-institut-biznesa | slug |
 
 
 Пример запроса:
-```
+```bash
 curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/detail' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "filter": {
-        "id": 11,
-        "slug": "moskovskij-otkrytyj-institut",
+        "id": 17,
+        "slug": "tomskij-institut-biznesa"
     }
 }'
  ```
 Пример ответа:
-```
+```json
 {
-    "success": true,
     "data": {
-        "id": 11,
-        "parent_id": null,
+        "id": 17,
+        "type": "organizations",
         "published": 1,
-        "name": "Московский открытый институт",
-        "slug": "moskovskij-otkrytyj-institut",
-        "subtitle": "Образовательная автономная некоммерческая организация высшего образования \"Московский открытый институт\" (ОАНО \"МОИ\")",
+        "name": "Томский институт бизнеса",
+        "abbreviation_name": null,
+        "slug": "tomskij-institut-biznesa",
         "land": null,
-        "description": "С 1988 года  МОИ осуществляет профессиональную подготовку студентов по более 200 программам колледжа, высшего, второго высшего и дополнительного образования. На базе университета существует первая в России школа бизнеса, которая обладает 7 престижными международными аккредитациями AMBA",
-        "html_body": "<div class=\"university__table-container\">\r\n                <div class=\"university__table-wrapper\">\r\n                    <div class=\"university__table university__table--4\">\r\n                        <div class=\"university__table-left\">\r\n                            <div class=\"university__table-top\">\r\n                                <div class=\"university__table-item\">\r\n                                    <div class=\"university__table-title university__table-title--small\">Бессрочная лицензия</div>\r\n                                    <div class=\"university__table-text\">на право ведения образовательной деятельности</div>\r\n                                </div>\r\n                                <div class=\"university__table-item\">\r\n                                    <div class=\"university__table-title university__table-title--small\">Доступность</div>\r\n                                    <div class=\"university__table-text\">образовательных услуг и программ</div>\r\n                                </div>\r\n                            </div>\r\n                            <div class=\"university__table-bottom\">\r\n                                <div class=\"university__table-item\">\r\n                                    <div class=\"university__table-title university__table-title--small\">Возможность</div>\r\n                                    <div class=\"university__table-text\">совмещать работу и учебу</div>\r\n                                </div>\r\n                                <div class=\"university__table-item\">\r\n                                    <div class=\"university__table-title university__table-title--small\">Поддержка</div>\r\n                                    <div class=\"university__table-text\">персонального куратора</div>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"university__table-right\">\r\n                            <div class=\"university__table-item\">\r\n                                <div class=\"university__table-title university__table-title--small\">Государственный диплом</div>\r\n                                <div class=\"university__table-text\">о высшем образовании и общеевропейское приложение на английском языке</div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>",
-        "classes": "university--4 university-moi",
-        "color_code_titles": null,
-        "address": "125190, г. Москва, Ленинградский проспект, дом 80",
-        "type_text": "Образовательная автономная некоммерческая организация высшего образования",
-        "map_link": "https://www.google.com/maps/place/%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B3%D1%80%D0%B0%D0%B4%D1%81%D0%BA%D0%B8%D0%B9+%D0%BF%D1%80-%D1%82.,+80,+%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0,+125315/@55.8027682,37.5227886,17z/data=!3m1!4b1!4m5!3m4!1s0x46b549c9b692c3f1:0x7a94c903fe8b0996!8m2!3d55.8027682!4d37.5249773",
-        "preview_image": "/storage/uploads/organizations/preview/GLsx7WewkQosqRlhWoQP6NfLVX4pqC9r45VdrnuF.svg",
-        "digital_image": "/storage/uploads/organizations/preview/pgAyidtsjHHw1Ox95VKuFQZXGsGNTRd7uFxyH0GD.png",
-        "created_at": "2021-06-01T14:02:16.000000Z",
-        "updated_at": "2021-06-30T11:56:49.000000Z"
+        "subtitle": "Негосударственное (частное) образовательное учреждение высшего образования",
+        "description": "Томский институт Бизнеса - это частный ВУЗ, чья история насчитывает более 20 лет образовательной деятельности. Здесь студенты получают не только знания и необходимые профессиональные навыки, но и все условия для личностного и творческого роста. Тёплая дружеская атмосфера и индивидуальный подход к обучению - это то, что мы гарантируем каждому, кто становится нашим студентом.",
+        "html_body": "<div class=\"university__table-container\">\r\n                <div class=\"university__table-wrapper\">\r\n                    <div class=\"university__table university__table--3\">\r\n                        <div class=\"university__table-left\">\r\n                            <div class=\"university__table-top\">\r\n                                <div class=\"university__table-item\">\r\n                                    <div class=\"university__table-title title--colored\">>20</div>\r\n                                    <div class=\"university__table-text\">лет образовательной деятельности</div>\r\n                                </div>\r\n                                <div class=\"university__table-item\">\r\n                                    <div class=\"university__table-title title--colored\">5</div>\r\n                                    <div class=\"university__table-text\">направлений обучения</div>\r\n                                </div>\r\n\r\n                            </div>\r\n                            <div class=\"university__table-bottom\">\r\n                                <div class=\"university__table-item\">\r\n                                    <div class=\"university__table-title title--colored\">15 404</div>\r\n                                    <div class=\"university__table-text\">экземпляра в печатном фонде библиотеки Института</div>\r\n                                </div>\r\n                                <div class=\"university__table-item\">\r\n                                    <div class=\"university__table-title title--colored\">2006</div>\r\n                                    <div class=\"university__table-text\">год разработки  уникальной Технологии подготовки предпринимателей</div>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"university__table-right\">\r\n                            <div class=\"university__table-item\">\r\n                                <div class=\"university__table-title title--colored\">Государственный диплом</div>\r\n                                <div class=\"university__table-text\">о высшем образовании</div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>",
+        "logo_code": "synergy",
+        "color_code_titles": "#ca372d",
+        "preview_image": "uploads/organizations/preview/SOS3UalFrXLhpcmAYpGm1c1emf2tjZa3Ft2wqD0I.jpg",
+        "digital_image": "uploads/organizations/preview/KdBCwqzNvq3SYY8Oes8tvYSrISpv3z0ojjel0BbV.png",
+        "address": "634050,  Томск, Томская обл., пл. Батенькова, 2",
+        "type_text": "Негосударственное (частное) образовательное учреждение высшего образования",
+        "map_link": "https://www.google.com/maps/place/Томский+институт+бизнеса/@56.484854,84.9489893,17z/data=!3m1!4b1!4m5!3m4!1s0x43269367774db46f:0x483bca3d71669b99!8m2!3d56.4846684!4d84.9510821?hl=ru",
+        "parent_id": null,
+        "created_at": "2021-06-28T06:30:05.000000Z",
+        "updated_at": "2021-06-29T09:32:10.000000Z"
     },
+    "success": true,
     "log_request_id": ""
 }
  ```
@@ -337,19 +337,19 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/list' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "ids": [830,831,832,833,834,835,836,837,486],
-        "published": true,
-        "name": "Веб-дизайн",
-        "slug": "veb-dizain",
-        "expiration_date": "24.08.2021 00:00",
-        "is_document": true,
-        "is_installment": true,
-        "is_employment": true,
-        "organization_ids": [9,10],
-        "subject_ids": [97,26,146],
-        "format_ids": [23,26,22],
-        "level_ids": [9,2,3],
-        "direction_ids": [3,22,11],
-        "person_ids": [59,197]
+    "published": true,
+    "name": "Веб-дизайн",
+    "slug": "veb-dizain",
+    "expiration_date": "24.08.2021 00:00",
+    "is_document": true,
+    "is_installment": true,
+    "is_employment": true,
+    "organization_ids": [9,10],
+    "subject_ids": [97,26,146],
+    "format_ids": [23,26,22],
+    "level_ids": [9,2,3],
+    "direction_ids": [3,22,11],
+    "person_ids": [59,197]
 }
 ```
 Пример ответа:

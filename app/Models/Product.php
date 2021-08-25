@@ -321,6 +321,7 @@ class Product extends Model
 
     public function organization()
     {
-        return $this->hasOne(Organization::class, Organization::FIELD_ID, self::FIELD_ORGANIZATION_ID);
+        return $this->belongsTo(Organization::class);
     }
+
 }
