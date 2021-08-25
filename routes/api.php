@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\PersonController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
@@ -25,7 +26,11 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('test', [TestController::class, 'test']);
 
     Route::get('products/list', [ProductController::class, 'list']);
+    Route::get('products/detail', [ProductController::class, 'detail']);
+    Route::get('persons/list', [PersonController::class, 'list']);
+    Route::get('persons/detail', [PersonController::class, 'detail']);
     Route::get('directions/list', [DirectionController::class, 'list']);
+    Route::get('directions/detail', [DirectionController::class, 'detail']);
     Route::get('organizations/list', [OrganizationController::class, 'list']);
     Route::get('organizations/detail', [OrganizationController::class, 'detail']);
     Route::get('formats/list', [FormatController::class, 'list']);

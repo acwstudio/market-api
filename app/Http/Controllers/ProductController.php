@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Core\Input\Fields\Product\ProductGetList;
-use App\Core\Response\ResponseTrait;
-use App\Repositories\ProductRepository;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\ProductDetailResource;
+use App\Http\Resources\ProductListCollection;
 use App\Models\Product;
-use App\Core\Error\ErrorManager;
+use App\Repositories\ProductRepository;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ProductController extends Controller
 {
-    use ResponseTrait;
-
     /**
      * @var ProductRepository
      */
@@ -26,42 +25,57 @@ class ProductController extends Controller
 
     public function list(Request $request)
     {
-        if (!$request->isJson()) {
-            return $this->errorResponse([
-                ErrorManager::buildValidateError(VALIDATION_REQUEST_JSON_EXPECTED)->toArray()
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        $query = QueryBuilder::for(Product::class)
+            ->allowedFilters([
+                AllowedFilter::exact('ids', 'id'),
+                AllowedFilter::exact('published'),
+                AllowedFilter::exact('name'),
+                AllowedFilter::exact('slug'),
+                AllowedFilter::callback('expiration_date', function (Builder $query, $value) {
+                    $query->whereDate('expiration_date', '<=', date('Y-m-d H:i:s', strtotime($value)));
+                }),
+                AllowedFilter::exact('is_document'),
+                AllowedFilter::exact('is_installment'),
+                AllowedFilter::exact('is_employment'),
+                AllowedFilter::exact('organization_ids', 'organization_id'),
+                AllowedFilter::exact('subject_ids', 'subjects.id'),
+                AllowedFilter::exact('format_ids', 'formats.id'),
+                AllowedFilter::exact('level_ids', 'levels.id'),
+                AllowedFilter::exact('direction_ids', 'directions.id'),
+                AllowedFilter::exact('person_ids', 'persons.id'),
+            ])
+            ->allowedSorts(['name', 'id', 'expiration_date']);
 
-        $requestFieldSet = new ProductGetList($request->json()->all() ? $request->json()->all() : []);
+        $pagination = $request->json()->all()['pagination'] ?? ['page' => 1, 'page_size' => 10];
 
-        $requestFieldSet->validate();
+        return (new ProductListCollection($query->paginate(
+            $pagination['page_size'],
+            $columns = ['*'],
+            $pageName = 'page',
+            $pagination['page'],
+        )))->additional([
+            'count' => $query->count(),
+            'success' => true
+        ]);
 
-        $errors = $requestFieldSet->getErrorsArray();
+    }
 
-        if (count($errors)) {
-            return $this->errorResponse($errors, Response::HTTP_OK);
-        }
+    /**
+     * @return ProductDetailResource|string
+     */
+    public function detail()
+    {
+        $query = QueryBuilder::for(Product::class)
+            ->allowedFilters([
+                AllowedFilter::exact('id'),
+                AllowedFilter::exact('slug')
+            ])
+            ->firstOrFail();
 
-        $requestFieldSet->prepare();
-
-        $filteredResults = $this->productRepository->getList($requestFieldSet);
-
-        $list = [];
-        /** @var Product $product */
-        foreach ($filteredResults['products'] as $product) {
-            $list[] = [
-                Product::FIELD_ID              => $product->getId(),
-                Product::FIELD_PUBLISHED       => $product->getPublished(),
-                Product::FIELD_NAME            => $product->getName(),
-                Product::FIELD_PREVIEW_IMAGE   => $product->getPreviewImage(),
-                Product::FIELD_ORGANIZATION_ID => $product->getOrganizationId(),
-                Product::FIELD_SLUG            => $product->getSlug(),
-            ];
-        }
-
-        return $this->successResponse([
-            'list' => $list,
-            'count' => $filteredResults['count'],
+        return (new ProductDetailResource($query))->additional([
+            'success' => true,
+            'log_request_id' => ''
         ]);
     }
+
 }
