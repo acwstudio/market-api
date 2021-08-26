@@ -16,7 +16,7 @@ class DirectionDetailResource extends JsonResource
     public function toArray($request)
     {
         /** @var Direction $direction */
-        $direction = $this;
+        $direction = $this->resource;
 
         return [
             'id'            => $direction->id,

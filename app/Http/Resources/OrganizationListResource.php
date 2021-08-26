@@ -16,7 +16,7 @@ class OrganizationListResource extends JsonResource
     public function toArray($request)
     {
         /** @var Organization $organization */
-        $organization = $this;
+        $organization = $this->resource;
 
         return [
             'id'            => $organization->id,
