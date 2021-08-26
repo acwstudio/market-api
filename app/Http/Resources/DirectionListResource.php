@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Direction;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class DirectionListResource extends JsonResource
@@ -14,7 +15,8 @@ class DirectionListResource extends JsonResource
      */
     public function toArray($request)
     {
-        $direction = $this;
+        /** @var Direction $direction */
+        $direction = $this->resource;
 
         return [
             'id'              => $direction->id,

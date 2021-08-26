@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Models\Person;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/** @mixin \App\Models\Person */
 class PersonListResource extends JsonResource
 {
     /**
@@ -16,10 +17,10 @@ class PersonListResource extends JsonResource
     public function toArray($request)
     {
         /** @var Person $person */
-        $person = $this;
+        $person = $this->resource;
 
         return [
-            'id'              => $person->id,
+            'id'              => $this->id,
             'type'            => 'persons',
             'published'       => $person->published,
             'name'            => $person->name,

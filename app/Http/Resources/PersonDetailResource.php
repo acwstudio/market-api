@@ -16,7 +16,7 @@ class PersonDetailResource extends JsonResource
     public function toArray($request)
     {
         /** @var Person $person */
-        $person = $this;
+        $person = $this->resource;
 
         return [
             'id'            => $person->id,
