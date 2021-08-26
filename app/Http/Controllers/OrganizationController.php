@@ -7,7 +7,9 @@ use App\Core\Input\Fields\Organization\OrganizationGetList;
 use App\Core\Input\Fields\Organization\OrganizationGetDetail;
 use App\Core\FieldSet;
 use App\Core\Response\ResponseTrait;
-use App\Http\Resources\OrganizationDetailResource;
+use App\Http\Requests\EntityDetailRequest;
+use App\Http\Resources\OrganizationCollection;
+use App\Http\Resources\OrganizationResource;
 use App\Http\Resources\OrganizationListCollection;
 use App\Models\Organization;
 use App\Repositories\OrganizationRepository;
@@ -44,15 +46,15 @@ class OrganizationController extends Controller
             ->allowedSorts(['id', 'name', 'address'])
             ->get();
 
-        return (new OrganizationListCollection($query))
+        return (new OrganizationCollection($query))
             ->additional([
                 'count' => $query->count(),
                 'success' => true
             ]);
     }
 
-    public function detail(Request $request){
-
+    public function detail(EntityDetailRequest $request)
+    {
         $query = QueryBuilder::for(Organization::class)
             ->allowedFilters([
                 AllowedFilter::exact('id'),
@@ -60,7 +62,7 @@ class OrganizationController extends Controller
             ])
             ->firstOrFail();
 
-        return (new OrganizationDetailResource($query))
+        return (new OrganizationResource($query))
             ->additional([
                 'success' => true,
                 'log_request_id' => ''

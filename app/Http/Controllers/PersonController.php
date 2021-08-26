@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\PersonDetailResource;
+use App\Http\Requests\EntityDetailRequest;
+use App\Http\Resources\PersonCollection;
+use App\Http\Resources\PersonResource;
 use App\Http\Resources\PersonListCollection;
 use App\Models\Person;
 use Illuminate\Http\Request;
@@ -13,9 +15,9 @@ class PersonController extends Controller
 {
     /**
      * @param Request $request
-     * @return PersonListCollection
+     * @return PersonCollection
      */
-    public function list(Request $request): PersonListCollection
+    public function list(Request $request): PersonCollection
     {
         $query = QueryBuilder::for(Person::class)
             ->allowedFilters([
@@ -28,7 +30,7 @@ class PersonController extends Controller
             ->allowedSorts(['position', 'name', 'id'])
             ->get();
 
-        return (new PersonListCollection($query))
+        return (new PersonCollection($query))
             ->additional([
                 'count' => $query->count(),
                 'success' => true
@@ -36,9 +38,9 @@ class PersonController extends Controller
     }
 
     /**
-     * @return PersonDetailResource|string
+     * @return PersonResource|string
      */
-    public function detail()
+    public function detail(EntityDetailRequest $request)
     {
         $query = QueryBuilder::for(Person::class)
             ->allowedFilters([
@@ -46,7 +48,7 @@ class PersonController extends Controller
             ])
             ->firstOrFail();
 
-        return (new PersonDetailResource($query))
+        return (new PersonResource($query))
             ->additional([
                 'success' => true,
                 'log_request_id' => ''

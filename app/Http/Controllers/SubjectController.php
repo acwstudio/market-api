@@ -8,15 +8,18 @@ use App\Core\Error\ErrorManager;
 use App\Core\FieldSet;
 use App\Core\Input\Fields\Subject\SubjectGetList;
 use App\Core\Response\ResponseTrait;
+use App\Http\Requests\EntityDetailRequest;
+use App\Http\Resources\SubjectCollection;
+use App\Http\Resources\SubjectResource;
 use App\Models\Subject;
 use App\Repositories\SubjectRepository;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
 
 class SubjectController extends Controller
 {
-    use ResponseTrait;
-
     /**
      * @var SubjectRepository
      */
@@ -28,39 +31,41 @@ class SubjectController extends Controller
     }
 
     public function list(Request $request){
-        if (!$request->isJson()) {
-            return $this->errorResponse([
-                ErrorManager::buildValidateError(VALIDATION_REQUEST_JSON_EXPECTED)->toArray()
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
 
-        $requestFieldSet = new SubjectGetList($request->json()->all() ? $request->json()->all() : []);
+        $query = QueryBuilder::for(Subject::class)
+            ->allowedFilters([
+                AllowedFilter::exact('ids', 'id'),
+                AllowedFilter::exact('published'),
+                AllowedFilter::exact('name'),
+                AllowedFilter::exact('slug'),
+                AllowedFilter::exact('product_ids', 'products.id')
+            ])
+            ->allowedSorts(['name', 'id'])
+            ->get();
 
-        $requestFieldSet->validate();
+        return (new SubjectCollection($query))
+            ->additional([
+                'count' => $query->count(),
+                'success' => true
+            ]);
+    }
 
-        $errors = $requestFieldSet->getErrorsArray();
+    /**
+     * @return SubjectResource
+     */
+    public function detail(EntityDetailRequest $request)
+    {
+        $query = QueryBuilder::for(Subject::class)
+            ->allowedFilters([
+                AllowedFilter::exact('id'),
+                AllowedFilter::exact('slug'),
+            ])
+            ->firstOrFail();
 
-        if (count($errors)) {
-            return $this->errorResponse($errors, Response::HTTP_OK);
-        }
-
-        $requestFieldSet->prepare();
-
-        $filteredResult = $this->subjectRepository->getList($requestFieldSet);
-
-        $list = [];
-        /** @var Subject $subjects */
-        foreach($filteredResult['subjects'] as $subjects){
-            $list[] = [
-                Subject::FIELD_ID      => $subjects->getId(),
-                Subject::FIELD_NAME    => $subjects->getName(),
-                Subject::FIELD_SLUG    => $subjects->getSlug(),
-            ];
-        }
-
-        return $this->successResponse([
-            'list'  => $list,
-            'count' => $filteredResult['count'],
-        ]);
+        return (new SubjectResource($query))
+            ->additional([
+                'success' => true,
+                'log_request_id' => ''
+            ]);
     }
 }

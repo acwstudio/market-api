@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\DirectionDetailResource;
-use App\Http\Resources\DirectionListCollection;
+use App\Http\Requests\EntityDetailRequest;
+use App\Http\Resources\DirectionCollection;
+use App\Http\Resources\DirectionResource;
 use App\Models\Direction;
 use App\Repositories\DirectionRepository;
+use Arr;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -36,7 +38,7 @@ class DirectionController extends Controller
             ->allowedSorts(['sort', 'name', 'id'])
             ->get();
 
-        return (new DirectionListCollection($query))
+        return (new DirectionCollection($query))
             ->additional([
                 'count' => $query->count(),
                 'success' => true
@@ -44,9 +46,9 @@ class DirectionController extends Controller
     }
 
     /**
-     * @return DirectionDetailResource|string
+     * @return DirectionResource|string
      */
-    public function detail()
+    public function detail(EntityDetailRequest $request)
     {
         $query = QueryBuilder::for(Direction::class)
             ->allowedFilters([
@@ -55,7 +57,7 @@ class DirectionController extends Controller
             ])
             ->firstOrFail();
 
-        return (new DirectionDetailResource($query))
+        return (new DirectionResource($query))
             ->additional([
                 'success' => true,
                 'log_request_id' => ''

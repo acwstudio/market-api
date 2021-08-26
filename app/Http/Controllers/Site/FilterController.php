@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Site;
 
-use App\Http\Resources\FilterListCollection;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Site\FilterCollection;
 use App\Models\Direction;
 use App\Models\Format;
 use App\Models\Level;
@@ -34,7 +35,7 @@ class FilterController extends Controller
             ->where('published', 1)
             ->get();
 
-        return (new FilterListCollection([
+        return (new FilterCollection([
             'directions' => $directions,
             'levels' => $levels,
             'formats' => $formats,

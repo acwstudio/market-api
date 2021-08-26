@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\CourseController;
-use App\Http\Controllers\FilterController;
+use App\Http\Controllers\Site\FilterController;
 use App\Http\Controllers\PersonController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +35,8 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('organizations/list', [OrganizationController::class, 'list']);
     Route::get('organizations/detail', [OrganizationController::class, 'detail']);
     Route::get('formats/list', [FormatController::class, 'list']);
+    Route::get('formats/detail', [FormatController::class, 'detail']);
     Route::get('subjects/list', [SubjectController::class, 'list']);
+    Route::get('subjects/detail', [SubjectController::class, 'detail']);
     Route::get('filter', [FilterController::class, 'filter']);
 });

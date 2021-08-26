@@ -17,18 +17,20 @@
 | ids | array int[] | - | [8,9,10] | Массив идентификаторов |
 | product_ids | array int[] | - | [492, 686] | Массив продуктовых идентификаторов |
 
-
+Поля доступные для сотировки: id, name, sort
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
+curl --location --request GET 'http://localhost:8003/api/v1/directions/list' \
+--header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "filter": {
         "published": true,
         "ids": [8,9,10],
         "name": "Госслужба",
-        "product_ids": [492]
+        "product_ids": [492],
+        "show_main": true
     },
     "sort": "sort"
 }'
@@ -43,7 +45,11 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
             "published": 1,
             "name": "Госслужба",
             "show_main": 1,
-            "getPreviewImage": "uploads/directions/vjw0iGtifs5ERy2eQEasugONeLbQkPuD0OkWUNk3.png"
+            "sort": 12,
+            "preview_image": "uploads/directions/vjw0iGtifs5ERy2eQEasugONeLbQkPuD0OkWUNk3.png",
+            "slug": "gossluzba",
+            "created_at": "2021-05-27T15:12:21.000000Z",
+            "updated_at": "2021-07-30T11:15:12.000000Z"
         }
     ],
     "count": 1,
@@ -63,15 +69,16 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
 | id | id | - | 8 | Идентификатор |
 | slug | string | - | biznes | slug |
 
+* Указывать можно какое-нибудь одно
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/detail' \
+curl --location --request GET 'http://localhost:8003/api/v1/directions/detail' \
+--header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "filter": {
-        "id": 8,
-        "slug": "biznes",
+        "slug": "biznes"
     }
 }'
  ```
@@ -95,7 +102,6 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/detail' \
 }
  ```
 
-
 ## Метод получения организаций по фильтру: organizations/list
 Адрес: https://mp.synergy.ru/api/v1/organizations/list  
 Тип: GET  
@@ -114,13 +120,14 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/detail' \
 | product_ids | array int[] | - | [806] | Массив продуктовых идентификаторов |
 | person_ids | array int[] | - | [425] | Массив идентификаторов личностей |
 
+Поля доступные для сотировки: id, name, address
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/list' \
+curl --location --request GET 'http://localhost:8003/api/v1/organizations/list' \
+--header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    {
     "filter": {
         "ids": [10,11,12,13,14,15,16,17],
         "published": true,
@@ -130,8 +137,8 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/list' 
         "parent_id": null,
         "product_ids": [806],
         "person_ids": [425]
-    }
-}
+    },
+    "sort": "-name"
 }'
  ```
 Пример ответа:
@@ -143,9 +150,22 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/list' 
             "type": "organizations",
             "published": 1,
             "name": "Томский институт бизнеса",
+            "abbreviation_name": null,
             "slug": "tomskij-institut-biznesa",
+            "land": null,
+            "subtitle": "Негосударственное (частное) образовательное учреждение высшего образования",
+            "description": "Томский институт Бизнеса - это частный ВУЗ, чья история насчитывает более 20 лет образовательной деятельности. Здесь студенты получают не только знания и необходимые профессиональные навыки, но и все условия для личностного и творческого роста. Тёплая дружеская атмосфера и индивидуальный подход к обучению - это то, что мы гарантируем каждому, кто становится нашим студентом.",
+            "html_body": "<div class=\"university__table-container\">\r\n                <div class=\"university__table-wrapper\">\r\n                    <div class=\"university__table university__table--3\">\r\n                        <div class=\"university__table-left\">\r\n                            <div class=\"university__table-top\">\r\n                                <div class=\"university__table-item\">\r\n                                    <div class=\"university__table-title title--colored\">>20</div>\r\n                                    <div class=\"university__table-text\">лет образовательной деятельности</div>\r\n                                </div>\r\n                                <div class=\"university__table-item\">\r\n                                    <div class=\"university__table-title title--colored\">5</div>\r\n                                    <div class=\"university__table-text\">направлений обучения</div>\r\n                                </div>\r\n\r\n                            </div>\r\n                            <div class=\"university__table-bottom\">\r\n                                <div class=\"university__table-item\">\r\n                                    <div class=\"university__table-title title--colored\">15 404</div>\r\n                                    <div class=\"university__table-text\">экземпляра в печатном фонде библиотеки Института</div>\r\n                                </div>\r\n                                <div class=\"university__table-item\">\r\n                                    <div class=\"university__table-title title--colored\">2006</div>\r\n                                    <div class=\"university__table-text\">год разработки  уникальной Технологии подготовки предпринимателей</div>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"university__table-right\">\r\n                            <div class=\"university__table-item\">\r\n                                <div class=\"university__table-title title--colored\">Государственный диплом</div>\r\n                                <div class=\"university__table-text\">о высшем образовании</div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>",
+            "logo_code": "synergy",
+            "color_code_titles": "#ca372d",
             "preview_image": "uploads/organizations/preview/SOS3UalFrXLhpcmAYpGm1c1emf2tjZa3Ft2wqD0I.jpg",
-            "digital_image": "uploads/organizations/preview/KdBCwqzNvq3SYY8Oes8tvYSrISpv3z0ojjel0BbV.png"
+            "digital_image": "uploads/organizations/preview/KdBCwqzNvq3SYY8Oes8tvYSrISpv3z0ojjel0BbV.png",
+            "address": "634050,  Томск, Томская обл., пл. Батенькова, 2",
+            "type_text": "Негосударственное (частное) образовательное учреждение высшего образования",
+            "map_link": "https://www.google.com/maps/place/Томский+институт+бизнеса/@56.484854,84.9489893,17z/data=!3m1!4b1!4m5!3m4!1s0x43269367774db46f:0x483bca3d71669b99!8m2!3d56.4846684!4d84.9510821?hl=ru",
+            "parent_id": null,
+            "created_at": "2021-06-28T06:30:05.000000Z",
+            "updated_at": "2021-06-29T09:32:10.000000Z"
         }
     ],
     "count": 1,
@@ -165,14 +185,15 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/list' 
 | id | id | - | 17 | Идентификатор |
 | slug | string | - | tomskij-institut-biznesa | slug |
 
+* Указывать можно какое-нибудь одно
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/detail' \
+curl --location --request GET 'http://localhost:8003/api/v1/organizations/detail' \
+--header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "filter": {
-        "id": 17,
         "slug": "tomskij-institut-biznesa"
     }
 }'
@@ -216,43 +237,87 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/detail
 
 | Название поля | Тип | Обязательное | Пример | Комментарий
 | ------------- | ------- | --- | ---------------- | ------------------------------ |
-| ids | array int[] | - | [27,26] | Массив идентификаторов |
+| ids | array int[] | - | [22,23,24,25,26,27] | Массив идентификаторов |
 | published | bool | - | true | Опубликован |
-| name      | string  | -   | Очно-заочная | Название |
-| slug      | string  | -   | ochno-zaochnaya | slug |
-| product_ids | array int[] | - | [480, 481, 766] | Массив продуктовых идентификаторов |
+| name      | string  | -   | Заочная | Название |
+| slug      | string  | -   | zaochnaya | slug |
+| product_ids | array int[] | - | [456] | Массив продуктовых идентификаторов |
 
+Поля доступные для сотировки: id, name
 
 Пример запроса:
-```
-curl --location --request GET 'https://mp.synergy.ru/api/v1/formats/list' \
+```bash
+curl --location --request GET 'http://localhost:8003/api/v1/formats/list' \
+--header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "filter": {
-        "ids": [27,26],
-        "published": true
+        "ids": [22,23,24,25,26,27],
+        "published": true,
+        "name": "Заочная",
+        "slug": "zaocnaya",
+        "product_ids": [546]
+    },
+    "sort": "id"
+}'
+ ```
+Пример ответа:
+```json
+{
+    "data": [
+        {
+            "id": 23,
+            "type": "formats",
+            "published": 1,
+            "name": "Заочная",
+            "slug": "zaocnaya",
+            "created_at": "2021-06-04T10:18:16.000000Z",
+            "updated_at": "2021-06-04T10:20:26.000000Z"
+        }
+    ],
+    "count": 1,
+    "success": true
+}
+ ```
+
+## Метод получения конкретной формы обучения по фильтру: formats/detail
+Адрес: https://mp.synergy.ru/api/v1/formats/detail  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| id | id | - | 22 | Идентификатор |
+| slug | string | - | ocnaya | slug |
+
+* Указывать можно какое-нибудь одно
+
+Пример запроса:
+```bash
+curl --location --request GET 'http://localhost:8003/api/v1/formats/detail' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "id": 22
     }
 }'
  ```
 Пример ответа:
-```
+```json
 {
-    "success": true,
     "data": {
-        "list": [
-            {
-                "id": 27,
-                "name": "Очно-заочная",
-                "slug": "ochno-zaochnaya"
-            },
-            {
-                "id": 26,
-                "name": "Онлайн",
-                "slug": "onlain"
-            }
-        ],
-        "count": 2
+        "id": 22,
+        "type": "formats",
+        "published": 1,
+        "name": "Очная",
+        "slug": "ocnaya",
+        "created_at": "2021-06-04T10:18:16.000000Z",
+        "updated_at": "2021-06-04T10:20:42.000000Z"
     },
+    "success": true,
     "log_request_id": ""
 }
  ```
@@ -266,43 +331,87 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/formats/list' \
 
 | Название поля | Тип | Обязательное | Пример | Комментарий
 | ------------- | ------- | --- | ---------------- | ------------------------------ |
-| ids | array int[] | - | [146,145] | Массив идентификаторов |
+| ids | array int[] | - | [10,11,12,13,14,15,16,17,18] | Массив идентификаторов |
 | published | bool | - | true | Опубликован |
-| name      | string  | -   | Торговое дело | Название |
-| slug      | string  | -   | torgovoe-delo | slug |
-| product_ids | array int[] | - | [480, 481, 766] | Массив продуктовых идентификаторов |
+| name      | string  | -   | Веб-разработка | Название |
+| slug      | string  | -   | veb-razrabotka | slug |
+| product_ids | array int[] | - | [661,666] | Массив продуктовых идентификаторов |
 
+Поля доступные для сотировки: id, name
 
 Пример запроса:
-```
-curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/list' \
+```bash
+curl --location --request GET 'http://localhost:8003/api/v1/subjects/list' \
+--header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "filter": {
-        "ids": [146,145],
-        "published": true
+        "ids": [10,11,12,13,14,15,16,17,18],
+        "published": true,
+        "name": "Веб-разработка",
+        "slug": "veb-razrabotka",
+        "product_ids": [661,666]
+    }
+    "sort": "-name"
+}'
+ ```
+Пример ответа:
+```json
+{
+    "data": [
+        {
+            "id": 13,
+            "type": "subjects",
+            "published": 1,
+            "name": "Веб-разработка",
+            "slug": "veb-razrabotka",
+            "created_at": "2021-06-04T10:53:25.000000Z",
+            "updated_at": "2021-06-04T10:53:25.000000Z"
+        }
+    ],
+    "count": 1,
+    "success": true
+}
+ ```
+
+## Метод получения конкретного предмета по фильтру: subjects/detail
+Адрес: https://mp.synergy.ru/api/v1/subjects/detail  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| id | id | - | 10 | Идентификатор |
+| slug | string | - | animaciya | slug |
+
+* Указывать можно какое-нибудь одно
+
+Пример запроса:
+```bash
+curl --location --request GET 'http://localhost:8003/api/v1/subjects/detail' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "id": 10
     }
 }'
  ```
 Пример ответа:
 ```json
 {
-    "success": true,
     "data": {
-        "list": [
-            {
-                "id": 146,
-                "name": "Торговое дело",
-                "slug": "torgovoe-delo"
-            },
-            {
-                "id": 145,
-                "name": "YouTube",
-                "slug": "youtube"
-            }
-        ],
-        "count": 2
+        "id": 10,
+        "type": "subjects",
+        "published": 1,
+        "name": "Анимация",
+        "slug": "animaciya",
+        "created_at": "2021-05-27T15:13:03.000000Z",
+        "updated_at": "2021-05-27T15:13:03.000000Z"
     },
+    "success": true,
     "log_request_id": ""
 }
  ```
@@ -331,26 +440,32 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/list' \
 | direction_ids | array int[] | - | [3,22,11] | Массив идентификаторов направлений |
 | person_ids | array int[] | - | [59,197] | Массив идентификаторов персон |
 
+Поля доступные для сотировки: name, id, expiration_date
+
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/products/list' \
+curl --location --request GET 'http://localhost:8003/api/v1/products/list' \
+--header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "ids": [830,831,832,833,834,835,836,837,486],
-    "published": true,
-    "name": "Веб-дизайн",
-    "slug": "veb-dizain",
-    "expiration_date": "24.08.2021 00:00",
-    "is_document": true,
-    "is_installment": true,
-    "is_employment": true,
-    "organization_ids": [9,10],
-    "subject_ids": [97,26,146],
-    "format_ids": [23,26,22],
-    "level_ids": [9,2,3],
-    "direction_ids": [3,22,11],
-    "person_ids": [59,197]
-}
+    "filter": {
+        "ids": [830,831,832,833,834,835,836,837,486],
+        "published": true,
+        "name": "Веб-дизайн",
+        "slug": "veb-dizain",
+        "expiration_date": "24.08.2021 00:00",
+        "is_document": true,
+        "is_installment": true,
+        "is_employment": true,
+        "organization_ids": [9,10],
+        "subject_ids": [97,26,146],
+        "format_ids": [23,26,22],
+        "level_ids": [9,2,3],
+        "direction_ids": [3,22,11],
+        "person_ids": [59,197]
+    },
+    "sort": "-id"
+}'
 ```
 Пример ответа:
 ```json
@@ -359,11 +474,33 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/list' \
         {
             "id": 486,
             "type": "products",
+            "is_moderated": 0,
+            "land": "KD_market",
             "published": 1,
+            "expiration_date": "24.08.2021 16:11",
             "name": "Веб-дизайн",
+            "slug": "veb-dizain",
             "preview_image": "uploads/products/ldnYcowVVXSnnfxZ7YASOpY2vqAdk5CO182rIaRY.png",
+            "digital_image": "uploads/products/ctqDtKQPIjRVnpYZAPAO5m7p25dF9eAD1Q4AuWDG.png",
+            "price": null,
+            "start_date": null,
+            "is_employment": 1,
+            "is_installment": 1,
+            "installment_months": 54,
+            "is_document": 1,
+            "document": 1,
+            "triggers": "1|3|5|6",
+            "begin_duration": "0",
+            "begin_duration_format_value": "0",
+            "duration": 38880,
+            "duration_format_value": "4y-6m",
+            "description": "Web-дизайнер - актуальная и востребованная профессия. Цель программы  – дать актуальные знания в сфере разработки digital-дизайна, обучить современным графическим редакторам и программам, а также анализировать поведения и пожелания целевой аудитории.",
+            "color": "#FFEEC3",
             "organization_id": 9,
-            "slug": "veb-dizain"
+            "category_id": 2,
+            "user_id": 5,
+            "created_at": "2021-06-04T10:19:38.000000Z",
+            "updated_at": "2021-08-02T07:33:29.000000Z"
         }
     ],
     "links": {
@@ -415,14 +552,15 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/list' \
 | id | id | - | 500 | Идентификатор |
 | slug | string | - | ekonomika-i-buxgalterskii-ucet | slug |
 
+* Указывать можно какое-нибудь одно
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/products/detail' \
+curl --location --request GET 'http://localhost:8003/api/v1/products/detail' \
+--header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "filter": {
-        "id": 500,
         "slug": "ekonomika-i-buxgalterskii-ucet"
     }
 }'
@@ -485,7 +623,8 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/detail' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/list' \
+curl --location --request GET 'http://localhost:8003/api/v1/persons/list' \
+--header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "filter": {
@@ -493,8 +632,8 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/list' \
         "published": true,
         "name": "Марина Борисовна Позина",
         "product_ids": [506, 523]
-    }
-    "sort": "position"
+    },
+    "sort": "name"
 }'
  ```
 Пример ответа:
@@ -506,8 +645,12 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/list' \
             "type": "persons",
             "published": 1,
             "name": "Марина Борисовна Позина",
+            "position": "",
             "show_main": 0,
-            "getPreviewImage": "uploads/persons/IZBoJtlFPiSI7ycGK3GCbEYWGPXWCSbX.jpg"
+            "description": "Заведующая кафедрой Психологии, к.п.н, сертифицированный профконсультант. Автор научных публикаций.",
+            "preview_image": "uploads/persons/IZBoJtlFPiSI7ycGK3GCbEYWGPXWCSbX.jpg",
+            "created_at": "2021-06-03T17:22:06.000000Z",
+            "updated_at": "2021-08-02T12:51:57.000000Z"
         }
     ],
     "count": 1,
@@ -529,7 +672,8 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/list' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/detail' \
+curl --location --request GET 'http://localhost:8003/api/v1/persons/detail' \
+--header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "filter": {
@@ -557,3 +701,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/detail' \
 }
  ```
 
+## Метод получения филтра: filter
+Адрес: https://mp.synergy.ru/api/v1/filter  
+Тип: GET  
+Формат входных данных: JSON<br>

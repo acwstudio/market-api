@@ -65,6 +65,11 @@ class Person extends Model
         return $this->getAttribute(self::FIELD_POSITION);
     }
 
+    public function getShowMain()
+    {
+        return $this->getAttribute(self::FIELD_SHOW_MAIN);
+    }
+
     public function getDescription()
     {
         return $this->getAttribute(self::FIELD_DESCRIPTION);
