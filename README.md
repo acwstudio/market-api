@@ -669,7 +669,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/detail' \
 }
  ```
 
-## Метод получения филтра: filter
+## Метод получения фильтра: filter
 Адрес: https://mp.synergy.ru/api/v1/filter  
 Тип: GET  
 Формат входных данных: JSON<br>
@@ -735,6 +735,64 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/filter' \
         ]
     },
     "count": null,
+    "success": true
+}
+```
+
+## Метод получения меню: menu
+Адрес: https://mp.synergy.ru/api/v1/menu  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входных параметров для запроса нет
+
+Пример запроса:
+
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/menu' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/vnd.api+json' \
+--data-raw ''
+```
+
+Пример ответа:
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "type": "menus",
+            "active": 1,
+            "anchor": "Колледж",
+            "pointer": 1,
+            "link": null
+        },
+        {
+            "id": 2,
+            "type": "menus",
+            "active": 1,
+            "anchor": "Бакалавриат",
+            "pointer": 2,
+            "link": null
+        },
+        {
+            "id": 3,
+            "type": "menus",
+            "active": 1,
+            "anchor": "Магистратура",
+            "pointer": 3,
+            "link": null
+        },
+        {
+            "id": 10,
+            "type": "menus",
+            "active": 1,
+            "anchor": "Все форумы",
+            "pointer": 10,
+            "link": null
+        }
+    ],
+    "count": 4,
     "success": true
 }
 ```
