@@ -21,7 +21,7 @@
 
 Пример запроса:
 ```bash
-curl --location --request GET 'http://localhost:8003/api/v1/directions/list' \
+curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -73,7 +73,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/directions/list' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'http://localhost:8003/api/v1/directions/detail' \
+curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -124,7 +124,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/directions/detail' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'http://localhost:8003/api/v1/organizations/list' \
+curl --location --request GET 'http://https://mp.synergy.ru/api/v1/organizations/list' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -189,7 +189,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/organizations/list' 
 
 Пример запроса:
 ```bash
-curl --location --request GET 'http://localhost:8003/api/v1/organizations/detail' \
+curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -247,7 +247,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/organizations/detail
 
 Пример запроса:
 ```bash
-curl --location --request GET 'http://localhost:8003/api/v1/formats/list' \
+curl --location --request GET 'https://mp.synergy.ru/api/v1/formats/list' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -296,7 +296,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/formats/list' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'http://localhost:8003/api/v1/formats/detail' \
+curl --location --request GET 'https://mp.synergy.ru/api/v1/formats/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -341,7 +341,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/formats/detail' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'http://localhost:8003/api/v1/subjects/list' \
+curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/list' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -390,7 +390,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/subjects/list' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'http://localhost:8003/api/v1/subjects/detail' \
+curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -444,7 +444,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/subjects/detail' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'http://localhost:8003/api/v1/products/list' \
+curl --location --request GET 'https://mp.synergy.ru/api/v1/products/list' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -504,8 +504,8 @@ curl --location --request GET 'http://localhost:8003/api/v1/products/list' \
         }
     ],
     "links": {
-        "first": "http://localhost:8003/api/v1/products/list?page=1",
-        "last": "http://localhost:8003/api/v1/products/list?page=1",
+        "first": "https://mp.synergy.ru/api/v1/products/list?page=1",
+        "last": "https://mp.synergy.ru/api/v1/products/list?page=1",
         "prev": null,
         "next": null
     },
@@ -520,7 +520,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/products/list' \
                 "active": false
             },
             {
-                "url": "http://localhost:8003/api/v1/products/list?page=1",
+                "url": "https://mp.synergy.ru/api/v1/products/list?page=1",
                 "label": "1",
                 "active": true
             },
@@ -530,7 +530,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/products/list' \
                 "active": false
             }
         ],
-        "path": "http://localhost:8003/api/v1/products/list",
+        "path": "https://mp.synergy.ru/api/v1/products/list",
         "per_page": 10,
         "to": 1,
         "total": 1
@@ -556,7 +556,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/products/list' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'http://localhost:8003/api/v1/products/detail' \
+curl --location --request GET 'https://mp.synergy.ru/api/v1/products/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -623,7 +623,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/products/detail' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'http://localhost:8003/api/v1/persons/list' \
+curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/list' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -672,7 +672,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/persons/list' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'http://localhost:8003/api/v1/persons/detail' \
+curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -711,7 +711,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/persons/detail' \
 Пример запроса:
 
 ```bash
-curl --location --request GET 'http://localhost:8003/api/v1/filter' \
+curl --location --request GET 'https://mp.synergy.ru/api/v1/filter' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/vnd.api+json' \
 --data-raw ''
