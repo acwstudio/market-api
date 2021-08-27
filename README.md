@@ -470,6 +470,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/list' \
 Пример ответа:
 ```json
 {
+    "success": true,
     "data": [
         {
             "id": 486,
@@ -503,40 +504,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/list' \
             "updated_at": "2021-08-02T07:33:29.000000Z"
         }
     ],
-    "links": {
-        "first": "https://mp.synergy.ru/api/v1/products/list?page=1",
-        "last": "https://mp.synergy.ru/api/v1/products/list?page=1",
-        "prev": null,
-        "next": null
-    },
-    "meta": {
-        "current_page": 1,
-        "from": 1,
-        "last_page": 1,
-        "links": [
-            {
-                "url": null,
-                "label": "&laquo; Previous",
-                "active": false
-            },
-            {
-                "url": "https://mp.synergy.ru/api/v1/products/list?page=1",
-                "label": "1",
-                "active": true
-            },
-            {
-                "url": null,
-                "label": "Next &raquo;",
-                "active": false
-            }
-        ],
-        "path": "https://mp.synergy.ru/api/v1/products/list",
-        "per_page": 10,
-        "to": 1,
-        "total": 1
-    },
-    "count": 1,
-    "success": true
+    "count": 1
 }
 ```
 
