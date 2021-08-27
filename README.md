@@ -705,3 +705,69 @@ curl --location --request GET 'http://localhost:8003/api/v1/persons/detail' \
 Адрес: https://mp.synergy.ru/api/v1/filter  
 Тип: GET  
 Формат входных данных: JSON<br>
+
+Входных параметров для запроса нет
+
+Пример запроса:
+
+```bash
+curl --location --request GET 'http://localhost:8003/api/v1/filter' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/vnd.api+json' \
+--data-raw ''
+```
+
+Пример ответа:
+```json
+{
+    "data": {
+        "directions": [
+            {
+                "id": 1,
+                "name": "Экономика и финансы"
+            },
+            {
+                "id": 2,
+                "name": "IT"
+            }
+        ],
+        "levels": [
+            {
+                "id": 1,
+                "name": "Школа"
+            },
+            {
+                "id": 2,
+                "name": "Колледж"
+            },
+            {
+                "id": 3,
+                "name": "Бакалавриат"
+            }
+        ],
+        "formats": [
+            {
+                "id": 22,
+                "name": "Очная"
+            },
+            {
+                "id": 23,
+                "name": "Заочная"
+            }
+        ],
+        "subjects": [
+            {
+                "id": 1,
+                "name": "Графический дизайн"
+            },
+            {
+                "id": 2,
+                "name": "Дизайн интерьера"
+            }
+        ]
+    },
+    "count": null,
+    "success": true
+}
+```
+
