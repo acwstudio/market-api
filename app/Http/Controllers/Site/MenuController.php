@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Site\MenuCollection;
-use App\Http\Resources\Site\MenuResource;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -22,6 +21,10 @@ class MenuController extends Controller
             ->allowedSorts(['pointer', 'id'])
             ->get();
 
-        return new MenuCollection($query);
+        return (new MenuCollection($query))
+            ->additional([
+                'count' => $query->count(),
+                'success' => true
+            ]);
     }
 }

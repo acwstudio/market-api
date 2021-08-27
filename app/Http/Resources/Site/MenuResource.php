@@ -23,8 +23,7 @@ class MenuResource extends JsonResource
             Menu::FIELD_ACTIVE     => $menu->getActive(),
             Menu::FIELD_ANCHOR     => $menu->getAnchor() ? $menu->getAnchor() : $menu->menuable->name,
             Menu::FIELD_POINTER    => $menu->getSort(),
-//            Menu::FIELD_CREATED_AT => $menu->getCreatedAt(),
-//            Menu::FIELD_UPDATED_AT => $menu->getUpdatedAt(),
+            Menu::FIELD_LINK       => null,
         ];
     }
 }

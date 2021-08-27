@@ -20,6 +20,7 @@ class Menu extends Model
         FIELD_MODEL      = 'model',
         FIELD_MODEL_ID   = 'model_id',
         FIELD_POINTER    = 'pointer',
+        FIELD_LINK       = 'link',
         FIELD_ANCHOR     = 'anchor',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
