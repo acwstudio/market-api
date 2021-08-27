@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Site;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FilterListResource extends JsonResource
+class FilterResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

@@ -3,20 +3,17 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Core\Error\ErrorManager;
-use App\Core\FieldSet;
-use App\Core\Input\Fields\Format\FormatGetList;
-use App\Core\Response\ResponseTrait;
+use App\Http\Requests\EntityDetailRequest;
+use App\Http\Resources\FormatCollection;
+use App\Http\Resources\FormatResource;
 use App\Models\Format;
 use App\Repositories\FormatRepository;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class FormatController extends Controller
 {
-    use ResponseTrait;
-
     /**
      * @var FormatRepository
      */
@@ -27,40 +24,43 @@ class FormatController extends Controller
         $this->formatRepository = $formatRepository;
     }
 
-    public function list(Request $request){
-        if (!$request->isJson()) {
-            return $this->errorResponse([
-                ErrorManager::buildValidateError(VALIDATION_REQUEST_JSON_EXPECTED)->toArray()
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+    public function list(Request $request)
+    {
 
-        $requestFieldSet = new FormatGetList($request->json()->all() ? $request->json()->all() : []);
+        $query = QueryBuilder::for(Format::class)
+            ->allowedFilters([
+                AllowedFilter::exact('ids', 'id'),
+                AllowedFilter::exact('published'),
+                AllowedFilter::exact('name'),
+                AllowedFilter::exact('slug'),
+                AllowedFilter::exact('product_ids', 'products.id')
+            ])
+            ->allowedSorts(['name', 'id'])
+            ->get();
 
-        $requestFieldSet->validate();
+        return (new FormatCollection($query))
+            ->additional([
+                'count' => $query->count(),
+                'success' => true
+            ]);
+    }
 
-        $errors = $requestFieldSet->getErrorsArray();
+    /**
+     * @return FormatResource
+     */
+    public function detail(EntityDetailRequest $request)
+    {
+        $query = QueryBuilder::for(Format::class)
+            ->allowedFilters([
+                AllowedFilter::exact('id'),
+                AllowedFilter::exact('slug'),
+            ])
+            ->firstOrFail();
 
-        if (count($errors)) {
-            return $this->errorResponse($errors, Response::HTTP_OK);
-        }
-
-        $requestFieldSet->prepare();
-
-        $filteredResult = $this->formatRepository->getList($requestFieldSet);
-
-        $list = [];
-        /** @var Format $format */
-        foreach($filteredResult['formats'] as $format){
-            $list[] = [
-                Format::FIELD_ID      => $format->getId(),
-                Format::FIELD_NAME    => $format->getName(),
-                Format::FIELD_SLUG    => $format->getSlug(),
-            ];
-        }
-
-        return $this->successResponse([
-            'list'  => $list,
-            'count' => $filteredResult['count'],
-        ]);
+        return (new FormatResource($query))
+            ->additional([
+                'success' => true,
+                'log_request_id' => ''
+            ]);
     }
 }

@@ -21,6 +21,7 @@ class Product extends Model
     const IS_EXPIRATION_DATE = 'is_expiration_date';
 
     const FIELD_ID = 'id',
+        FIELD_IS_MODERATED = 'is_moderated',
         FIELD_PUBLISHED = 'published',
         FIELD_EXPIRATION_DATE = 'expiration_date',
         FIELD_NAME = 'name',
@@ -34,6 +35,8 @@ class Product extends Model
         FIELD_IS_EMPLOYMENT = 'is_employment',
         FIELD_IS_INSTALLMENT = 'is_installment',
         FIELD_INSTALLMENT_MONTHS = 'installment_months',
+        FIELD_BEGIN_DURATION = 'begin_duration',
+        FIELD_BEGIN_DURATION_FORMAT_VALUE = 'begin_duration_format_value',
         FIELD_DURATION = 'duration',
         FIELD_DURATION_FORMAT_VALUE = 'duration_format_value',
 
@@ -62,6 +65,7 @@ class Product extends Model
     const DATE_TIME_DISPLAY_FORMAT = 'd.m.Y H:i';
 
     protected $fillable = [
+        self::FIELD_IS_MODERATED,
         self::FIELD_NAME,
         self::FIELD_PUBLISHED,
         self::FIELD_NAME,
@@ -78,6 +82,8 @@ class Product extends Model
         self::FIELD_IS_DOCUMENT,
         self::FIELD_DOCUMENT,
         self::FIELD_TRIGGERS,
+        self::FIELD_BEGIN_DURATION,
+        self::FIELD_BEGIN_DURATION_FORMAT_VALUE,
         self::FIELD_DURATION,
         self::FIELD_DURATION_FORMAT_VALUE,
         self::FIELD_DESCRIPTION,
@@ -103,6 +109,11 @@ class Product extends Model
     public function getId()
     {
         return $this->getAttribute(self::FIELD_ID);
+    }
+
+    public function getIsModerated()
+    {
+        return $this->getAttribute(self::FIELD_IS_MODERATED);
     }
 
     public function getPublished()
@@ -176,6 +187,16 @@ class Product extends Model
     public function getInstallmentMonths()
     {
         return $this->getAttribute(self::FIELD_INSTALLMENT_MONTHS);
+    }
+
+    public function getBeginDuration()
+    {
+        return $this->getAttribute(self::FIELD_BEGIN_DURATION);
+    }
+
+    public function getBeginDurationFormatValue()
+    {
+        return $this->getAttribute(self::FIELD_BEGIN_DURATION_FORMAT_VALUE);
     }
 
     public function getDuration()

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ProductDetailResource;
-use App\Http\Resources\ProductListCollection;
+use App\Http\Requests\EntityDetailRequest;
+use App\Http\Resources\ProductResource;
+use App\Http\Resources\ProductCollection;
 use App\Models\Product;
 use App\Repositories\ProductRepository;
 use Illuminate\Database\Eloquent\Builder;
@@ -48,7 +49,7 @@ class ProductController extends Controller
 
         $pagination = $request->json()->all()['pagination'] ?? ['page' => 1, 'page_size' => 10];
 
-        return (new ProductListCollection($query->paginate(
+        return (new ProductCollection($query->paginate(
             $pagination['page_size'],
             $columns = ['*'],
             $pageName = 'page',
@@ -61,9 +62,9 @@ class ProductController extends Controller
     }
 
     /**
-     * @return ProductDetailResource|string
+     * @return ProductResource|string
      */
-    public function detail()
+    public function detail(EntityDetailRequest $request)
     {
         $query = QueryBuilder::for(Product::class)
             ->allowedFilters([
@@ -72,7 +73,7 @@ class ProductController extends Controller
             ])
             ->firstOrFail();
 
-        return (new ProductDetailResource($query))->additional([
+        return (new ProductResource($query))->additional([
             'success' => true,
             'log_request_id' => ''
         ]);
