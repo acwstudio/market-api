@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\CourseController;
 use App\Http\Controllers\Site\FilterController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\Site\MenuController;

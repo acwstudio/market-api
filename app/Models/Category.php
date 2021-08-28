@@ -71,4 +71,9 @@ class Category extends Model
     {
         return $this->hasOne(Product::class);
     }
+
+    public function menu()
+    {
+        return $this->morphOne(Menu::class, 'menuable');
+    }
 }
