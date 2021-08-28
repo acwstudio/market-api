@@ -4,6 +4,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\Site\FilterController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\Site\MenuController;
+use App\Http\Controllers\Site\ProductSectionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
@@ -41,4 +42,5 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('subjects/detail', [SubjectController::class, 'detail']);
     Route::get('filter', [FilterController::class, 'filter']);
     Route::get('menu', [MenuController::class, 'menu']);
+    Route::get('products/sections/detail', [ProductSectionController::class, 'detail']);
 });
