@@ -20,7 +20,7 @@ class MenuController extends Controller
             ->defaultSort('pointer')
             ->allowedSorts(['pointer', 'id'])
             ->get();
-
+        
         return (new MenuCollection($query))
             ->additional([
                 'count' => $query->count(),

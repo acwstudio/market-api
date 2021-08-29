@@ -58,8 +58,8 @@ class ProductController extends Controller
         ));
 
         return response([
-            'success' =>true,
             'data' => $collection,
+            'success' =>true,
             'count' => $count
         ]);
 

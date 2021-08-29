@@ -470,7 +470,6 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/list' \
 Пример ответа:
 ```json
 {
-    "success": true,
     "data": [
         {
             "id": 486,
@@ -504,7 +503,8 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/list' \
             "updated_at": "2021-08-02T07:33:29.000000Z"
         }
     ],
-    "count": 1
+    "count": 1,
+    "success": true
 }
 ```
 
@@ -797,3 +797,48 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/menu' \
 }
 ```
 
+## Метод получения конкретной секции продукта по фильтру: products/sections/detail
+Адрес: https://mp.synergy.ru/api/v1/products/sections/detail  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| product_id | integer | - | 549 | Идентификатор |
+| section_id | integer | - | 10 | Идентификатор |
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/products/sections/detail' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "section_id": 10,
+        "product_id": 549
+    }
+}'
+ ```
+
+Пример ответа:
+```json
+{
+    "data": [
+        {
+            "product_id": 549,
+            "type": "product-sections",
+            "section_id": 10,
+            "published": 1,
+            "title": "Чему <span>вы научитесь</span>",
+            "is_hide_anchor": 0,
+            "sort": 500,
+            "json": "{\n    \"items\": {\n        \"data\": [\n            {\n                \"title\": {\n                    \"name\": \"Название\",\n                    \"type\": \"text\",\n                    \"value\": \"Мастерству монтажа звука\"\n                }\n            },\n            {\n                \"title\": {\n                    \"name\": \"Название\",\n                    \"type\": \"text\",\n                    \"value\": \"Технологии концертного звукоусиления\"\n                }\n            },\n            {\n                \"title\": {\n                    \"name\": \"Название\",\n                    \"type\": \"text\",\n                    \"value\": \"Звукозаписи в студии\"\n                }\n            },\n            {\n                \"title\": {\n                    \"name\": \"Название\",\n                    \"type\": \"text\",\n                    \"value\": \"Технологии сведения многодорожечных фонограмм\"\n                }\n            },\n            {\n                \"title\": {\n                    \"name\": \"Название\",\n                    \"type\": \"text\",\n                    \"value\": \"Проведению слухового анализа\"\n                }\n            },\n            {\n                \"title\": {\n                    \"name\": \"Название\",\n                    \"type\": \"text\",\n                    \"value\": \"Развитию технического слуха\"\n                }\n            }\n        ],\n        \"name\": \"Элементы\",\n        \"type\": \"list\"\n    }\n}",
+            "created_at": null,
+            "updated_at": null
+        }
+    ],
+    "success": true
+}
+```

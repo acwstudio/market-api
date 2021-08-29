@@ -24,8 +24,8 @@ class ProductSectionController extends Controller
         $count = $query->count();
 
         return response()->json([
+            'data' => $collection,
             'success' => true,
-            'data' => $collection
         ]);
     }
 }
