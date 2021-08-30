@@ -95,7 +95,9 @@ class Handler extends ExceptionHandler
             $statusCode = 500;
         }
 
-        $response = [];
+        $response = [
+            'success' => false
+        ];
 
         switch ($statusCode) {
             case 401:

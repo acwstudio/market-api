@@ -26,7 +26,7 @@ class ProductSectionResource extends JsonResource
             ProductSection::FIELD_TITLE          => $productSection->getTitle(),
             ProductSection::FIELD_IS_HIDE_ANCHOR => $productSection->getIsHideAnchor(),
             ProductSection::FIELD_SORT           => $productSection->getSort(),
-            ProductSection::FIELD_JSON           => $productSection->getJson(),
+            ProductSection::FIELD_JSON           => json_decode($productSection->getJson()),
             ProductSection::FIELD_CREATED_AT     => $productSection->getCreatedAt(),
             ProductSection::FIELD_UPDATED_AT     => $productSection->getUpdatedAt()
         ];

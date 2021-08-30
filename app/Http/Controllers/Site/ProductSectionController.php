@@ -14,7 +14,6 @@ class ProductSectionController extends Controller
 {
     public function detail(Request $request)
     {
-
         $validated = $request->validate([
             'filter' => 'required|array',
             'filter.section_id' => 'required|integer',
@@ -31,8 +30,8 @@ class ProductSectionController extends Controller
         $collection = new ProductSectionResource($query);
 
         return response()->json([
-            'data' => $collection,
             'success' => true,
+            'data' => $collection,
         ]);
     }
 }
