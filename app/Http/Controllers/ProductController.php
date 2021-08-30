@@ -48,15 +48,19 @@ class ProductController extends Controller
             ->allowedSorts(['name', 'id', 'expiration_date']);
 
         $pagination = $request->json()->all()['pagination'] ?? ['page' => 1, 'page_size' => 10];
+        $count = $query->count();
 
-        return (new ProductCollection($query->paginate(
+        $collection = new ProductCollection($query->paginate(
             $pagination['page_size'],
             $columns = ['*'],
             $pageName = 'page',
             $pagination['page'],
-        )))->additional([
-            'count' => $query->count(),
-            'success' => true
+        ));
+
+        return response([
+            'data' => $collection,
+            'success' =>true,
+            'count' => $count
         ]);
 
     }

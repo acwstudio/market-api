@@ -71,4 +71,9 @@ class Level extends Model
     {
         return $this->belongsToMany(Product::class);
     }
+
+    public function menu()
+    {
+        return $this->morphOne(Menu::class, 'menuable');
+    }
 }
