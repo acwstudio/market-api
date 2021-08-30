@@ -825,20 +825,18 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/sections/de
 Пример ответа:
 ```json
 {
-    "data": [
-        {
-            "product_id": 549,
-            "type": "product-sections",
-            "section_id": 10,
-            "published": 1,
-            "title": "Чему <span>вы научитесь</span>",
-            "is_hide_anchor": 0,
-            "sort": 500,
-            "json": "{\n    \"items\": {\n        \"data\": [\n            {\n                \"title\": {\n                    \"name\": \"Название\",\n                    \"type\": \"text\",\n                    \"value\": \"Мастерству монтажа звука\"\n                }\n            },\n            {\n                \"title\": {\n                    \"name\": \"Название\",\n                    \"type\": \"text\",\n                    \"value\": \"Технологии концертного звукоусиления\"\n                }\n            },\n            {\n                \"title\": {\n                    \"name\": \"Название\",\n                    \"type\": \"text\",\n                    \"value\": \"Звукозаписи в студии\"\n                }\n            },\n            {\n                \"title\": {\n                    \"name\": \"Название\",\n                    \"type\": \"text\",\n                    \"value\": \"Технологии сведения многодорожечных фонограмм\"\n                }\n            },\n            {\n                \"title\": {\n                    \"name\": \"Название\",\n                    \"type\": \"text\",\n                    \"value\": \"Проведению слухового анализа\"\n                }\n            },\n            {\n                \"title\": {\n                    \"name\": \"Название\",\n                    \"type\": \"text\",\n                    \"value\": \"Развитию технического слуха\"\n                }\n            }\n        ],\n        \"name\": \"Элементы\",\n        \"type\": \"list\"\n    }\n}",
-            "created_at": null,
-            "updated_at": null
-        }
-    ],
+    "data": {
+        "product_id": 549,
+        "type": "product-sections",
+        "section_id": 10,
+        "published": 1,
+        "title": "Чему <span>вы научитесь</span>",
+        "is_hide_anchor": 0,
+        "sort": 500,
+        "json": "{\n    \"items\": {\n        \"data\": [\n            {\n                \"title\": {\n                    \"name\": \"Название\",\n                    \"type\": \"text\",\n                    \"value\": \"Мастерству монтажа звука\"\n                }\n            },\n            {\n                \"title\": {\n                    \"name\": \"Название\",\n                    \"type\": \"text\",\n                    \"value\": \"Технологии концертного звукоусиления\"\n                }\n            },\n            {\n                \"title\": {\n                    \"name\": \"Название\",\n                    \"type\": \"text\",\n                    \"value\": \"Звукозаписи в студии\"\n                }\n            },\n            {\n                \"title\": {\n                    \"name\": \"Название\",\n                    \"type\": \"text\",\n                    \"value\": \"Технологии сведения многодорожечных фонограмм\"\n                }\n            },\n            {\n                \"title\": {\n                    \"name\": \"Название\",\n                    \"type\": \"text\",\n                    \"value\": \"Проведению слухового анализа\"\n                }\n            },\n            {\n                \"title\": {\n                    \"name\": \"Название\",\n                    \"type\": \"text\",\n                    \"value\": \"Развитию технического слуха\"\n                }\n            }\n        ],\n        \"name\": \"Элементы\",\n        \"type\": \"list\"\n    }\n}",
+        "created_at": null,
+        "updated_at": null
+    },
     "success": true
 }
 ```

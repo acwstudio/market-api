@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Site\ProductSectionCollection;
+use App\Http\Resources\Site\ProductSectionResource;
 use App\Models\ProductSection;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -11,17 +12,23 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class ProductSectionController extends Controller
 {
-    public function detail()
+    public function detail(Request $request)
     {
+
+        $validated = $request->validate([
+            'filter' => 'required|array',
+            'filter.section_id' => 'required|integer',
+            'filter.product_id' => 'required|integer'
+        ]);
+
         $query = QueryBuilder::for(ProductSection::class)
             ->allowedFilters([
                 AllowedFilter::exact('product_id'),
                 AllowedFilter::exact('section_id')
             ])
-            ->get();
+            ->firstOrFail();
 
-        $collection = new ProductSectionCollection($query);
-        $count = $query->count();
+        $collection = new ProductSectionResource($query);
 
         return response()->json([
             'data' => $collection,
