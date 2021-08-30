@@ -41,5 +41,6 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('subjects/detail', [SubjectController::class, 'detail']);
     Route::get('filter', [FilterController::class, 'filter']);
     Route::get('menu', [MenuController::class, 'menu']);
+    Route::get('products/sections/list', [ProductSectionController::class, 'list']);
     Route::get('products/sections/detail', [ProductSectionController::class, 'detail']);
 });

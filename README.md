@@ -797,6 +797,76 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/menu' \
 }
 ```
 
+## Метод получения секций продукта по фильтру: products/sections/list
+Адрес: https://mp.synergy.ru/api/v1/products/sections/list  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| product_id | integer | + | 549 | Идентификатор |
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/products/sections/list' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/vnd.api+json' \
+--data-raw '{
+    "filter": {
+        "product_id": 594
+    }
+}''
+ ```
+
+Пример ответа:
+```json
+{
+    "success": true,
+    "data": [
+        {
+            "product_id": 594,
+            "type": "product-sections",
+            "section_id": 12,
+            "published": 1,
+            "title": "Программа обучения",
+            "is_hide_anchor": 0,
+            "sort": 2,
+            "json": {
+                "title": {
+                    "name": "Жирное значение",
+                    "type": "text",
+                    "value": "5 000"
+                },
+                "description": {
+                    "name": "Описание",
+                    "type": "text",
+                    "value": "компаний сейчас ищут специалистов на headhunter"
+                }
+            }
+            "created_at": null,
+            "updated_at": null
+        },
+        {
+            "product_id": 594,
+            "type": "product-sections",
+            "section_id": 13,
+            "published": 1,
+            "title": "Преподаватели программы",
+            "is_hide_anchor": 1,
+            "sort": 3,
+            "json": [],
+            "created_at": null,
+            "updated_at": null
+        },
+    ]
+}
+```
+
+
+
+
 ## Метод получения конкретной секции продукта по фильтру: products/sections/detail
 Адрес: https://mp.synergy.ru/api/v1/products/sections/detail  
 Тип: GET  
