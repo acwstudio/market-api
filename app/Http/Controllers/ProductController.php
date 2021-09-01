@@ -54,7 +54,7 @@ class ProductController extends Controller
             $pagination['page_size'],
             $columns = ['*'],
             $pageName = 'page',
-            $pagination['page'],
+            $pagination['page']
         ));
 
         return response([
