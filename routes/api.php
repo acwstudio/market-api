@@ -6,6 +6,7 @@ use App\Http\Controllers\Site\MenuController;
 use App\Http\Controllers\Site\ProductSectionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DirectionController;
@@ -31,6 +32,8 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('products/detail', [ProductController::class, 'detail']);
     Route::get('persons/list', [PersonController::class, 'list']);
     Route::get('persons/detail', [PersonController::class, 'detail']);
+    Route::get('banners/list', [BannerController::class, 'list']);
+    Route::get('banners/detail', [BannerController::class, 'detail']);
     Route::get('directions/list', [DirectionController::class, 'list']);
     Route::get('directions/detail', [DirectionController::class, 'detail']);
     Route::get('organizations/list', [OrganizationController::class, 'list']);
