@@ -797,6 +797,76 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/menu' \
 }
 ```
 
+## Метод получения секций продукта по фильтру: products/sections/list
+Адрес: https://mp.synergy.ru/api/v1/products/sections/list  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| product_id | integer | + | 549 | Идентификатор |
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/products/sections/list' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/vnd.api+json' \
+--data-raw '{
+    "filter": {
+        "product_id": 594
+    }
+}''
+ ```
+
+Пример ответа:
+```json
+{
+    "success": true,
+    "data": [
+        {
+            "product_id": 594,
+            "type": "product-sections",
+            "section_id": 12,
+            "published": 1,
+            "title": "Программа обучения",
+            "is_hide_anchor": 0,
+            "sort": 2,
+            "json": {
+                "title": {
+                    "name": "Жирное значение",
+                    "type": "text",
+                    "value": "5 000"
+                },
+                "description": {
+                    "name": "Описание",
+                    "type": "text",
+                    "value": "компаний сейчас ищут специалистов на headhunter"
+                }
+            }
+            "created_at": null,
+            "updated_at": null
+        },
+        {
+            "product_id": 594,
+            "type": "product-sections",
+            "section_id": 13,
+            "published": 1,
+            "title": "Преподаватели программы",
+            "is_hide_anchor": 1,
+            "sort": 3,
+            "json": [],
+            "created_at": null,
+            "updated_at": null
+        },
+    ]
+}
+```
+
+
+
+
 ## Метод получения конкретной секции продукта по фильтру: products/sections/detail
 Адрес: https://mp.synergy.ru/api/v1/products/sections/detail  
 Тип: GET  
@@ -840,3 +910,103 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/sections/de
     "success": true
 }
 ```
+
+## Метод получения баннеров по фильтру: banners/list
+Адрес: https://mp.synergy.ru/api/v1/banners/list  
+Тип: POST  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип         | Обязательное | Пример              | Комментарий
+| ------------- | ----------- | ------------ | ------------------- | ---------------------- |
+| ids           | array int[] | -            | [1,3]               | Массив идентификаторов |
+| published     | bool        | -            | true                | Опубликован            |
+| name          | string      | -            | Баннер 1            | Название               |
+| link          | string      | -            | http://example.ru/1 | Ссылка                 |
+
+
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/banners/list' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "ids": [1,3],
+        "published": true,
+    },
+    "sort": "-name"
+}'
+ ```
+Пример ответа:
+```json
+{
+	"data": [
+		{
+			"id": 1,
+			"type": "banners",
+			"published": 1,
+			"name": "Баннер 1",
+			"link":"http://example.ru/1",
+			"image":"uploads\/banners\/nSDOUocleJZcOhTtaSbdk1IR5eqAQz5DlBAaov4B.jpg",
+			"created_at":"2021-09-01T17:12:25.000000Z",
+			"updated_at":"2021-09-01T17:22:47.000000Z"
+		},
+		{
+			"id": 3,
+			"type": "banners",
+			"published": 1,
+			"name": "Banner 2",
+			"link": "http://example.ru/2",
+			"image": "uploads\/banners\/lRfJ0FoRDx2xz9odVM7Hn0BoeDxObc92nXozynfm.jpg",
+			"created_at": "2021-09-01T17:35:12.000000Z",
+			"updated_at": "2021-09-02T17:38:01.000000Z"
+		}
+	],
+	"count": 2,
+	"success": true
+}
+ ```
+
+## Метод получения конкретного баннера по фильтру: banners/detail
+Адрес: https://mp.synergy.ru/api/v1/banners/detail  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | --- | ------------ | ------ | ------------- |
+| id            | id  | -            | 3      | Идентификатор |
+
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/banners/detail' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "id": 3
+    }
+}'
+ ```
+Пример ответа:
+```json
+{
+	"data": {
+		"id": 3,
+		"type": "banners",
+		"published": 1,
+		"name": "Banner 2",
+		"link": "http://example.ru/2",
+		"image": "uploads\/banners\/lRfJ0FoRDx2xz9odVM7Hn0BoeDxObc92nXozynfm.jpg",
+		"created_at": "2021-09-01T17:35:12.000000Z",
+		"updated_at": "2021-09-02T17:38:01.000000Z"
+	},
+	"success": true,
+	"log_request_id": ""
+}
+ ```

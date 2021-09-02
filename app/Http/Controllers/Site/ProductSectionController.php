@@ -12,9 +12,30 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class ProductSectionController extends Controller
 {
+    public function list(Request $request)
+    {
+        $validated = $request->validate([
+            'filter' => 'required|array',
+            'filter.product_id' => 'required|integer',
+        ]);
+
+        $query = QueryBuilder::for(ProductSection::class)
+            ->allowedFilters([
+                AllowedFilter::exact('product_id'),
+            ])
+            ->defaultSort('sort')
+            ->get();
+
+        $collection = new ProductSectionCollection($query);
+
+        return response()->json([
+            'success' => true,
+            'data' => $collection,
+        ]);
+    }
+
     public function detail(Request $request)
     {
-
         $validated = $request->validate([
             'filter' => 'required|array',
             'filter.section_id' => 'required|integer',
@@ -31,8 +52,8 @@ class ProductSectionController extends Controller
         $collection = new ProductSectionResource($query);
 
         return response()->json([
-            'data' => $collection,
             'success' => true,
+            'data' => $collection,
         ]);
     }
 }
