@@ -72,6 +72,9 @@ class Level extends Model
         return $this->belongsToMany(Product::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
     public function menu()
     {
         return $this->morphOne(Menu::class, 'menuable');

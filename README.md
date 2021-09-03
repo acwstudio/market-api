@@ -1010,3 +1010,68 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/banners/detail' \
 	"log_request_id": ""
 }
  ```
+
+## Метод получения главного меню по фильтру: menu/main
+Адрес: https://mp.synergy.ru/api/v1/menu/main  
+Тип: POST  
+Формат входных данных: JSON<br>
+
+Входных параметров нет
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/menu/main' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/vnd.api+json' \
+--data-raw ''
+ ```
+
+Пример ответа
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "anchor": "Колледж",
+      "link": "/catalog/level/2",
+      "sub_items": [
+        {
+          "id": 6,
+          "anchor": "Продажи",
+          "link": "/catalog/level/2/direction/6",
+          "products": [
+            {
+              "id": 481,
+              "anchor": "Предпринимательство",
+              "link": "/product/predprinimatelstvo"
+            },
+            {
+              "id": 597,
+              "anchor": "Электронная коммерция",
+              "link": "/product/elektronnaya-kommerciya"
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "anchor": "Бизнес",
+          "link": "/catalog/level/2/direction/8",
+          "products": [
+            {
+              "id": 481,
+              "anchor": "Предпринимательство",
+              "link": "/product/predprinimatelstvo"
+            },
+            {
+              "id": 494,
+              "anchor": "Банковское дело",
+              "link": "/product/bankovskoe-delo"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
