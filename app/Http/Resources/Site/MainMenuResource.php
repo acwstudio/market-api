@@ -27,7 +27,7 @@ class MainMenuResource extends JsonResource
     {
         $explodeEntity = explode('\\', $this->model);
         $entity = strtolower(end($explodeEntity));
-//        dd(strtolower(end($explodeEntity)));
+
         //  id продуктов принадлежащих данному пункту меню
         $idsProducts = $this->menuable->products->pluck('id')->toArray();
         //  находим все эти продукты

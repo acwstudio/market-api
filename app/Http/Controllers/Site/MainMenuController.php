@@ -12,11 +12,15 @@ class MainMenuController extends Controller
 {
     public function menu(Request $request)
     {
-        $menus = QueryBuilder::for(Menu::class)
+        $query = QueryBuilder::for(Menu::class)
             ->where('active', true)
             ->with('menuable')
             ->get();
 
-        return MainMenuResource::collection($menus);
+        return (MainMenuResource::collection($query))
+            ->additional([
+                'success' => true,
+                'count' => $query->count()
+            ]);
     }
 }
