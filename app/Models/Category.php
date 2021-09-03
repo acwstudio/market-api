@@ -67,11 +67,14 @@ class Category extends Model
         return $this->getAttribute(self::FIELD_UPDATED_AT);
     }
 
-    public function product()
+    public function products()
     {
-        return $this->hasOne(Product::class);
+        return $this->hasMany(Product::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
     public function menu()
     {
         return $this->morphOne(Menu::class, 'menuable');
