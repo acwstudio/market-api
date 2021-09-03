@@ -1011,6 +1011,284 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/banners/detail' \
 }
  ```
 
+## Метод получения секций организации по фильтру: organizations/sections/list
+Адрес: https://mp.synergy.ru/api/v1/organizations/sections/list  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля   | Тип     | Обязательное | Пример | Комментарий
+| --------------- | ------- | ------------ | ------ | ------------- |
+| organization_id | integer | +            | 10     | Идентификатор |
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/sections/list' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/vnd.api+json' \
+--data-raw '{
+    "filter": {
+        "organization_id": 10
+    }
+}''
+ ```
+
+Пример ответа:
+```json
+{
+    "success": true,
+    "data": [
+        {
+            "organization_id": 10,
+            "type": "organization-sections",
+            "section_id": 18,
+            "published": 1,
+            "title": "Об университете",
+            "sort": 500,
+            "json": {
+                "top": {
+                    "data": [
+                        {
+                            "description": {
+                                "name": "Значение",
+                                "type": "text",
+                                "value": "Международные стандарты обучения"
+                            }
+                        },
+                        {
+                            "description": {
+                                "name": "Значение",
+                                "type": "text",
+                                "value": "Практическая направленность"
+                            }
+                        },
+                        {
+                            "description": {
+                                "name": "Значение",
+                                "type": "text",
+                                "value": "Государственный диплом"
+                            }
+                        },
+                        {
+                            "description": {
+                                "name": "Значение",
+                                "type": "text",
+                                "value": "Доверие работодателей"
+                            }
+                        },
+                        {
+                            "description": {
+                                "name": "Значение",
+                                "type": "text",
+                                "value": "Помощь в трудоустройстве"
+                            }
+                        },
+                        {
+                            "description": {
+                                "name": "Значение",
+                                "type": "text",
+                                "value": "Ориентация на подготовку кадров в сфере потребительского рынка и услуг для города Москвы"
+                            }
+                        }
+                    ],
+                    "name": "Элементы сверху (с галочками)",
+                    "type": "list"
+                },
+                "bottom": {
+                    "data": [
+                        {
+                            "title": {
+                                "name": "Заголовок",
+                                "type": "text",
+                                "value": "ТОП-100"
+                            },
+                            "description": {
+                                "name": "Описание",
+                                "type": "text",
+                                "value": "лучших ВУЗов России"
+                            }
+                        },
+                        {
+                            "title": {
+                                "name": "Заголовок",
+                                "type": "text",
+                                "value": "5"
+                            },
+                            "description": {
+                                "name": "Описание",
+                                "type": "text",
+                                "value": "программ бакалавриата"
+                            }
+                        },
+                        {
+                            "title": {
+                                "name": "Заголовок",
+                                "type": "text",
+                                "value": "от 4 лет"
+                            },
+                            "description": {
+                                "name": "Описание",
+                                "type": "text",
+                                "value": "срок обучения"
+                            }
+                        }
+                    ],
+                    "name": "Элементы",
+                    "type": "list"
+                },
+                "bottom_title": {
+                    "name": "Заголовок нижнего блока",
+                    "type": "text",
+                    "value": "Об академии в цифрах"
+                }
+            },
+            "created_at": null,
+            "updated_at": null
+        }
+    ]
+}
+```
+
+## Метод получения конкретной секции организации по фильтру: organizations/sections/detail
+Адрес: https://mp.synergy.ru/api/v1/organizations/sections/detail  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля   | Тип     | Обязательное | Пример | Комментарий
+| --------------- | ------- | ------------ | ------ | ------------- |
+| organization_id | integer | +            | 10     | Идентификатор |
+| section_id      | integer | +            | 18     | Идентификатор |
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/sections/detail' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "organization_id": 10,
+        "section_id": 18
+    }
+}'
+ ```
+
+Пример ответа:
+```json
+{
+    "success": true,
+    "data": {
+        "organization_id": 10,
+        "type": "organization-sections",
+        "section_id": 18,
+        "published": 1,
+        "title": "Об университете",
+        "sort": 500,
+        "json": {
+            "top": {
+                "data": [
+                    {
+                        "description": {
+                            "name": "Значение",
+                            "type": "text",
+                            "value": "Международные стандарты обучения"
+                        }
+                    },
+                    {
+                        "description": {
+                            "name": "Значение",
+                            "type": "text",
+                            "value": "Практическая направленность"
+                        }
+                    },
+                    {
+                        "description": {
+                            "name": "Значение",
+                            "type": "text",
+                            "value": "Государственный диплом"
+                        }
+                    },
+                    {
+                        "description": {
+                            "name": "Значение",
+                            "type": "text",
+                            "value": "Доверие работодателей"
+                        }
+                    },
+                    {
+                        "description": {
+                            "name": "Значение",
+                            "type": "text",
+                            "value": "Помощь в трудоустройстве"
+                        }
+                    },
+                    {
+                        "description": {
+                            "name": "Значение",
+                            "type": "text",
+                            "value": "Ориентация на подготовку кадров в сфере потребительского рынка и услуг для города Москвы"
+                        }
+                    }
+                ],
+                "name": "Элементы сверху (с галочками)",
+                "type": "list"
+            },
+            "bottom": {
+                "data": [
+                    {
+                        "title": {
+                            "name": "Заголовок",
+                            "type": "text",
+                            "value": "ТОП-100"
+                        },
+                        "description": {
+                            "name": "Описание",
+                            "type": "text",
+                            "value": "лучших ВУЗов России"
+                        }
+                    },
+                    {
+                        "title": {
+                            "name": "Заголовок",
+                            "type": "text",
+                            "value": "5"
+                        },
+                        "description": {
+                            "name": "Описание",
+                            "type": "text",
+                            "value": "программ бакалавриата"
+                        }
+                    },
+                    {
+                        "title": {
+                            "name": "Заголовок",
+                            "type": "text",
+                            "value": "от 4 лет"
+                        },
+                        "description": {
+                            "name": "Описание",
+                            "type": "text",
+                            "value": "срок обучения"
+                        }
+                    }
+                ],
+                "name": "Элементы",
+                "type": "list"
+            },
+            "bottom_title": {
+                "name": "Заголовок нижнего блока",
+                "type": "text",
+                "value": "Об академии в цифрах"
+            }
+        },
+        "created_at": null,
+        "updated_at": null
+    }
+}
+```
+
 ## Метод получения главного меню по фильтру: menu/main
 Адрес: https://mp.synergy.ru/api/v1/menu/main  
 Тип: POST  
