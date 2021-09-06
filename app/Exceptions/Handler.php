@@ -89,6 +89,7 @@ class Handler extends ExceptionHandler
      */
     private function customApiResponse($exception)
     {
+        dd($exception);
         if (method_exists($exception, 'getStatusCode')) {
             $statusCode = $exception->getStatusCode();
         } else {
