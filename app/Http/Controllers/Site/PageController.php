@@ -16,9 +16,10 @@ class PageController extends Controller
     {
         $query = QueryBuilder::for(Page::class)
             ->allowedFilters([
-                AllowedFilter::exact('id')
+                AllowedFilter::exact('id'),
+                AllowedFilter::exact('slug'),
             ])
-            ->with(['components', 'components.methods', 'components.methods.method'])
+            ->with(['components', 'components.methods', 'components.methods.method', 'seotags'])
             ->firstOrFail();
 
         $pageResource = new PageResource($query);

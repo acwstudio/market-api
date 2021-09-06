@@ -1,5 +1,91 @@
 ## Методы API
 
+## Метод получения конкретной страницы: page
+Адрес: https://mp.synergy.ru/api/v1/page  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| id | integer | - | 3 | Идентификатор |
+| slug | string | - | product | slug |
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/page' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/vnd.api+json' \
+--data-raw '{
+    "filter": {
+        "slug": "product"
+    },
+    "params": {
+        "id": 100,
+        "slug": "sdfsdf"
+    }
+}'
+ ```
+
+Пример ответа:
+```json
+{
+    "success": true,
+    "data": {
+        "id": 3,
+        "name": "Карточка товара",
+        "slug": "product",
+        "static": false,
+        "page_type": "product",
+        "components": [
+            {
+                "id": 1,
+                "title": "Карточка товара",
+                "key": "product_detail",
+                "view_type": "product",
+                "methods": [
+                    {
+                        "data": {
+                            "filter": {
+                                "id": 100
+                            }
+                        },
+                        "url": "/api/v1/products/detail"
+                    },
+                    {
+                        "data": {
+                            "filter": {
+                                "product_id": 100
+                            }
+                        },
+                        "url": "/api/v1/products/sections/list"
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "title": "Самые востребованные профессии\n",
+                "key": "most_popular_product_list",
+                "view_type": "product_list",
+                "methods": [
+                    {
+                        "data": {},
+                        "url": "/api/v1/products/list"
+                    }
+                ]
+            }
+        ],
+        "meta": {
+            "h1": "H1 - Главный заголовок",
+            "title": "Title - заголовок вкладки браузера",
+            "keywords": "keywords",
+            "description": "Description Description"
+        }
+    }
+}
+```
+
 
 ## Метод получения направлений по фильтру: directions/list
 Адрес: https://mp.synergy.ru/api/v1/directions/list  

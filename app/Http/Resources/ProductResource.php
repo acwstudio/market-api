@@ -10,7 +10,7 @@ class ProductResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
@@ -20,7 +20,6 @@ class ProductResource extends JsonResource
 
         return [
             Product::FIELD_ID                          => $product->getId(),
-            'type'                                     => 'products',
             Product::FIELD_IS_MODERATED                => $product->getIsModerated(),
             Product::FIELD_LAND                        => $product->getLand(),
             Product::FIELD_PUBLISHED                   => $product->getPublished(),
@@ -48,6 +47,21 @@ class ProductResource extends JsonResource
             Product::FIELD_USER_ID                     => $product->getUserId(),
             Product::FIELD_CREATED_AT                  => $product->getCreatedAt(),
             Product::FIELD_UPDATED_AT                  => $product->getUpdatedAt(),
+            'type'                                     => 'products',
+            'page'                                     => $this->getPage($product),
+        ];
+    }
+
+    private function getPage(Product $product)
+    {
+        return [
+            'filter' => [
+                'slug' => 'product',
+            ],
+            'params' => [
+                'id' => $product->getId(),
+                'slug' => $product->getSlug()
+            ]
         ];
     }
 

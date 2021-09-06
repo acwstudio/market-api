@@ -6,11 +6,14 @@ use App\Models\Component;
 use App\Models\ComponentMethod;
 use App\Models\Method;
 use App\Models\Page;
+use App\Models\SeoTag;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 
 class PageResource extends JsonResource
 {
+    const META_FIELD = 'meta';
+
     /**
      * Transform the resource into an array.
      *
@@ -42,7 +45,8 @@ class PageResource extends JsonResource
             Page::FIELD_SLUG                 => $page->getSlug(),
             Page::FIELD_STATIC               => (bool)$page->getStatic(),
             Page::FIELD_PAGE_TYPE            => $page->getPageType(),
-            Page::ENTITY_RELATIVE_COMPONENTS => $components
+            Page::ENTITY_RELATIVE_COMPONENTS => $components,
+            self::META_FIELD                 => ($page->seotags instanceof SeoTag) ? $this->getSeoTags($page->seotags) : null
         ];
     }
 
@@ -75,6 +79,20 @@ class PageResource extends JsonResource
         return [
             ComponentMethod::FIELD_DATA => json_decode($this->replaceTemplateToValue($queryParams, $componentMethod->getData())),
             Method::FIELD_URL           => $methodModel->getUrl()
+        ];
+    }
+
+    /**
+     * @param SeoTag $seoTag
+     * @return array
+     */
+    private function getSeoTags(SeoTag $seoTag)
+    {
+        return [
+            SeoTag::FIELD_H1          => $seoTag->getH1(),
+            SeoTag::FIELD_TITLE       => $seoTag->getTitle(),
+            SeoTag::FIELD_KEYWORDS    => $seoTag->getKeywords(),
+            SeoTag::FIELD_DESCRIPTION => $seoTag->getDescription(),
         ];
     }
 
