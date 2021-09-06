@@ -10,6 +10,8 @@ class Menu extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $with = ['menuable'];
+
     public $table = 'menus';
 
     const MODEL_NAME = 'Меню',
@@ -88,6 +90,9 @@ class Menu extends Model
         return $this->getAttribute(self::FIELD_UPDATED_AT);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
     public function menuable()
     {
         return $this->morphTo(__FUNCTION__, 'model', 'model_id');

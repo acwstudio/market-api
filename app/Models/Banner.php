@@ -4,27 +4,31 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
-class Category extends Model
+class Banner extends Model
 {
     use HasFactory;
 
-    public $table = 'categories';
+    public $table = 'banners';
 
-    const MODEL_NAME = 'Категории',
-        MODEL_LINK = 'categories';
+    const MODEL_NAME = 'Баннеры',
+        MODEL_LINK = 'banners';
 
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',
         FIELD_NAME = 'name',
-        FIELD_SLUG = 'slug',
+        FIELD_LINK = 'link',
+        FIELD_IMAGE = 'image',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
 
     public $fillable = [
+        self::FIELD_ID,
         self::FIELD_PUBLISHED,
         self::FIELD_NAME,
-        self::FIELD_SLUG
+        self::FIELD_LINK,
+        self::FIELD_IMAGE
     ];
 
     public static function getModelName()
@@ -52,9 +56,19 @@ class Category extends Model
         return $this->getAttribute(self::FIELD_NAME);
     }
 
-    public function getSlug()
+    public function getLink()
     {
-        return $this->getAttribute(self::FIELD_SLUG);
+        return $this->getAttribute(self::FIELD_LINK);
+    }
+
+    public function getImage()
+    {
+        return $this->getAttribute(self::FIELD_IMAGE);
+    }
+
+    public function getImageUrl()
+    {
+        return Storage::url($this->getImage());
     }
 
     public function getCreatedAt()
@@ -65,18 +79,5 @@ class Category extends Model
     public function getUpdatedAt()
     {
         return $this->getAttribute(self::FIELD_UPDATED_AT);
-    }
-
-    public function products()
-    {
-        return $this->hasMany(Product::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
-     */
-    public function menu()
-    {
-        return $this->morphOne(Menu::class, 'menuable');
     }
 }

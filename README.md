@@ -996,3 +996,446 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/sections/de
     "success": true
 }
 ```
+
+## Метод получения баннеров по фильтру: banners/list
+Адрес: https://mp.synergy.ru/api/v1/banners/list  
+Тип: POST  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип         | Обязательное | Пример              | Комментарий
+| ------------- | ----------- | ------------ | ------------------- | ---------------------- |
+| ids           | array int[] | -            | [1,3]               | Массив идентификаторов |
+| published     | bool        | -            | true                | Опубликован            |
+| name          | string      | -            | Баннер 1            | Название               |
+| link          | string      | -            | http://example.ru/1 | Ссылка                 |
+
+
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/banners/list' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "ids": [1,3],
+        "published": true,
+    },
+    "sort": "-name"
+}'
+ ```
+Пример ответа:
+```json
+{
+	"data": [
+		{
+			"id": 1,
+			"type": "banners",
+			"published": 1,
+			"name": "Баннер 1",
+			"link":"http://example.ru/1",
+			"image":"uploads\/banners\/nSDOUocleJZcOhTtaSbdk1IR5eqAQz5DlBAaov4B.jpg",
+			"created_at":"2021-09-01T17:12:25.000000Z",
+			"updated_at":"2021-09-01T17:22:47.000000Z"
+		},
+		{
+			"id": 3,
+			"type": "banners",
+			"published": 1,
+			"name": "Banner 2",
+			"link": "http://example.ru/2",
+			"image": "uploads\/banners\/lRfJ0FoRDx2xz9odVM7Hn0BoeDxObc92nXozynfm.jpg",
+			"created_at": "2021-09-01T17:35:12.000000Z",
+			"updated_at": "2021-09-02T17:38:01.000000Z"
+		}
+	],
+	"count": 2,
+	"success": true
+}
+ ```
+
+## Метод получения конкретного баннера по фильтру: banners/detail
+Адрес: https://mp.synergy.ru/api/v1/banners/detail  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | --- | ------------ | ------ | ------------- |
+| id            | id  | -            | 3      | Идентификатор |
+
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/banners/detail' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "id": 3
+    }
+}'
+ ```
+Пример ответа:
+```json
+{
+	"data": {
+		"id": 3,
+		"type": "banners",
+		"published": 1,
+		"name": "Banner 2",
+		"link": "http://example.ru/2",
+		"image": "uploads\/banners\/lRfJ0FoRDx2xz9odVM7Hn0BoeDxObc92nXozynfm.jpg",
+		"created_at": "2021-09-01T17:35:12.000000Z",
+		"updated_at": "2021-09-02T17:38:01.000000Z"
+	},
+	"success": true,
+	"log_request_id": ""
+}
+ ```
+
+## Метод получения секций организации по фильтру: organizations/sections/list
+Адрес: https://mp.synergy.ru/api/v1/organizations/sections/list  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля   | Тип     | Обязательное | Пример | Комментарий
+| --------------- | ------- | ------------ | ------ | ------------- |
+| organization_id | integer | +            | 10     | Идентификатор |
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/sections/list' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/vnd.api+json' \
+--data-raw '{
+    "filter": {
+        "organization_id": 10
+    }
+}''
+ ```
+
+Пример ответа:
+```json
+{
+    "success": true,
+    "data": [
+        {
+            "organization_id": 10,
+            "type": "organization-sections",
+            "section_id": 18,
+            "published": 1,
+            "title": "Об университете",
+            "sort": 500,
+            "json": {
+                "top": {
+                    "data": [
+                        {
+                            "description": {
+                                "name": "Значение",
+                                "type": "text",
+                                "value": "Международные стандарты обучения"
+                            }
+                        },
+                        {
+                            "description": {
+                                "name": "Значение",
+                                "type": "text",
+                                "value": "Практическая направленность"
+                            }
+                        },
+                        {
+                            "description": {
+                                "name": "Значение",
+                                "type": "text",
+                                "value": "Государственный диплом"
+                            }
+                        },
+                        {
+                            "description": {
+                                "name": "Значение",
+                                "type": "text",
+                                "value": "Доверие работодателей"
+                            }
+                        },
+                        {
+                            "description": {
+                                "name": "Значение",
+                                "type": "text",
+                                "value": "Помощь в трудоустройстве"
+                            }
+                        },
+                        {
+                            "description": {
+                                "name": "Значение",
+                                "type": "text",
+                                "value": "Ориентация на подготовку кадров в сфере потребительского рынка и услуг для города Москвы"
+                            }
+                        }
+                    ],
+                    "name": "Элементы сверху (с галочками)",
+                    "type": "list"
+                },
+                "bottom": {
+                    "data": [
+                        {
+                            "title": {
+                                "name": "Заголовок",
+                                "type": "text",
+                                "value": "ТОП-100"
+                            },
+                            "description": {
+                                "name": "Описание",
+                                "type": "text",
+                                "value": "лучших ВУЗов России"
+                            }
+                        },
+                        {
+                            "title": {
+                                "name": "Заголовок",
+                                "type": "text",
+                                "value": "5"
+                            },
+                            "description": {
+                                "name": "Описание",
+                                "type": "text",
+                                "value": "программ бакалавриата"
+                            }
+                        },
+                        {
+                            "title": {
+                                "name": "Заголовок",
+                                "type": "text",
+                                "value": "от 4 лет"
+                            },
+                            "description": {
+                                "name": "Описание",
+                                "type": "text",
+                                "value": "срок обучения"
+                            }
+                        }
+                    ],
+                    "name": "Элементы",
+                    "type": "list"
+                },
+                "bottom_title": {
+                    "name": "Заголовок нижнего блока",
+                    "type": "text",
+                    "value": "Об академии в цифрах"
+                }
+            },
+            "created_at": null,
+            "updated_at": null
+        }
+    ]
+}
+```
+
+## Метод получения конкретной секции организации по фильтру: organizations/sections/detail
+Адрес: https://mp.synergy.ru/api/v1/organizations/sections/detail  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля   | Тип     | Обязательное | Пример | Комментарий
+| --------------- | ------- | ------------ | ------ | ------------- |
+| organization_id | integer | +            | 10     | Идентификатор |
+| section_id      | integer | +            | 18     | Идентификатор |
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/sections/detail' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "organization_id": 10,
+        "section_id": 18
+    }
+}'
+ ```
+
+Пример ответа:
+```json
+{
+    "success": true,
+    "data": {
+        "organization_id": 10,
+        "type": "organization-sections",
+        "section_id": 18,
+        "published": 1,
+        "title": "Об университете",
+        "sort": 500,
+        "json": {
+            "top": {
+                "data": [
+                    {
+                        "description": {
+                            "name": "Значение",
+                            "type": "text",
+                            "value": "Международные стандарты обучения"
+                        }
+                    },
+                    {
+                        "description": {
+                            "name": "Значение",
+                            "type": "text",
+                            "value": "Практическая направленность"
+                        }
+                    },
+                    {
+                        "description": {
+                            "name": "Значение",
+                            "type": "text",
+                            "value": "Государственный диплом"
+                        }
+                    },
+                    {
+                        "description": {
+                            "name": "Значение",
+                            "type": "text",
+                            "value": "Доверие работодателей"
+                        }
+                    },
+                    {
+                        "description": {
+                            "name": "Значение",
+                            "type": "text",
+                            "value": "Помощь в трудоустройстве"
+                        }
+                    },
+                    {
+                        "description": {
+                            "name": "Значение",
+                            "type": "text",
+                            "value": "Ориентация на подготовку кадров в сфере потребительского рынка и услуг для города Москвы"
+                        }
+                    }
+                ],
+                "name": "Элементы сверху (с галочками)",
+                "type": "list"
+            },
+            "bottom": {
+                "data": [
+                    {
+                        "title": {
+                            "name": "Заголовок",
+                            "type": "text",
+                            "value": "ТОП-100"
+                        },
+                        "description": {
+                            "name": "Описание",
+                            "type": "text",
+                            "value": "лучших ВУЗов России"
+                        }
+                    },
+                    {
+                        "title": {
+                            "name": "Заголовок",
+                            "type": "text",
+                            "value": "5"
+                        },
+                        "description": {
+                            "name": "Описание",
+                            "type": "text",
+                            "value": "программ бакалавриата"
+                        }
+                    },
+                    {
+                        "title": {
+                            "name": "Заголовок",
+                            "type": "text",
+                            "value": "от 4 лет"
+                        },
+                        "description": {
+                            "name": "Описание",
+                            "type": "text",
+                            "value": "срок обучения"
+                        }
+                    }
+                ],
+                "name": "Элементы",
+                "type": "list"
+            },
+            "bottom_title": {
+                "name": "Заголовок нижнего блока",
+                "type": "text",
+                "value": "Об академии в цифрах"
+            }
+        },
+        "created_at": null,
+        "updated_at": null
+    }
+}
+```
+
+## Метод получения главного меню по фильтру: menu/main
+Адрес: https://mp.synergy.ru/api/v1/menu/main  
+Тип: POST  
+Формат входных данных: JSON<br>
+
+Входных параметров нет
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/menu/main' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/vnd.api+json' \
+--data-raw ''
+ ```
+
+Пример ответа
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "anchor": "Колледж",
+      "link": "/catalog/level/2",
+      "sub_items": [
+        {
+          "id": 6,
+          "anchor": "Продажи",
+          "link": "/catalog/level/2/direction/6",
+          "products": [
+            {
+              "id": 481,
+              "anchor": "Предпринимательство",
+              "link": "/product/predprinimatelstvo"
+            },
+            {
+              "id": 597,
+              "anchor": "Электронная коммерция",
+              "link": "/product/elektronnaya-kommerciya"
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "anchor": "Бизнес",
+          "link": "/catalog/level/2/direction/8",
+          "products": [
+            {
+              "id": 481,
+              "anchor": "Предпринимательство",
+              "link": "/product/predprinimatelstvo"
+            },
+            {
+              "id": 494,
+              "anchor": "Банковское дело",
+              "link": "/product/bankovskoe-delo"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```

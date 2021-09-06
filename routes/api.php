@@ -3,10 +3,13 @@
 use App\Http\Controllers\Site\PageController;
 use App\Http\Controllers\Site\FilterController;
 use App\Http\Controllers\PersonController;
+use App\Http\Controllers\Site\MainMenuController;
 use App\Http\Controllers\Site\MenuController;
 use App\Http\Controllers\Site\ProductSectionController;
+use App\Http\Controllers\Site\OrganizationSectionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DirectionController;
@@ -34,6 +37,8 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('products/detail', [ProductController::class, 'detail']);
     Route::get('persons/list', [PersonController::class, 'list']);
     Route::get('persons/detail', [PersonController::class, 'detail']);
+    Route::get('banners/list', [BannerController::class, 'list']);
+    Route::get('banners/detail', [BannerController::class, 'detail']);
     Route::get('directions/list', [DirectionController::class, 'list']);
     Route::get('directions/detail', [DirectionController::class, 'detail']);
     Route::get('organizations/list', [OrganizationController::class, 'list']);
@@ -44,6 +49,9 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('subjects/detail', [SubjectController::class, 'detail']);
     Route::get('filter', [FilterController::class, 'filter']);
     Route::get('menu', [MenuController::class, 'menu']);
+    Route::get('menu/main', [MainMenuController::class, 'menu']);
     Route::get('products/sections/list', [ProductSectionController::class, 'list']);
     Route::get('products/sections/detail', [ProductSectionController::class, 'detail']);
+    Route::get('organizations/sections/list', [OrganizationSectionController::class, 'list']);
+    Route::get('organizations/sections/detail', [OrganizationSectionController::class, 'detail']);
 });
