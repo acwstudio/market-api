@@ -29,8 +29,6 @@ use App\Http\Controllers\SubjectController;
 */
 
 Route::group(['prefix' => '/v1'], function () {
-    Route::get('test', [TestController::class, 'test']);
-
     Route::get('page', [PageController::class, 'page']);
 
     Route::get('products/list', [ProductController::class, 'list']);
