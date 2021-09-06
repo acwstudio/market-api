@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Site\PageController;
 use App\Http\Controllers\Site\FilterController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\Site\MainMenuController;
@@ -29,6 +30,8 @@ use App\Http\Controllers\SubjectController;
 
 Route::group(['prefix' => '/v1'], function () {
     Route::get('test', [TestController::class, 'test']);
+
+    Route::get('page', [PageController::class, 'page']);
 
     Route::get('products/list', [ProductController::class, 'list']);
     Route::get('products/detail', [ProductController::class, 'detail']);
