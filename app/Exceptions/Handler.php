@@ -127,6 +127,7 @@ class Handler extends ExceptionHandler
         }
 
         $response['status'] = $statusCode;
+        $response['message_exception'] = $exception->getMessage();
 
         return response()->json($response, $statusCode);
     }
