@@ -7,6 +7,7 @@ use App\Http\Controllers\Site\MainMenuController;
 use App\Http\Controllers\Site\MenuController;
 use App\Http\Controllers\Site\ProductSectionController;
 use App\Http\Controllers\Site\OrganizationSectionController;
+use App\Http\Controllers\Site\QuizController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BannerController;
@@ -52,4 +53,5 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('products/sections/detail', [ProductSectionController::class, 'detail']);
     Route::get('organizations/sections/list', [OrganizationSectionController::class, 'list']);
     Route::get('organizations/sections/detail', [OrganizationSectionController::class, 'detail']);
+    Route::get('quizzes/list', [QuizController::class, 'list']);
 });
