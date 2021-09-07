@@ -54,4 +54,5 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('organizations/sections/list', [OrganizationSectionController::class, 'list']);
     Route::get('organizations/sections/detail', [OrganizationSectionController::class, 'detail']);
     Route::get('quizzes/list', [QuizController::class, 'list']);
+    Route::get('quizzes/detail', [QuizController::class, 'detail']);
 });
