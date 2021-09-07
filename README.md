@@ -930,7 +930,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/sections/li
                     "type": "text",
                     "value": "компаний сейчас ищут специалистов на headhunter"
                 }
-            }
+            },
             "created_at": null,
             "updated_at": null
         },
@@ -945,7 +945,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/sections/li
             "json": [],
             "created_at": null,
             "updated_at": null
-        },
+        }
     ]
 }
 ```
@@ -1439,3 +1439,96 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/menu/main' \
   ]
 }
 ```
+
+## Метод получения квизов по фильтру: quizzes/list
+Адрес: https://mp.synergy.ru/api/v1/quizzes/list  
+Тип: POST  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| published | bool | - | true | Опубликован |
+
+
+Пример запроса:
+```bash
+curl --location --request GET 'http://localhost:8003/api/v1/quizzes/list' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "include": ["questions","questions.answers"],
+    "filter": {
+        "published": true
+    },
+    "sort": "id"
+}'
+ ```
+Пример ответа:
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "type": "quizzes",
+            "lead_id": 1,
+            "name": "Подбор программы обучения",
+            "description": "Квиз для подбора программы обучения",
+            "page": 2,
+            "title": "Образовательный <br> маркетплейс",
+            "text": "Ответьте на 6 вопросов <br> и мы подберём Вам нужную программу",
+            "button": "Подобрать программу",
+            "published": 1,
+            "questions": [
+                {
+                    "id": 1,
+                    "type": "questions",
+                    "question": "К каким профессиям вы больше склонны?",
+                    "published": 1,
+                    "answers": [
+                        {
+                            "id": 1,
+                            "type": "answers",
+                            "question_id": 1,
+                            "answer": "Гуманитарные",
+                            "next_question_id": 1
+                        },
+                        {
+                            "id": 2,
+                            "type": "answers",
+                            "question_id": 1,
+                            "answer": "Технические",
+                            "next_question_id": 1
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "type": "questions",
+                    "question": "Какое направление обучения вас интересует?",
+                    "published": 1,
+                    "answers": [
+                        {
+                            "id": 4,
+                            "type": "answers",
+                            "question_id": 2,
+                            "answer": "Колледж",
+                            "next_question_id": 1
+                        },
+                        {
+                            "id": 5,
+                            "type": "answers",
+                            "question_id": 2,
+                            "answer": "Бакалавриат",
+                            "next_question_id": 1
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "count": 2,
+    "success": true
+}
+ ```
