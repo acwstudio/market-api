@@ -12,3 +12,4 @@ fi
 cd /var/www/html
 
 php artisan route:clear
+php artisan optimize:clear
