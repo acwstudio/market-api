@@ -12,23 +12,13 @@ use App\Http\Resources\Site\PageResource;
 
 class TestController extends Controller
 {
-    public function test(Request $request)
+    public function web(Request $request)
     {
-        $query = QueryBuilder::for(Page::class)
-            ->allowedFilters([
-                AllowedFilter::exact('id'),
-                AllowedFilter::exact('slug'),
-            ])
-            ->with(['components', 'components.methods', 'components.methods.method', 'seotags'])
-            ->firstOrFail();
+        dd('web', $request->all());
+    }
 
-        $pageResource = new PageResource($query);
-
-        dd($pageResource);
-
-        return response()->json([
-            'success' =>true,
-            'data' => $pageResource
-        ]);
+    public function api(Request $request)
+    {
+        dd('api', $request->all());
     }
 }

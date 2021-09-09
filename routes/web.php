@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\TestController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::view('/docs', 'redoc');
+Route::get('/test/web', [TestController::class, 'web']);
