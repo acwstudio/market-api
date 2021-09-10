@@ -1621,3 +1621,45 @@ curl --location --request GET 'http://localhost:8003/api/v1/quizzes/detail' \
     "log_request_id": ""
 }
  ```
+
+## Метод получения конкретной секции страницы по фильтру: pages/sections/detail
+Адрес: https://mp.synergy.ru/api/v1/pages/sections/detail  
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | ------- | --- | ---------------- | ------------------------------ |
+| page_id | integer | - | 1 | Идентификатор |
+| section_id | integer | - | 10 | Идентификатор |
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/pages/sections/detail' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "section_id": 10,
+        "page_id": 1
+    }
+}'
+ ```
+
+Пример ответа:
+```json
+{
+    "success": true,
+    "data": {
+        "page_id": 1,
+        "section_id": 10,
+        "published": 1,
+        "title": "Название секции",
+        "sort": 500,
+        "json": "{\"items\": {\"data\": [{\"title\": {\"name\": \"Название\", \"type\": \"text\", \"value\": \"Название элемента\"}}], \"name\": \"Элементы\", \"type\": \"list\"}}",
+        "created_at": null,
+        "updated_at": null
+    }
+}
+```

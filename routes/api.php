@@ -5,6 +5,7 @@ use App\Http\Controllers\Site\FilterController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\Site\MainMenuController;
 use App\Http\Controllers\Site\MenuController;
+use App\Http\Controllers\Site\PageSectionController;
 use App\Http\Controllers\Site\ProductSectionController;
 use App\Http\Controllers\Site\OrganizationSectionController;
 use App\Http\Controllers\Site\QuizController;
@@ -55,6 +56,7 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('organizations/sections/detail', [OrganizationSectionController::class, 'detail']);
     Route::get('quizzes/list', [QuizController::class, 'list']);
     Route::get('quizzes/detail', [QuizController::class, 'detail']);
+    Route::get('pages/sections/detail', [PageSectionController::class, 'detail']);
 
     Route::get('/test/api', [TestController::class, 'api']);
 });
