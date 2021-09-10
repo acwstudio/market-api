@@ -56,5 +56,5 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('quizzes/list', [QuizController::class, 'list']);
     Route::get('quizzes/detail', [QuizController::class, 'detail']);
 
-    Route::get('/test/api', [TestController::class, 'api']);
+    Route::post('/test/api', [TestController::class, 'api']);
 });

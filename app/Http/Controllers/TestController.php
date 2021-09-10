@@ -14,11 +14,11 @@ class TestController extends Controller
 {
     public function web(Request $request)
     {
-        dd('web', $request->all());
+        return response()->json($request->all());
     }
 
     public function api(Request $request)
     {
-        dd('api', $request->all());
+        return response()->json($request->all());
     }
 }
