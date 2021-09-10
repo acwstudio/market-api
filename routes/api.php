@@ -31,32 +31,32 @@ use App\Http\Controllers\SubjectController;
 */
 
 Route::group(['prefix' => '/v1'], function () {
-    Route::get('page', [PageController::class, 'page']);
+    Route::post('page', [PageController::class, 'page']);
 
-    Route::get('products/list', [ProductController::class, 'list']);
-    Route::get('products/detail', [ProductController::class, 'detail']);
-    Route::get('persons/list', [PersonController::class, 'list']);
-    Route::get('persons/detail', [PersonController::class, 'detail']);
-    Route::get('banners/list', [BannerController::class, 'list']);
-    Route::get('banners/detail', [BannerController::class, 'detail']);
-    Route::get('directions/list', [DirectionController::class, 'list']);
-    Route::get('directions/detail', [DirectionController::class, 'detail']);
-    Route::get('organizations/list', [OrganizationController::class, 'list']);
-    Route::get('organizations/detail', [OrganizationController::class, 'detail']);
-    Route::get('formats/list', [FormatController::class, 'list']);
-    Route::get('formats/detail', [FormatController::class, 'detail']);
-    Route::get('subjects/list', [SubjectController::class, 'list']);
-    Route::get('subjects/detail', [SubjectController::class, 'detail']);
-    Route::get('filter', [FilterController::class, 'filter']);
-    Route::get('menu', [MenuController::class, 'menu']);
-    Route::get('menu/main', [MainMenuController::class, 'menu']);
-    Route::get('products/sections/list', [ProductSectionController::class, 'list']);
-    Route::get('products/sections/detail', [ProductSectionController::class, 'detail']);
-    Route::get('organizations/sections/list', [OrganizationSectionController::class, 'list']);
-    Route::get('organizations/sections/detail', [OrganizationSectionController::class, 'detail']);
-    Route::get('quizzes/list', [QuizController::class, 'list']);
-    Route::get('quizzes/detail', [QuizController::class, 'detail']);
-    Route::get('pages/sections/detail', [PageSectionController::class, 'detail']);
+    Route::post('products/list', [ProductController::class, 'list']);
+    Route::post('products/detail', [ProductController::class, 'detail']);
+    Route::post('persons/list', [PersonController::class, 'list']);
+    Route::post('persons/detail', [PersonController::class, 'detail']);
+    Route::post('banners/list', [BannerController::class, 'list']);
+    Route::post('banners/detail', [BannerController::class, 'detail']);
+    Route::post('directions/list', [DirectionController::class, 'list']);
+    Route::post('directions/detail', [DirectionController::class, 'detail']);
+    Route::post('organizations/list', [OrganizationController::class, 'list']);
+    Route::post('organizations/detail', [OrganizationController::class, 'detail']);
+    Route::post('formats/list', [FormatController::class, 'list']);
+    Route::post('formats/detail', [FormatController::class, 'detail']);
+    Route::post('subjects/list', [SubjectController::class, 'list']);
+    Route::post('subjects/detail', [SubjectController::class, 'detail']);
+    Route::post('filter', [FilterController::class, 'filter']);
+    Route::post('menu', [MenuController::class, 'menu']);
+    Route::post('menu/main', [MainMenuController::class, 'menu']);
+    Route::post('products/sections/list', [ProductSectionController::class, 'list']);
+    Route::post('products/sections/detail', [ProductSectionController::class, 'detail']);
+    Route::post('organizations/sections/list', [OrganizationSectionController::class, 'list']);
+    Route::post('organizations/sections/detail', [OrganizationSectionController::class, 'detail']);
+    Route::post('quizzes/list', [QuizController::class, 'list']);
+    Route::post('quizzes/detail', [QuizController::class, 'detail']);
+    Route::post('pages/sections/detail', [PageSectionController::class, 'detail']);
 
     Route::post('/test/api', [TestController::class, 'api']);
 });
