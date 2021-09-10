@@ -2,7 +2,7 @@
 
 ## Метод получения конкретной страницы: page
 Адрес: https://mp.synergy.ru/api/v1/page  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
@@ -145,7 +145,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
 
 ## Метод получения конкретного направления по фильтру: directions/detail
 Адрес: https://mp.synergy.ru/api/v1/directions/detail  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
@@ -190,7 +190,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/detail' \
 
 ## Метод получения организаций по фильтру: organizations/list
 Адрес: https://mp.synergy.ru/api/v1/organizations/list  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
@@ -261,7 +261,7 @@ curl --location --request GET 'http://https://mp.synergy.ru/api/v1/organizations
 
 ## Метод получения конкретной организации по фильтру: organizations/detail
 Адрес: https://mp.synergy.ru/api/v1/organizations/detail  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
@@ -316,7 +316,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/detail
 
 ## Метод получения форматов по фильтру: formats/list
 Адрес: https://mp.synergy.ru/api/v1/formats/list  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
@@ -368,7 +368,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/formats/list' \
 
 ## Метод получения конкретной формы обучения по фильтру: formats/detail
 Адрес: https://mp.synergy.ru/api/v1/formats/detail  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
@@ -410,7 +410,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/formats/detail' \
 
 ## Метод получения предметов по фильтру: subjects/list
 Адрес: https://mp.synergy.ru/api/v1/subjects/list  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
@@ -462,7 +462,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/list' \
 
 ## Метод получения конкретного предмета по фильтру: subjects/detail
 Адрес: https://mp.synergy.ru/api/v1/subjects/detail  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
@@ -504,7 +504,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/detail' \
 
 ## Метод получения продуктов по фильтру: products/list
 Адрес: https://mp.synergy.ru/api/v1/products/list  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
@@ -596,7 +596,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/list' \
 
 ## Метод получения конкретного продукта по фильтру: products/detail
 Адрес: https://mp.synergy.ru/api/v1/products/detail  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
@@ -714,7 +714,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/list' \
 
 ## Метод получения конкретной персоны по фильтру: persons/detail
 Адрес: https://mp.synergy.ru/api/v1/persons/detail  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
@@ -757,7 +757,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/detail' \
 
 ## Метод получения фильтра: filter
 Адрес: https://mp.synergy.ru/api/v1/filter  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входных параметров для запроса нет
@@ -827,7 +827,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/filter' \
 
 ## Метод получения меню: menu
 Адрес: https://mp.synergy.ru/api/v1/menu  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входных параметров для запроса нет
@@ -885,7 +885,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/menu' \
 
 ## Метод получения секций продукта по фильтру: products/sections/list
 Адрес: https://mp.synergy.ru/api/v1/products/sections/list  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
@@ -955,7 +955,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/sections/li
 
 ## Метод получения конкретной секции продукта по фильтру: products/sections/detail
 Адрес: https://mp.synergy.ru/api/v1/products/sections/detail  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
@@ -1058,7 +1058,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/banners/list' \
 
 ## Метод получения конкретного баннера по фильтру: banners/detail
 Адрес: https://mp.synergy.ru/api/v1/banners/detail  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
@@ -1099,7 +1099,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/banners/detail' \
 
 ## Метод получения секций организации по фильтру: organizations/sections/list
 Адрес: https://mp.synergy.ru/api/v1/organizations/sections/list  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
@@ -1238,7 +1238,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/sectio
 
 ## Метод получения конкретной секции организации по фильтру: organizations/sections/detail
 Адрес: https://mp.synergy.ru/api/v1/organizations/sections/detail  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
@@ -1535,7 +1535,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/quizzes/list' \
 
 ## Метод получения конкретного квиза по фильтру: quizzes/detail
 Адрес: https://mp.synergy.ru/api/v1/quizzes/detail  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
@@ -1624,7 +1624,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/quizzes/detail' \
 
 ## Метод получения конкретной секции страницы по фильтру: pages/sections/detail
 Адрес: https://mp.synergy.ru/api/v1/pages/sections/detail  
-Тип: GET  
+Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
