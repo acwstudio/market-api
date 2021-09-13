@@ -307,22 +307,22 @@ class Product extends Model
 
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class);
+        return $this->morphedByMany(Subject::class, 'productable');
     }
 
     public function formats()
     {
-        return $this->belongsToMany(Format::class);
+        return $this->morphedByMany(Format::class, 'productable');
     }
 
     public function levels()
     {
-        return $this->belongsToMany(Level::class);
+        return $this->morphedByMany(Level::class, 'productable');
     }
 
     public function directions()
     {
-        return $this->belongsToMany(Direction::class);
+        return $this->morphedByMany(Direction::class, 'productable');
     }
 
     public function sections()
@@ -349,4 +349,6 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+
 }

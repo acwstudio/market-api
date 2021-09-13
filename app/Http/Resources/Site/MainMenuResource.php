@@ -20,7 +20,7 @@ class MainMenuResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
@@ -42,15 +42,18 @@ class MainMenuResource extends JsonResource
                 //  выбираем продукты конкретного направления
                 $directionProducts = Product::whereHas('directions', function ($q) use ($direction) {
                     $q->where('id', $direction['id']);
-                })->whereIn('id', $idsProducts)->get();
+                })->whereIn('id', $idsProducts)->where('deleted_at', null)->get();
 
                 //  Выбираем нужные поля продуктов
-                $resourceProducts = $directionProducts->map(function ($item){
+                /** @var Collection $resourceProducts */
+                $resourceProducts = $directionProducts->map(function ($item) {
+
                     return [
                         'id' => $item->id,
                         'anchor' => $item->name,
-                        'link' => "/product/$item->slug"
+                        'link' => "/product/$item->slug",
                     ];
+
                 });
 
                 //  собираем массив направлений и вложенные в направления продукты
