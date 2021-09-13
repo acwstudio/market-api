@@ -71,6 +71,8 @@ class Format extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+//        return $this->belongsToMany(Product::class);
+        return $this->morphToMany(Product::class, 'productable');
     }
+
 }

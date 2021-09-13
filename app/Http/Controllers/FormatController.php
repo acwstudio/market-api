@@ -26,7 +26,6 @@ class FormatController extends Controller
 
     public function list(Request $request)
     {
-
         $query = QueryBuilder::for(Format::class)
             ->allowedFilters([
                 AllowedFilter::exact('ids', 'id'),
