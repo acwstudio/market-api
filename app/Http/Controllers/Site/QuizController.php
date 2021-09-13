@@ -36,6 +36,7 @@ class QuizController extends Controller
                 AllowedFilter::exact('id')
             ])
             ->allowedIncludes(['questions', 'questions.answers'])
+            ->with(['questions', 'questions.answers'])
             ->firstOrFail();
 
         return (new QuizResource($query))
