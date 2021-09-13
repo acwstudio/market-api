@@ -42,7 +42,7 @@ class MainMenuResource extends JsonResource
                 //  выбираем продукты конкретного направления
                 $directionProducts = Product::whereHas('directions', function ($q) use ($direction) {
                     $q->where('id', $direction['id']);
-                })->whereIn('id', $idsProducts)->get()->where('deleted_at', null);
+                })->whereIn('id', $idsProducts)->where('deleted_at', null)->get();
 
                 //  Выбираем нужные поля продуктов
                 /** @var Collection $resourceProducts */

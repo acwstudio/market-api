@@ -17,10 +17,7 @@ class MainMenuController extends Controller
             ->where('active', true)
             ->with('menuable')
             ->get();
-//        $productIds = Menu::find(1)->menuable->products->pluck('id');
-//        $directions = Direction::all();
-//        return Menu::find(1)->menuable->first()->morphedToMany();
-//        return Menu::find(1)->menuable->products->pluck('id');
+
         return (MainMenuResource::collection($query))
             ->additional([
                 'success' => true,

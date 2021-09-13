@@ -98,8 +98,7 @@ class Direction extends Model
 
     public function products()
     {
-//        return $this->belongsToMany(Product::class);
-        return $this->morphMany(Product::class, 'productable');
+        return $this->morphToMany(Product::class, 'productable');
     }
 
 }

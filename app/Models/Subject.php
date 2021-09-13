@@ -72,7 +72,6 @@ class Subject extends Model
 
     public function products()
     {
-//        return $this->belongsToMany(Product::class);
         return $this->morphToMany(Product::class, 'productable');
     }
 }
