@@ -1,6 +1,48 @@
 ## Методы API
 
-## Метод получения конкретной страницы: page
+## Методы
+
+#### Страницы  
++ [Метод получения конкретной страницы: page](#method_page);
++ [Метод получения конкретной секции страницы по фильтру: pages/sections/detail](#method_pages_sections_detail);
+
+#### Навигация
++ [Метод получения меню: menu](#method_menu);
++ [Метод получения главного меню по фильтру: menu/main](#method_menu_main);
++ [Метод получения фильтра продуктов: filter](#method_filter);
+
+#### Организации
++ [Метод получения организаций по фильтру: organizations/list](#method_organizations_list);
++ [Метод получения конкретной организации по фильтру: organizations/detail](#method_organizations_detail);
++ [Метод получения секций организации по фильтру: organizations/sections/list](#method_organizations_sections_list);
++ [Метод получения конкретной секции организации по фильтру: organizations/sections/detail](#method_organizations_sections_detail);
+
+#### Продукты
++ [Метод получения продуктов по фильтру: products/list](#method_products_list);
++ [Метод получения конкретного продукта по фильтру: products/detail](#method_products_detail);
++ [Метод получения секций продукта по фильтру: products/sections/list](#method_products_sections_list);
++ [Метод получения конкретной секции продукта по фильтру: products/sections/detail](#method_products_sections_detail);
+
+#### Персоны
++ [Метод получения персон по фильтру: persons/list](#method_persons_list);
++ [Метод получения конкретной персоны по фильтру: persons/detail](#method_persons_detail);
+
+#### Контент
++ [Метод получения баннеров по фильтру: banners/list](#method_banners_list);
++ [Метод получения конкретного баннера по фильтру: banners/detail](#method_banners_detail);
++ [Метод получения квизов по фильтру: quizzes/list](#method_quizzes_list);
++ [Метод получения конкретного квиза по фильтру: quizzes/detail](#method_quizzes_detail);
+
+#### Другое
++ [Метод получения направлений по фильтру: directions/list](#method_directions_list);
++ [Метод получения конкретного направления по фильтру: directions/detail](#method_directions_detail);
++ [Метод получения форматов по фильтру: formats/list](#method_formats_list);
++ [Метод получения конкретного формата обучения по фильтру: formats/detail](#method_formats_detail);
++ [Метод получения предметов по фильтру: subjects/list](#method_subjects_list);
++ [Метод получения конкретного предмета по фильтру: subjects/detail](#method_subjects_detail);
+
+
+## <a name="method_page"></a> Метод получения конкретной страницы: page
 Адрес: https://mp.synergy.ru/api/v1/page  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -14,7 +56,7 @@
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/page' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/page' \
 --header 'Content-Type: application/json' \
 --header 'Accept: application/vnd.api+json' \
 --data-raw '{
@@ -86,8 +128,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/page' \
 }
 ```
 
-
-## Метод получения направлений по фильтру: directions/list
+## <a name="method_directions_list"></a> Метод получения направлений по фильтру: directions/list
 Адрес: https://mp.synergy.ru/api/v1/directions/list  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -107,7 +148,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/page' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/directions/list' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -143,7 +184,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
 }
  ```
 
-## Метод получения конкретного направления по фильтру: directions/detail
+## <a name="method_directions_detail"></a> Метод получения конкретного направления по фильтру: directions/detail
 Адрес: https://mp.synergy.ru/api/v1/directions/detail  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -159,7 +200,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/list' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/detail' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/directions/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -188,7 +229,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/detail' \
 }
  ```
 
-## Метод получения организаций по фильтру: organizations/list
+## <a name="method_organizations_list"></a> Метод получения организаций по фильтру: organizations/list
 Адрес: https://mp.synergy.ru/api/v1/organizations/list  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -210,7 +251,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/directions/detail' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'http://https://mp.synergy.ru/api/v1/organizations/list' \
+curl --location --request POST 'http://https://mp.synergy.ru/api/v1/organizations/list' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -259,7 +300,7 @@ curl --location --request GET 'http://https://mp.synergy.ru/api/v1/organizations
 }
  ```
 
-## Метод получения конкретной организации по фильтру: organizations/detail
+## <a name="method_organizations_detail"></a> Метод получения конкретной организации по фильтру: organizations/detail
 Адрес: https://mp.synergy.ru/api/v1/organizations/detail  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -275,7 +316,7 @@ curl --location --request GET 'http://https://mp.synergy.ru/api/v1/organizations
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/detail' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/organizations/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -314,7 +355,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/detail
 }
  ```
 
-## Метод получения форматов по фильтру: formats/list
+## <a name="method_formats_list"></a> Метод получения форматов по фильтру: formats/list
 Адрес: https://mp.synergy.ru/api/v1/formats/list  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -333,7 +374,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/detail
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/formats/list' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/formats/list' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -366,7 +407,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/formats/list' \
 }
  ```
 
-## Метод получения конкретной формы обучения по фильтру: formats/detail
+## <a name="method_formats_detail"></a> Метод получения конкретного формата обучения по фильтру: formats/detail
 Адрес: https://mp.synergy.ru/api/v1/formats/detail  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -382,7 +423,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/formats/list' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/formats/detail' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/formats/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -408,7 +449,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/formats/detail' \
 }
  ```
 
-## Метод получения предметов по фильтру: subjects/list
+## <a name="method_subjects_list"></a> Метод получения предметов по фильтру: subjects/list
 Адрес: https://mp.synergy.ru/api/v1/subjects/list  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -427,7 +468,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/formats/detail' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/list' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/subjects/list' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -460,7 +501,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/list' \
 }
  ```
 
-## Метод получения конкретного предмета по фильтру: subjects/detail
+## <a name="method_subjects_detail"></a> Метод получения конкретного предмета по фильтру: subjects/detail
 Адрес: https://mp.synergy.ru/api/v1/subjects/detail  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -476,7 +517,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/list' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/detail' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/subjects/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -502,7 +543,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/detail' \
 }
  ```
 
-## Метод получения продуктов по фильтру: products/list
+## <a name="method_products_list"></a>  Метод получения продуктов по фильтру: products/list
 Адрес: https://mp.synergy.ru/api/v1/products/list  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -530,7 +571,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/subjects/detail' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/products/list' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/products/list' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -594,7 +635,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/list' \
 }
 ```
 
-## Метод получения конкретного продукта по фильтру: products/detail
+## <a name="method_products_detail"></a> Метод получения конкретного продукта по фильтру: products/detail
 Адрес: https://mp.synergy.ru/api/v1/products/detail  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -610,7 +651,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/list' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/products/detail' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/products/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -658,7 +699,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/detail' \
 }
  ```
 
-## Метод получения персон по фильтру: persons/list
+## <a name="method_persons_list"></a> Метод получения персон по фильтру: persons/list
 Адрес: https://mp.synergy.ru/api/v1/persons/list  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -677,7 +718,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/detail' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/list' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/persons/list' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -712,7 +753,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/list' \
 }
  ```
 
-## Метод получения конкретной персоны по фильтру: persons/detail
+## <a name="method_persons_detail"></a> Метод получения конкретной персоны по фильтру: persons/detail
 Адрес: https://mp.synergy.ru/api/v1/persons/detail  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -726,7 +767,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/list' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/detail' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/persons/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -755,7 +796,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/detail' \
 }
  ```
 
-## Метод получения фильтра: filter
+## <a name="method_filter"></a> Метод получения фильтра: filter
 Адрес: https://mp.synergy.ru/api/v1/filter  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -765,7 +806,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/persons/detail' \
 Пример запроса:
 
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/filter' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/filter' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/vnd.api+json' \
 --data-raw ''
@@ -825,7 +866,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/filter' \
 }
 ```
 
-## Метод получения меню: menu
+## <a name="method_menu"></a> Метод получения меню: menu
 Адрес: https://mp.synergy.ru/api/v1/menu  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -835,7 +876,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/filter' \
 Пример запроса:
 
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/menu' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/menu' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/vnd.api+json' \
 --data-raw ''
@@ -883,7 +924,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/menu' \
 }
 ```
 
-## Метод получения секций продукта по фильтру: products/sections/list
+## <a name="method_products_sections_list"></a> Метод получения секций продукта по фильтру: products/sections/list
 Адрес: https://mp.synergy.ru/api/v1/products/sections/list  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -896,7 +937,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/menu' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/products/sections/list' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/products/sections/list' \
 --header 'Content-Type: application/json' \
 --header 'Accept: application/vnd.api+json' \
 --data-raw '{
@@ -950,10 +991,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/sections/li
 }
 ```
 
-
-
-
-## Метод получения конкретной секции продукта по фильтру: products/sections/detail
+## <a name="method_products_sections_detail"></a> Метод получения конкретной секции продукта по фильтру: products/sections/detail
 Адрес: https://mp.synergy.ru/api/v1/products/sections/detail  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -967,7 +1005,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/sections/li
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/products/sections/detail' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/products/sections/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -997,7 +1035,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/sections/de
 }
 ```
 
-## Метод получения баннеров по фильтру: banners/list
+## <a name="method_banners_list"></a> Метод получения баннеров по фильтру: banners/list
 Адрес: https://mp.synergy.ru/api/v1/banners/list  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -1015,7 +1053,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/sections/de
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/banners/list' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/banners/list' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -1056,7 +1094,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/banners/list' \
 }
  ```
 
-## Метод получения конкретного баннера по фильтру: banners/detail
+## <a name="method_banners_detail"></a> Метод получения конкретного баннера по фильтру: banners/detail
 Адрес: https://mp.synergy.ru/api/v1/banners/detail  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -1070,7 +1108,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/banners/list' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/banners/detail' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/banners/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -1097,7 +1135,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/banners/detail' \
 }
  ```
 
-## Метод получения секций организации по фильтру: organizations/sections/list
+## <a name="method_organizations_sections_list"></a> Метод получения секций организации по фильтру: organizations/sections/list
 Адрес: https://mp.synergy.ru/api/v1/organizations/sections/list  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -1110,7 +1148,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/banners/detail' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/sections/list' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/organizations/sections/list' \
 --header 'Content-Type: application/json' \
 --header 'Accept: application/vnd.api+json' \
 --data-raw '{
@@ -1236,7 +1274,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/sectio
 }
 ```
 
-## Метод получения конкретной секции организации по фильтру: organizations/sections/detail
+## <a name="method_organizations_sections_detail"></a> Метод получения конкретной секции организации по фильтру: organizations/sections/detail
 Адрес: https://mp.synergy.ru/api/v1/organizations/sections/detail  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -1250,7 +1288,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/sectio
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/sections/detail' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/organizations/sections/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -1375,7 +1413,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/sectio
 }
 ```
 
-## Метод получения главного меню по фильтру: menu/main
+##  <a name="method_menu_main"></a> Метод получения главного меню по фильтру: menu/main
 Адрес: https://mp.synergy.ru/api/v1/menu/main  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -1384,7 +1422,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/organizations/sectio
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/menu/main' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/menu/main' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/vnd.api+json' \
 --data-raw ''
@@ -1440,7 +1478,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/menu/main' \
 }
 ```
 
-## Метод получения квизов по фильтру: quizzes/list
+## <a name="method_quizzes_list"></a> Метод получения квизов по фильтру: quizzes/list
 Адрес: https://mp.synergy.ru/api/v1/quizzes/list  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -1454,7 +1492,7 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/menu/main' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'http://localhost:8003/api/v1/quizzes/list' \
+curl --location --request POST 'http://localhost:8003/api/v1/quizzes/list' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -1533,7 +1571,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/quizzes/list' \
 }
  ```
 
-## Метод получения конкретного квиза по фильтру: quizzes/detail
+## <a name="method_quizzes_detail"></a> Метод получения конкретного квиза по фильтру: quizzes/detail
 Адрес: https://mp.synergy.ru/api/v1/quizzes/detail  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -1546,7 +1584,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/quizzes/list' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'http://localhost:8003/api/v1/quizzes/detail' \
+curl --location --request POST 'http://localhost:8003/api/v1/quizzes/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -1622,7 +1660,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/quizzes/detail' \
 }
  ```
 
-## Метод получения конкретной секции страницы по фильтру: pages/sections/detail
+## <a name="method_pages_sections_detail"></a>  Метод получения конкретной секции страницы по фильтру: pages/sections/detail
 Адрес: https://mp.synergy.ru/api/v1/pages/sections/detail  
 Тип: POST  
 Формат входных данных: JSON<br>
@@ -1636,7 +1674,7 @@ curl --location --request GET 'http://localhost:8003/api/v1/quizzes/detail' \
 
 Пример запроса:
 ```bash
-curl --location --request GET 'https://mp.synergy.ru/api/v1/pages/sections/detail' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/pages/sections/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
