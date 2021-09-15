@@ -2,31 +2,44 @@
 
 ## Методы
 
+#### Страницы  
 + [Метод получения конкретной страницы: page](#method_page);
-+ [Метод получения направлений по фильтру: directions/list](#method_directions_list);
-+ [Метод получения конкретного направления по фильтру: directions/detail](#method_directions_detail);
++ [Метод получения конкретной секции страницы по фильтру: pages/sections/detail](#method_pages_sections_detail);
+
+#### Навигация
++ [Метод получения меню: menu](#method_menu);
++ [Метод получения главного меню по фильтру: menu/main](#method_menu_main);
++ [Метод получения фильтра продуктов: filter](#method_filter);
+
+#### Организации
 + [Метод получения организаций по фильтру: organizations/list](#method_organizations_list);
 + [Метод получения конкретной организации по фильтру: organizations/detail](#method_organizations_detail);
++ [Метод получения секций организации по фильтру: organizations/sections/list](#method_organizations_sections_list);
++ [Метод получения конкретной секции организации по фильтру: organizations/sections/detail](#method_organizations_sections_detail);
+
+#### Продукты
++ [Метод получения продуктов по фильтру: products/list](#method_products_list);
++ [Метод получения конкретного продукта по фильтру: products/detail](#method_products_detail);
++ [Метод получения секций продукта по фильтру: products/sections/list](#method_products_sections_list);
++ [Метод получения конкретной секции продукта по фильтру: products/sections/detail](#method_products_sections_detail);
+
+#### Персоны
++ [Метод получения персон по фильтру: persons/list](#method_persons_list);
++ [Метод получения конкретной персоны по фильтру: persons/detail](#method_persons_detail);
+
+#### Контент
++ [Метод получения баннеров по фильтру: banners/list](#method_banners_list);
++ [Метод получения конкретного баннера по фильтру: banners/detail](#method_banners_detail);
++ [Метод получения квизов по фильтру: quizzes/list](#method_quizzes_list);
++ [Метод получения конкретного квиза по фильтру: quizzes/detail](#method_quizzes_detail);
+
+#### Другое
++ [Метод получения направлений по фильтру: directions/list](#method_directions_list);
++ [Метод получения конкретного направления по фильтру: directions/detail](#method_directions_detail);
 + [Метод получения форматов по фильтру: formats/list](#method_formats_list);
 + [Метод получения конкретного формата обучения по фильтру: formats/detail](#method_formats_detail);
 + [Метод получения предметов по фильтру: subjects/list](#method_subjects_list);
 + [Метод получения конкретного предмета по фильтру: subjects/detail](#method_subjects_detail);
-+ [Метод получения продуктов по фильтру: products/list](#method_products_list);
-+ [Метод получения конкретного продукта по фильтру: products/detail](#method_products_detail);
-+ [Метод получения персон по фильтру: persons/list](#method_persons_list);
-+ [Метод получения конкретной персоны по фильтру: persons/detail](#method_persons_detail);
-+ [Метод получения фильтра: filter](#method_filter);
-+ [Метод получения меню: menu](#method_menu);
-+ [Метод получения секций продукта по фильтру: products/sections/list](#method_products_sections_list);
-+ [Метод получения конкретной секции продукта по фильтру: products/sections/detail](#method_products_sections_detail);
-+ [Метод получения баннеров по фильтру: banners/list](#method_banners_list);
-+ [Метод получения конкретного баннера по фильтру: banners/detail](#method_banners_detail);
-+ [Метод получения секций организации по фильтру: organizations/sections/list](#method_organizations_sections_list);
-+ [Метод получения конкретной секции организации по фильтру: organizations/sections/detail](#method_organizations_sections_detail);
-+ [Метод получения главного меню по фильтру: menu/main](#method_menu_main);
-+ [Метод получения квизов по фильтру: quizzes/list](#method_quizzes_list);
-+ [Метод получения конкретного квиза по фильтру: quizzes/detail](#method_quizzes_detail);
-+ [Метод получения конкретной секции страницы по фильтру: pages/sections/detail](#method_pages_sections_detail);
 
 
 ## <a name="method_page"></a> Метод получения конкретной страницы: page
