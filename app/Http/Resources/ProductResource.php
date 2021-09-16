@@ -18,7 +18,7 @@ class ProductResource extends JsonResource
         /** @var Product $product */
         $product = $this->resource;
 
-        return [
+        $resource = [
             Product::FIELD_ID                          => $product->getId(),
             Product::FIELD_IS_MODERATED                => $product->getIsModerated(),
             Product::FIELD_LAND                        => $product->getLand(),
@@ -45,11 +45,17 @@ class ProductResource extends JsonResource
             Product::FIELD_ORGANIZATION_ID             => $product->getOrganizationId(),
             Product::FIELD_CATEGORY_ID                 => $product->getCategoryId(),
             Product::FIELD_USER_ID                     => $product->getUserId(),
-            Product::FIELD_CREATED_AT                  => $product->getCreatedAt(),
-            Product::FIELD_UPDATED_AT                  => $product->getUpdatedAt(),
             'type'                                     => 'products',
             'page'                                     => $this->getPage($product),
+            'included'                                 => [
+                Product::ENTITY_RELATIVE_ORGANIZATION => OrganizationResource::make($this->whenLoaded('organization')),
+                Product::ENTITY_RELATIVE_LEVELS       => LevelResource::collection($this->whenLoaded('levels')),
+                Product::ENTITY_RELATIVE_DIRECTIONS   => DirectionResource::collection($this->whenLoaded('directions')),
+                Product::ENTITY_RELATIVE_FORMATS      => FormatResource::collection($this->whenLoaded('formats')),
+            ]
         ];
+
+        return $resource;
     }
 
     private function getPage(Product $product)
@@ -59,7 +65,7 @@ class ProductResource extends JsonResource
                 'slug' => 'product',
             ],
             'params' => [
-                'id' => $product->getId(),
+                'id'   => $product->getId(),
                 'slug' => $product->getSlug()
             ]
         ];
