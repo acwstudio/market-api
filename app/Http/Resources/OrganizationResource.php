@@ -30,7 +30,7 @@ class OrganizationResource extends JsonResource
             Organization::FIELD_DESCRIPTION       => $organization->getDescription(),
             Organization::FIELD_HTML_BODY         => $organization->getHtmlBody(),
             Organization::FIELD_LOGO_CODE         => $organization->getLogoCode(),
-            Organization::FIELD_LOGO              => $organization->getDigitalImage(),
+            Organization::FIELD_LOGO              => $organization->getPreviewImage(),
             Organization::FIELD_COLOR_CODE_TITLES => $organization->getColorCodeTitles(),
             Organization::FIELD_PREVIEW_IMAGE     => $organization->getPreviewImage(),
             Organization::FIELD_DIGITAL_IMAGE     => $organization->getDigitalImage(),
