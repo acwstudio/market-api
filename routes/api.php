@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Site\EntitySectionController;
 use App\Http\Controllers\Site\PageController;
 use App\Http\Controllers\Site\FilterController;
 use App\Http\Controllers\PersonController;
@@ -57,6 +58,8 @@ Route::group(['prefix' => '/v1'], function () {
     Route::post('quizzes/list', [QuizController::class, 'list']);
     Route::post('quizzes/detail', [QuizController::class, 'detail']);
     Route::post('pages/sections/detail', [PageSectionController::class, 'detail']);
+    Route::post('entities/sections/list', [EntitySectionController::class, 'list']);
+    Route::post('entities/sections/detail', [EntitySectionController::class, 'detail']);
 
     Route::post('/test/api', [TestController::class, 'api']);
 });

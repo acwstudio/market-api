@@ -2,11 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Page extends Model
 {
+    use HasFactory, SoftDeletes;
+
     public $table = 'pages';
+
+    const MODEL_NAME = 'Страницы',
+        MODEL_LINK = 'pages';
 
     const FIELD_ID = 'id',
         FIELD_NAME = 'name',
