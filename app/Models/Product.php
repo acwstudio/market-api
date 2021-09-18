@@ -336,9 +336,16 @@ class Product extends Model
         return $this->belongsToMany(Person::class);
     }
 
-    public function productSection()
+//    public function productSection()
+//    {
+//        return $this->hasMany(ProductSection::class)->orderBy(ProductSection::FIELD_SORT, 'asc');
+//    }
+
+    public function entitySection()
     {
-        return $this->hasMany(ProductSection::class)->orderBy(ProductSection::FIELD_SORT, 'asc');
+        return  $this->hasMany(EntitySection::class, 'entity_id')
+            ->where(EntitySection::FIELD_ENTITY_TYPE, 'App\\Models\\Product')
+            ->orderBy(EntitySection::FIELD_SORT, 'asc');
     }
 
     public function organization()

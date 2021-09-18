@@ -2,7 +2,7 @@
 
 #### Страницы  
 + [Метод получения конкретной страницы: page](#method_page);
-+ [Метод получения конкретной секции страницы по фильтру: pages/sections/detail](#method_pages_sections_detail);
++ [Метод получения конкретной секции страницы по фильтру: entities/sections/detail](#method_pages_sections_detail);
 
 #### Навигация
 + [Метод получения меню: menu](#method_menu);
@@ -12,14 +12,14 @@
 #### Организации
 + [Метод получения организаций по фильтру: organizations/list](#method_organizations_list);
 + [Метод получения конкретной организации по фильтру: organizations/detail](#method_organizations_detail);
-+ [Метод получения секций организации по фильтру: organizations/sections/list](#method_organizations_sections_list);
-+ [Метод получения конкретной секции организации по фильтру: organizations/sections/detail](#method_organizations_sections_detail);
++ [Метод получения секций организации по фильтру: entities/sections/list](#method_organizations_sections_list);
++ [Метод получения конкретной секции организации по фильтру: entities/sections/detail](#method_organizations_sections_detail);
 
 #### Продукты
 + [Метод получения продуктов по фильтру: products/list](#method_products_list);
 + [Метод получения конкретного продукта по фильтру: products/detail](#method_products_detail);
-+ [Метод получения секций продукта по фильтру: products/sections/list](#method_products_sections_list);
-+ [Метод получения конкретной секции продукта по фильтру: products/sections/detail](#method_products_sections_detail);
++ [Метод получения секций продукта по фильтру: entities/sections/list](#method_products_sections_list);
++ [Метод получения конкретной секции продукта по фильтру: entities/sections/detail](#method_products_sections_detail);
 
 #### Персоны
 + [Метод получения персон по фильтру: persons/list](#method_persons_list);

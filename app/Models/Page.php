@@ -76,4 +76,11 @@ class Page extends Model
     {
         return $this->belongsToMany(Component::class);
     }
+
+    public function entitySection()
+    {
+        return  $this->hasMany(EntitySection::class, 'entity_id')
+            ->where(EntitySection::FIELD_ENTITY_TYPE, 'App\\Models\\Page')
+            ->orderBy(EntitySection::FIELD_SORT, 'asc');
+    }
 }

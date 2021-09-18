@@ -190,8 +190,15 @@ class Organization extends Model
         return $this->belongsToMany(Person::class);
     }
 
-    public function organizationSection()
+//    public function organizationSection()
+//    {
+//        return $this->hasMany(OrganizationSection::class)->orderBy(OrganizationSection::FIELD_SORT, 'asc');
+//    }
+
+    public function entitySection()
     {
-        return $this->hasMany(OrganizationSection::class)->orderBy(OrganizationSection::FIELD_SORT, 'asc');
+        return $this->hasMany(EntitySection::class, 'entity_id')
+            ->where(EntitySection::FIELD_ENTITY_TYPE, 'App\\Models\\Organization')
+            ->orderBy(EntitySection::FIELD_SORT, 'asc');
     }
 }
