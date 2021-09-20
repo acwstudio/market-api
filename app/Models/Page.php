@@ -2,11 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Page extends Model
 {
+    use HasFactory, SoftDeletes;
+
     public $table = 'pages';
+
+    const MODEL_NAME = 'Страницы',
+        MODEL_LINK = 'pages';
 
     const FIELD_ID = 'id',
         FIELD_NAME = 'name',
@@ -68,5 +75,12 @@ class Page extends Model
     public function components()
     {
         return $this->belongsToMany(Component::class);
+    }
+
+    public function entitySection()
+    {
+        return  $this->hasMany(EntitySection::class, 'entity_id')
+            ->where(EntitySection::FIELD_ENTITY_TYPE, 'App\\Models\\Page')
+            ->orderBy(EntitySection::FIELD_SORT, 'asc');
     }
 }
