@@ -6,6 +6,7 @@ use App\Http\Controllers\PersonController;
 use App\Http\Controllers\Site\MainMenuController;
 use App\Http\Controllers\Site\MenuController;
 use App\Http\Controllers\Site\PageSectionController;
+use App\Http\Controllers\Site\ProductFilterController;
 use App\Http\Controllers\Site\ProductSectionController;
 use App\Http\Controllers\Site\OrganizationSectionController;
 use App\Http\Controllers\Site\QuizController;
@@ -48,6 +49,7 @@ Route::group(['prefix' => '/v1'], function () {
     Route::post('subjects/list', [SubjectController::class, 'list']);
     Route::post('subjects/detail', [SubjectController::class, 'detail']);
     Route::post('filter', [FilterController::class, 'filter']);
+    Route::post('filter/products/main', [ProductFilterController::class, 'filter']);
     Route::post('menu', [MenuController::class, 'menu']);
     Route::post('menu/main', [MainMenuController::class, 'menu']);
     Route::post('products/sections/list', [ProductSectionController::class, 'list']);
