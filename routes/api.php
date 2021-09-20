@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Site\EntitySectionController;
 use App\Http\Controllers\Site\PageController;
-use App\Http\Controllers\Site\FilterController;
+use App\Http\Controllers\Site\FilterProductController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\Site\MainMenuController;
 use App\Http\Controllers\Site\MenuController;
@@ -45,7 +45,7 @@ Route::group(['prefix' => '/v1'], function () {
     Route::post('formats/detail', [FormatController::class, 'detail']);
     Route::post('subjects/list', [SubjectController::class, 'list']);
     Route::post('subjects/detail', [SubjectController::class, 'detail']);
-    Route::post('filter', [FilterController::class, 'filter']);
+    Route::post('filters/products/catalog', [FilterProductController::class, 'catalog']);
     Route::post('menu', [MenuController::class, 'menu']);
     Route::post('menu/main', [MainMenuController::class, 'menu']);
     Route::post('quizzes/list', [QuizController::class, 'list']);

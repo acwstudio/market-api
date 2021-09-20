@@ -7,7 +7,6 @@
 #### Навигация
 + [Метод получения меню: menu](#method_menu);
 + [Метод получения главного меню по фильтру: menu/main](#method_menu_main);
-+ [Метод получения фильтра продуктов: filter](#method_filter);
 
 #### Организации
 + [Метод получения организаций по фильтру: organizations/list](#method_organizations_list);
@@ -16,6 +15,7 @@
 + [Метод получения конкретной секции организации по фильтру: entities/sections/detail](#method_organizations_sections_detail);
 
 #### Продукты
++ [Метод получения фильтра продуктов: filters/products/catalog](#method_filter);
 + [Метод получения продуктов по фильтру: products/list](#method_products_list);
 + [Метод получения конкретного продукта по фильтру: products/detail](#method_products_detail);
 + [Метод получения секций продукта по фильтру: entities/sections/list](#method_products_sections_list);
@@ -813,54 +813,113 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/filter' \
 Пример ответа:
 ```json
 {
-    "data": {
-        "directions": [
-            {
-                "id": 1,
-                "name": "Экономика и финансы"
-            },
-            {
-                "id": 2,
-                "name": "IT"
-            }
-        ],
-        "levels": [
-            {
-                "id": 1,
-                "name": "Школа"
-            },
-            {
-                "id": 2,
-                "name": "Колледж"
-            },
-            {
-                "id": 3,
-                "name": "Бакалавриат"
-            }
-        ],
-        "formats": [
-            {
-                "id": 22,
-                "name": "Очная"
-            },
-            {
-                "id": 23,
-                "name": "Заочная"
-            }
-        ],
-        "subjects": [
-            {
-                "id": 1,
-                "name": "Графический дизайн"
-            },
-            {
-                "id": 2,
-                "name": "Дизайн интерьера"
-            }
-        ]
-    },
-    "count": null,
-    "success": true
+    "success": true,
+    "data": [
+        {
+            "title": "Направления",
+            "filter_by": "directions",
+            "type": "list",
+            "search": false,
+            "values": [
+                {
+                    "id": 1,
+                    "name": "Экономика и финансы"
+                },
+                {
+                    "id": 2,
+                    "name": "IT"
+                }
+            ]
+        },
+        {
+            "title": "Уровни",
+            "filter_by": "levels",
+            "type": "list",
+            "search": false,
+            "values": [
+                {
+                    "id": 1,
+                    "name": "Школа"
+                },
+                {
+                    "id": 2,
+                    "name": "Колледж"
+                }
+            ]
+        },
+        {
+            "title": "Форматы",
+            "filter_by": "formats",
+            "type": "list",
+            "search": false,
+            "values": [
+                {
+                    "id": 22,
+                    "name": "Очная"
+                },
+                {
+                    "id": 23,
+                    "name": "Заочная"
+                }
+            ]
+        },
+        {
+            "title": "Учебные заведения",
+            "filter_by": "organization_id",
+            "type": "list",
+            "search": true,
+            "values": [
+                {
+                    "id": 9,
+                    "name": "333Университет «Синергия»"
+                },
+                {
+                    "id": 10,
+                    "name": "Московская академия предпринимательства"
+                }
+            ]
+        },
+        {
+            "title": "С трудоустройством",
+            "filter_by": "is_employment",
+            "type": "checkbox",
+            "search": true,
+            "values": [
+                true,
+                false
+            ]
+        },
+        {
+            "title": "В рассрочку",
+            "filter_by": "is_installment",
+            "type": "checkbox",
+            "search": true,
+            "values": [
+                true,
+                false
+            ]
+        },
+        {
+            "title": "Города",
+            "filter_by": "city_ids",
+            "type": "list",
+            "search": true,
+            "values": [
+                {
+                    "id": 1,
+                    "name": "г Сочи"
+                },
+                {
+                    "id": 2,
+                    "name": "Москва"
+                },
+                {
+                    "id": 3,
+                    "name": "Ростов-на-Дону"
+                }
+            ]
+        }
+    ]
 }
 ```
 
