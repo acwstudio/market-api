@@ -6,6 +6,7 @@ use App\Http\Controllers\Site\FilterProductController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\Site\MainMenuController;
 use App\Http\Controllers\Site\MenuController;
+use App\Http\Controllers\Site\ProductFilterController;
 use App\Http\Controllers\Site\QuizController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,7 @@ Route::group(['prefix' => '/v1'], function () {
     Route::post('formats/detail', [FormatController::class, 'detail']);
     Route::post('subjects/list', [SubjectController::class, 'list']);
     Route::post('subjects/detail', [SubjectController::class, 'detail']);
+    Route::post('filters/products/main', [ProductFilterController::class, 'filter']);
     Route::post('filters/products/catalog', [FilterProductController::class, 'catalog']);
     Route::post('menu', [MenuController::class, 'menu']);
     Route::post('menu/main', [MainMenuController::class, 'menu']);
