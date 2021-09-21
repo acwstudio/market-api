@@ -15,7 +15,7 @@
 + [Метод получения конкретной секции организации по фильтру: entities/sections/detail](#method_organizations_sections_detail);
 
 #### Продукты
-+ [Метод получения фильтра продуктов на главной странице: filter/products/main](#method_filter_products_main);
++ [Метод получения фильтра продуктов на главной странице: filters/products/main](#method_filter_products_main);
 + [Метод получения фильтра продуктов: filters/products/catalog](#method_filter);
 + [Метод получения продуктов по фильтру: products/list](#method_products_list);
 + [Метод получения конкретного продукта по фильтру: products/detail](#method_products_detail);
@@ -795,8 +795,8 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/persons/detail' \
 }
  ```
 
-## <a name="method_filter"></a> Метод получения фильтра: filter
-Адрес: https://mp.synergy.ru/api/v1/filter  
+## <a name="method_filter"></a> Метод получения фильтра: filters/products/catalog
+Адрес: https://mp.synergy.ru/api/v1/filters/products/catalog  
 Тип: POST  
 Формат входных данных: JSON<br>
 
@@ -805,7 +805,7 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/persons/detail' \
 Пример запроса:
 
 ```bash
-curl --location --request POST 'https://mp.synergy.ru/api/v1/filter' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/filters/products/catalog' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/vnd.api+json' \
 --data-raw ''
@@ -924,8 +924,8 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/filter' \
 }
 ```
 
-## <a name="method_filter_products_main"></a> Метод получения фильтра продуктов на главной странице: filter/products/main
-Адрес: https://mp.synergy.ru/api/v1/filter/products/main
+## <a name="method_filter_products_main"></a> Метод получения фильтра продуктов на главной странице: filters/products/main
+Адрес: https://mp.synergy.ru/api/v1/filters/products/main
 Тип: POST  
 Формат входных данных: JSON<br>
 
@@ -934,7 +934,7 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/filter' \
 Пример запроса:
 
 ```bash
-curl --location --request POST 'https://mp.synergy.ru/api/v1/filter/products/main' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/filters/products/main' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/vnd.api+json' \
 --data-raw ''
