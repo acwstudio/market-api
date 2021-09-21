@@ -1111,6 +1111,9 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/entities/sections/d
 | published     | bool        | -            | true                | Опубликован            |
 | name          | string      | -            | Баннер 1            | Название               |
 | link          | string      | -            | http://example.ru/1 | Ссылка                 |
+| banner_type   | string      | -            | narrow              | Тип                    |
+| colour        | string      | -            | #ff0000             | Цвет                   |
+| description   | string      | -            | Good banner         | Описание               |
 
 
 
@@ -1130,30 +1133,36 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/banners/list' \
 Пример ответа:
 ```json
 {
-	"data": [
-		{
-			"id": 1,
-			"type": "banners",
-			"published": 1,
-			"name": "Баннер 1",
-			"link":"http://example.ru/1",
-			"image":"uploads\/banners\/nSDOUocleJZcOhTtaSbdk1IR5eqAQz5DlBAaov4B.jpg",
-			"created_at":"2021-09-01T17:12:25.000000Z",
-			"updated_at":"2021-09-01T17:22:47.000000Z"
-		},
-		{
-			"id": 3,
-			"type": "banners",
-			"published": 1,
-			"name": "Banner 2",
-			"link": "http://example.ru/2",
-			"image": "uploads\/banners\/lRfJ0FoRDx2xz9odVM7Hn0BoeDxObc92nXozynfm.jpg",
-			"created_at": "2021-09-01T17:35:12.000000Z",
-			"updated_at": "2021-09-02T17:38:01.000000Z"
-		}
-	],
-	"count": 2,
-	"success": true
+    "data": [
+        {
+            "id": 1,
+            "type": "banners",
+            "published": 1,
+            "name": "Баннер 1",
+            "link": "http://example.ru/1",
+            "banner_type": "narrow",
+            "colour": "#ff0000",
+            "description": "Good banner",
+            "image": "uploads\/banners\/nSDOUocleJZcOhTtaSbdk1IR5eqAQz5DlBAaov4B.jpg",
+            "created_at": "2021-09-01T17:12:25.000000Z",
+            "updated_at": "2021-09-01T17:22:47.000000Z"
+        },
+        {
+            "id": 3,
+            "type": "banners",
+            "published": 1,
+            "name": "Banner 2",
+            "link": "http://example.ru/2",
+            "banner_type": "top",
+            "colour": "#00ff00",
+            "description": "Excellent banner",
+            "image": "uploads\/banners\/lRfJ0FoRDx2xz9odVM7Hn0BoeDxObc92nXozynfm.jpg",
+            "created_at": "2021-09-01T17:35:12.000000Z",
+            "updated_at": "2021-09-02T17:38:01.000000Z"
+        }
+    ],
+    "count": 2,
+    "success": true
 }
  ```
 
@@ -1183,18 +1192,21 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/banners/detail' \
 Пример ответа:
 ```json
 {
-	"data": {
-		"id": 3,
-		"type": "banners",
-		"published": 1,
-		"name": "Banner 2",
-		"link": "http://example.ru/2",
-		"image": "uploads\/banners\/lRfJ0FoRDx2xz9odVM7Hn0BoeDxObc92nXozynfm.jpg",
-		"created_at": "2021-09-01T17:35:12.000000Z",
-		"updated_at": "2021-09-02T17:38:01.000000Z"
-	},
-	"success": true,
-	"log_request_id": ""
+    "data": {
+        "id": 3,
+        "type": "banners",
+        "published": 1,
+        "name": "Banner 2",
+        "link": "http://example.ru/2",
+        "banner_type": "top",
+        "colour": "#00ff00",
+        "description": "Excellent banner",
+        "image": "uploads\/banners\/lRfJ0FoRDx2xz9odVM7Hn0BoeDxObc92nXozynfm.jpg",
+        "created_at": "2021-09-01T17:35:12.000000Z",
+        "updated_at": "2021-09-02T17:38:01.000000Z"
+    },
+    "success": true,
+    "log_request_id": ""
 }
  ```
 
