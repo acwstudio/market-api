@@ -41,7 +41,7 @@ class FilterProductController extends Controller
         $resource = [
             [
                 'title'     => 'Направления',
-                'filter_by' => 'organization_ids',
+                'filter_by' => 'direction_ids',
                 'type'      => 'list',
                 'search'    => false,
                 'values'    => $this->getPublishedListByModel(Direction::class),
