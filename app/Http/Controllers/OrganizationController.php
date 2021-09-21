@@ -43,14 +43,23 @@ class OrganizationController extends Controller
                 AllowedFilter::exact('product_ids', 'products.id'),
                 AllowedFilter::exact('person_ids', 'persons.id'),
             ])
-            ->allowedSorts(['id', 'name', 'address'])
-            ->get();
+            ->allowedSorts(['id', 'name', 'address']);
 
-        return (new OrganizationCollection($query))
-            ->additional([
-                'count' => $query->count(),
-                'success' => true
-            ]);
+        $pagination = $request->json()->all()['pagination'] ?? ['page' => 1, 'page_size' => 10];
+        $count = $query->count();
+
+        $collection = new OrganizationCollection($query->paginate(
+            $pagination['page_size'],
+            $columns = ['*'],
+            $pageName = 'page',
+            $pagination['page']
+        ));
+
+        return response([
+            'data' => $collection,
+            'success' =>true,
+            'count' => $count
+        ]);
     }
 
     public function detail(EntityDetailRequest $request)

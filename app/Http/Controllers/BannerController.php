@@ -23,7 +23,10 @@ class BannerController extends Controller
                 AllowedFilter::exact('ids', 'id'),
                 AllowedFilter::exact('published'),
                 AllowedFilter::exact('name'),
-                AllowedFilter::exact('link')
+                AllowedFilter::exact('link'),
+                AllowedFilter::exact('banner_type'),
+                AllowedFilter::exact('colour'),
+                AllowedFilter::exact('description')
             ])
             ->allowedSorts(['name', 'id'])
             ->get();

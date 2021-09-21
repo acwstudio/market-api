@@ -46,7 +46,6 @@ class ProductResource extends JsonResource
             Product::FIELD_CATEGORY_ID                 => $product->getCategoryId(),
             Product::FIELD_USER_ID                     => $product->getUserId(),
             'type'                                     => 'products',
-            'page'                                     => $this->getPage($product),
             'included'                                 => [
                 Product::ENTITY_RELATIVE_ORGANIZATION => OrganizationResource::make($this->whenLoaded('organization')),
                 Product::ENTITY_RELATIVE_LEVELS       => LevelResource::collection($this->whenLoaded('levels')),
@@ -57,18 +56,4 @@ class ProductResource extends JsonResource
 
         return $resource;
     }
-
-    private function getPage(Product $product)
-    {
-        return [
-            'filter' => [
-                'slug' => 'product',
-            ],
-            'params' => [
-                'id'   => $product->getId(),
-                'slug' => $product->getSlug()
-            ]
-        ];
-    }
-
 }

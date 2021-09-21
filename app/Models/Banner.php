@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
 class Banner extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     public $table = 'banners';
 
@@ -19,6 +20,9 @@ class Banner extends Model
         FIELD_PUBLISHED = 'published',
         FIELD_NAME = 'name',
         FIELD_LINK = 'link',
+        FIELD_BANNER_TYPE = 'banner_type',
+        FIELD_COLOUR = 'colour',
+        FIELD_DESCRIPTION = 'description',
         FIELD_IMAGE = 'image',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
@@ -28,6 +32,9 @@ class Banner extends Model
         self::FIELD_PUBLISHED,
         self::FIELD_NAME,
         self::FIELD_LINK,
+        self::FIELD_BANNER_TYPE,
+        self::FIELD_COLOUR,
+        self::FIELD_DESCRIPTION,
         self::FIELD_IMAGE
     ];
 
@@ -59,6 +66,21 @@ class Banner extends Model
     public function getLink()
     {
         return $this->getAttribute(self::FIELD_LINK);
+    }
+
+    public function getBannerType()
+    {
+        return $this->getAttribute(self::FIELD_BANNER_TYPE);
+    }
+
+    public function getColour()
+    {
+        return $this->getAttribute(self::FIELD_COLOUR);
+    }
+
+    public function getDescription()
+    {
+        return $this->getAttribute(self::FIELD_DESCRIPTION);
     }
 
     public function getImage()

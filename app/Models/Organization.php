@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
 class Organization extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     public $table = 'organizations';
 
@@ -190,8 +191,10 @@ class Organization extends Model
         return $this->belongsToMany(Person::class);
     }
 
-    public function organizationSection()
+    public function entitySection()
     {
-        return $this->hasMany(OrganizationSection::class)->orderBy(OrganizationSection::FIELD_SORT, 'asc');
+        return $this->hasMany(EntitySection::class, 'entity_id')
+            ->where(EntitySection::FIELD_ENTITY_TYPE, 'App\\Models\\Organization')
+            ->orderBy(EntitySection::FIELD_SORT, 'asc');
     }
 }

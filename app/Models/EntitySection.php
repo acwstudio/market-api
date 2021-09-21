@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductSection extends Model
+class EntitySection extends Model
 {
     use HasFactory;
 
-    public $table = 'product_section';
+    public $table = 'entity_sections';
 
-    const FIELD_PRODUCT_ID = 'product_id',
+    const FIELD_ENTITY_ID = 'entity_id',
         FIELD_SECTION_ID = 'section_id',
+        FIELD_ENTITY_TYPE = 'entity_type',
         FIELD_PUBLISHED = 'published',
         FIELD_TITLE = 'title',
         FIELD_ANCHOR_TITLE = 'anchor_title',
@@ -23,10 +24,13 @@ class ProductSection extends Model
         FIELD_UPDATED_AT = 'updated_at';
 
     protected $fillable = [
-        self::FIELD_PRODUCT_ID,
+        self::FIELD_ENTITY_ID,
         self::FIELD_SECTION_ID,
+        self::FIELD_ENTITY_TYPE,
         self::FIELD_PUBLISHED,
         self::FIELD_TITLE,
+        self::FIELD_ANCHOR_TITLE,
+        self::FIELD_IS_HIDE_ANCHOR,
         self::FIELD_SORT,
         self::FIELD_JSON,
     ];
@@ -36,9 +40,14 @@ class ProductSection extends Model
         return $this->getAttribute(self::FIELD_PUBLISHED);
     }
 
-    public function getProductId()
+    public function getEntityId()
     {
-        return $this->getAttribute(self::FIELD_PRODUCT_ID);
+        return $this->getAttribute(self::FIELD_ENTITY_ID);
+    }
+
+    public function getEntityType()
+    {
+        return $this->getAttribute(self::FIELD_ENTITY_TYPE);
     }
 
     public function getSectionId()

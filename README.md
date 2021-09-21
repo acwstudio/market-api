@@ -2,7 +2,7 @@
 
 #### Страницы  
 + [Метод получения конкретной страницы: page](#method_page);
-+ [Метод получения конкретной секции страницы по фильтру: pages/sections/detail](#method_pages_sections_detail);
++ [Метод получения конкретной секции страницы по фильтру: entities/sections/detail](#method_pages_sections_detail);
 
 #### Навигация
 + [Метод получения меню: menu](#method_menu);
@@ -13,14 +13,15 @@
 #### Организации
 + [Метод получения организаций по фильтру: organizations/list](#method_organizations_list);
 + [Метод получения конкретной организации по фильтру: organizations/detail](#method_organizations_detail);
-+ [Метод получения секций организации по фильтру: organizations/sections/list](#method_organizations_sections_list);
-+ [Метод получения конкретной секции организации по фильтру: organizations/sections/detail](#method_organizations_sections_detail);
++ [Метод получения секций организации по фильтру: entities/sections/list](#method_organizations_sections_list);
++ [Метод получения конкретной секции организации по фильтру: entities/sections/detail](#method_organizations_sections_detail);
 
 #### Продукты
++ [Метод получения фильтра продуктов: filters/products/catalog](#method_filter);
 + [Метод получения продуктов по фильтру: products/list](#method_products_list);
 + [Метод получения конкретного продукта по фильтру: products/detail](#method_products_detail);
-+ [Метод получения секций продукта по фильтру: products/sections/list](#method_products_sections_list);
-+ [Метод получения конкретной секции продукта по фильтру: products/sections/detail](#method_products_sections_detail);
++ [Метод получения секций продукта по фильтру: entities/sections/list](#method_products_sections_list);
++ [Метод получения конкретной секции продукта по фильтру: entities/sections/detail](#method_products_sections_detail);
 
 #### Персоны
 + [Метод получения персон по фильтру: persons/list](#method_persons_list);
@@ -814,54 +815,113 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/filter' \
 Пример ответа:
 ```json
 {
-    "data": {
-        "directions": [
-            {
-                "id": 1,
-                "name": "Экономика и финансы"
-            },
-            {
-                "id": 2,
-                "name": "IT"
-            }
-        ],
-        "levels": [
-            {
-                "id": 1,
-                "name": "Школа"
-            },
-            {
-                "id": 2,
-                "name": "Колледж"
-            },
-            {
-                "id": 3,
-                "name": "Бакалавриат"
-            }
-        ],
-        "formats": [
-            {
-                "id": 22,
-                "name": "Очная"
-            },
-            {
-                "id": 23,
-                "name": "Заочная"
-            }
-        ],
-        "subjects": [
-            {
-                "id": 1,
-                "name": "Графический дизайн"
-            },
-            {
-                "id": 2,
-                "name": "Дизайн интерьера"
-            }
-        ]
-    },
-    "count": null,
-    "success": true
+    "success": true,
+    "data": [
+        {
+            "title": "Направления",
+            "filter_by": "directions",
+            "type": "list",
+            "search": false,
+            "values": [
+                {
+                    "id": 1,
+                    "name": "Экономика и финансы"
+                },
+                {
+                    "id": 2,
+                    "name": "IT"
+                }
+            ]
+        },
+        {
+            "title": "Уровни",
+            "filter_by": "levels",
+            "type": "list",
+            "search": false,
+            "values": [
+                {
+                    "id": 1,
+                    "name": "Школа"
+                },
+                {
+                    "id": 2,
+                    "name": "Колледж"
+                }
+            ]
+        },
+        {
+            "title": "Форматы",
+            "filter_by": "formats",
+            "type": "list",
+            "search": false,
+            "values": [
+                {
+                    "id": 22,
+                    "name": "Очная"
+                },
+                {
+                    "id": 23,
+                    "name": "Заочная"
+                }
+            ]
+        },
+        {
+            "title": "Учебные заведения",
+            "filter_by": "organization_id",
+            "type": "list",
+            "search": true,
+            "values": [
+                {
+                    "id": 9,
+                    "name": "333Университет «Синергия»"
+                },
+                {
+                    "id": 10,
+                    "name": "Московская академия предпринимательства"
+                }
+            ]
+        },
+        {
+            "title": "С трудоустройством",
+            "filter_by": "is_employment",
+            "type": "checkbox",
+            "search": true,
+            "values": [
+                true,
+                false
+            ]
+        },
+        {
+            "title": "В рассрочку",
+            "filter_by": "is_installment",
+            "type": "checkbox",
+            "search": true,
+            "values": [
+                true,
+                false
+            ]
+        },
+        {
+            "title": "Города",
+            "filter_by": "city_ids",
+            "type": "list",
+            "search": true,
+            "values": [
+                {
+                    "id": 1,
+                    "name": "г Сочи"
+                },
+                {
+                    "id": 2,
+                    "name": "Москва"
+                },
+                {
+                    "id": 3,
+                    "name": "Ростов-на-Дону"
+                }
+            ]
+        }
+    ]
 }
 ```
 
@@ -1022,8 +1082,8 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/menu' \
 }
 ```
 
-## <a name="method_products_sections_list"></a> Метод получения секций продукта по фильтру: products/sections/list
-Адрес: https://mp.synergy.ru/api/v1/products/sections/list  
+## <a name="method_products_sections_list"></a> Метод получения секций продукта по фильтру: entities/sections/list
+Адрес: https://mp.synergy.ru/api/v1/entities/sections/list  
 Тип: POST  
 Формат входных данных: JSON<br>
 
@@ -1031,16 +1091,18 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/menu' \
 
 | Название поля | Тип | Обязательное | Пример | Комментарий
 | ------------- | ------- | --- | ---------------- | ------------------------------ |
-| product_id | integer | + | 549 | Идентификатор |
+| entity_id | integer | + | 549 | Идентификатор |
+| entity_type | string | + | "product" | Идентификатор |
 
 Пример запроса:
 ```bash
-curl --location --request POST 'https://mp.synergy.ru/api/v1/products/sections/list' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/entities/sections/list' \
 --header 'Content-Type: application/json' \
 --header 'Accept: application/vnd.api+json' \
 --data-raw '{
     "filter": {
-        "product_id": 594
+        "entity_id": 594
+        "entity_type": "product"
     }
 }''
  ```
@@ -1051,8 +1113,9 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/products/sections/l
     "success": true,
     "data": [
         {
-            "product_id": 594,
-            "type": "product-sections",
+            "entity_id": 594,
+            "entity_type": "product",
+            "type": "entity-sections",
             "section_id": 12,
             "published": 1,
             "title": "Программа обучения",
@@ -1089,8 +1152,8 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/products/sections/l
 }
 ```
 
-## <a name="method_products_sections_detail"></a> Метод получения конкретной секции продукта по фильтру: products/sections/detail
-Адрес: https://mp.synergy.ru/api/v1/products/sections/detail  
+## <a name="method_products_sections_detail"></a> Метод получения конкретной секции продукта по фильтру: entities/sections/detail
+Адрес: https://mp.synergy.ru/api/v1/entities/sections/detail  
 Тип: POST  
 Формат входных данных: JSON<br>
 
@@ -1098,18 +1161,20 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/products/sections/l
 
 | Название поля | Тип | Обязательное | Пример | Комментарий
 | ------------- | ------- | --- | ---------------- | ------------------------------ |
-| product_id | integer | - | 549 | Идентификатор |
+| entity_id | integer | - | 549 | Идентификатор |
+| entity_type | string | - | "product" | Идентификатор |
 | section_id | integer | - | 10 | Идентификатор |
 
 Пример запроса:
 ```bash
-curl --location --request POST 'https://mp.synergy.ru/api/v1/products/sections/detail' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/entities/sections/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "filter": {
         "section_id": 10,
-        "product_id": 549
+        "entity_id": 549,
+        "entity_type": "product",
     }
 }'
  ```
@@ -1118,7 +1183,8 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/products/sections/d
 ```json
 {
     "data": {
-        "product_id": 549,
+        "entity_id": 549,
+        "entity_type": "product",
         "type": "product-sections",
         "section_id": 10,
         "published": 1,
@@ -1146,6 +1212,9 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/products/sections/d
 | published     | bool        | -            | true                | Опубликован            |
 | name          | string      | -            | Баннер 1            | Название               |
 | link          | string      | -            | http://example.ru/1 | Ссылка                 |
+| banner_type   | string      | -            | narrow              | Тип                    |
+| colour        | string      | -            | #ff0000             | Цвет                   |
+| description   | string      | -            | Good banner         | Описание               |
 
 
 
@@ -1171,10 +1240,13 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/banners/list' \
             "type": "banners",
             "published": 1,
             "name": "Баннер 1",
-            "link":"http://example.ru/1",
-            "image":"uploads\/banners\/nSDOUocleJZcOhTtaSbdk1IR5eqAQz5DlBAaov4B.jpg",
-            "created_at":"2021-09-01T17:12:25.000000Z",
-            "updated_at":"2021-09-01T17:22:47.000000Z"
+            "link": "http://example.ru/1",
+            "banner_type": "narrow",
+            "colour": "#ff0000",
+            "description": "Good banner",
+            "image": "uploads\/banners\/nSDOUocleJZcOhTtaSbdk1IR5eqAQz5DlBAaov4B.jpg",
+            "created_at": "2021-09-01T17:12:25.000000Z",
+            "updated_at": "2021-09-01T17:22:47.000000Z"
         },
         {
             "id": 3,
@@ -1182,6 +1254,9 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/banners/list' \
             "published": 1,
             "name": "Banner 2",
             "link": "http://example.ru/2",
+            "banner_type": "top",
+            "colour": "#00ff00",
+            "description": "Excellent banner",
             "image": "uploads\/banners\/lRfJ0FoRDx2xz9odVM7Hn0BoeDxObc92nXozynfm.jpg",
             "created_at": "2021-09-01T17:35:12.000000Z",
             "updated_at": "2021-09-02T17:38:01.000000Z"
@@ -1224,6 +1299,9 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/banners/detail' \
         "published": 1,
         "name": "Banner 2",
         "link": "http://example.ru/2",
+        "banner_type": "top",
+        "colour": "#00ff00",
+        "description": "Excellent banner",
         "image": "uploads\/banners\/lRfJ0FoRDx2xz9odVM7Hn0BoeDxObc92nXozynfm.jpg",
         "created_at": "2021-09-01T17:35:12.000000Z",
         "updated_at": "2021-09-02T17:38:01.000000Z"
@@ -1233,25 +1311,27 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/banners/detail' \
 }
  ```
 
-## <a name="method_organizations_sections_list"></a> Метод получения секций организации по фильтру: organizations/sections/list
-Адрес: https://mp.synergy.ru/api/v1/organizations/sections/list  
+## <a name="method_organizations_sections_list"></a> Метод получения секций организации по фильтру: entities/sections/list
+Адрес: https://mp.synergy.ru/api/v1/entities/sections/list  
 Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
 
-| Название поля   | Тип     | Обязательное | Пример | Комментарий
-| --------------- | ------- | ------------ | ------ | ------------- |
-| organization_id | integer | +            | 10     | Идентификатор |
+| Название поля   | Тип     | Обязательное | Пример         | Комментарий
+| --------------- | ------- | ------------ | ---------------| ------------- |
+| entity_id       | integer | +            | 10             | Идентификатор |
+| entity_type     | string  | +            | "organization" | Идентификатор |
 
 Пример запроса:
 ```bash
-curl --location --request POST 'https://mp.synergy.ru/api/v1/organizations/sections/list' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/entities/sections/list' \
 --header 'Content-Type: application/json' \
 --header 'Accept: application/vnd.api+json' \
 --data-raw '{
     "filter": {
-        "organization_id": 10
+        "entity_id": 10,
+        "entity_type": "organization",
     }
 }''
  ```
@@ -1262,8 +1342,9 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/organizations/secti
     "success": true,
     "data": [
         {
-            "organization_id": 10,
-            "type": "organization-sections",
+            "entity_id": 10,
+            "entity_type": "organization",
+            "type": "entity-sections",
             "section_id": 18,
             "published": 1,
             "title": "Об университете",
@@ -1372,26 +1453,28 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/organizations/secti
 }
 ```
 
-## <a name="method_organizations_sections_detail"></a> Метод получения конкретной секции организации по фильтру: organizations/sections/detail
-Адрес: https://mp.synergy.ru/api/v1/organizations/sections/detail  
+## <a name="method_organizations_sections_detail"></a> Метод получения конкретной секции организации по фильтру: entities/sections/detail
+Адрес: https://mp.synergy.ru/api/v1/entities/sections/detail  
 Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
 
-| Название поля   | Тип     | Обязательное | Пример | Комментарий
-| --------------- | ------- | ------------ | ------ | ------------- |
-| organization_id | integer | +            | 10     | Идентификатор |
-| section_id      | integer | +            | 18     | Идентификатор |
+| Название поля   | Тип     | Обязательное | Пример         | Комментарий
+| --------------- | ------- | ------------ | -------------- | ------------- |
+| entity_id       | integer | +            | 10             | Идентификатор |
+| entity_type     | string  | +            | "organization" | Идентификатор |
+| section_id      | integer | +            | 18             | Идентификатор |
 
 Пример запроса:
 ```bash
-curl --location --request POST 'https://mp.synergy.ru/api/v1/organizations/sections/detail' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/entities/sections/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "filter": {
-        "organization_id": 10,
+        "entity_id": 10,
+        "entity_type": "organization",
         "section_id": 18
     }
 }'
@@ -1402,8 +1485,9 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/organizations/secti
 {
     "success": true,
     "data": {
-        "organization_id": 10,
-        "type": "organization-sections",
+        "entity_id": 10,
+        "entity_type": "organization",
+        "type": "entity-sections",
         "section_id": 18,
         "published": 1,
         "title": "Об университете",
@@ -1758,27 +1842,29 @@ curl --location --request POST 'http://localhost:8003/api/v1/quizzes/detail' \
 }
  ```
 
-## <a name="method_pages_sections_detail"></a>  Метод получения конкретной секции страницы по фильтру: pages/sections/detail
-Адрес: https://mp.synergy.ru/api/v1/pages/sections/detail  
+## <a name="method_pages_sections_detail"></a>  Метод получения конкретной секции страницы по фильтру: entities/sections/detail
+Адрес: https://mp.synergy.ru/api/v1/entities/sections/detail  
 Тип: POST  
 Формат входных данных: JSON<br>
 
 Входные параметры для фильтра
 
-| Название поля | Тип | Обязательное | Пример | Комментарий
-| ------------- | ------- | --- | ---------------- | ------------------------------ |
-| page_id | integer | - | 1 | Идентификатор |
-| section_id | integer | - | 10 | Идентификатор |
+| Название поля | Тип     | Обязательное | Пример | Комментарий
+| ------------- | ------- | ------------ | ------ | ------------- |
+| entity_id     | integer | -            | 1      | Идентификатор |
+| entity_type   | string  | -            | "page" | Идентификатор |
+| section_id    | integer | -            | 10     | Идентификатор |
 
 Пример запроса:
 ```bash
-curl --location --request POST 'https://mp.synergy.ru/api/v1/pages/sections/detail' \
+curl --location --request POST 'https://mp.synergy.ru/api/v1/entities/sections/detail' \
 --header 'Accept: application/vnd.api+json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "filter": {
         "section_id": 10,
-        "page_id": 1
+        "entity_id": 1,
+        "entity_type": "page",
     }
 }'
  ```
@@ -1788,7 +1874,8 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/pages/sections/deta
 {
     "success": true,
     "data": {
-        "page_id": 1,
+        "entity_id": 1,
+        "entity_type": "page",
         "section_id": 10,
         "published": 1,
         "title": "Название секции",
