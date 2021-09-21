@@ -41,28 +41,28 @@ class FilterProductController extends Controller
         $resource = [
             [
                 'title'     => 'Направления',
-                'filter_by' => 'directions',
+                'filter_by' => 'organization_ids',
                 'type'      => 'list',
                 'search'    => false,
                 'values'    => $this->getPublishedListByModel(Direction::class),
             ],
             [
                 'title'     => 'Уровни',
-                'filter_by' => 'levels',
+                'filter_by' => 'level_ids',
                 'type'      => 'list',
                 'search'    => false,
                 'values'    => $this->getPublishedListByModel(Level::class),
             ],
             [
                 'title'     => 'Форматы',
-                'filter_by' => 'formats',
+                'filter_by' => 'format_ids',
                 'type'      => 'list',
                 'search'    => false,
                 'values'    => $this->getPublishedListByModel(Format::class),
             ],
             [
                 'title'     => 'Учебные заведения',
-                'filter_by' => 'organization_id',
+                'filter_by' => 'organization_ids',
                 'type'      => 'list',
                 'search'    => true,
                 'values'    => $this->getPublishedListByModel(Organization::class),
