@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Site\FilterCollection;
+use App\Http\Resources\Site\FilterProductCatalogCollection;
 use App\Models\City;
 use App\Models\Direction;
 use App\Models\Format;
@@ -11,12 +11,34 @@ use App\Models\Level;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
+use App\Http\Resources\Site\FilterProductCollection;
+use App\Models\Subject;
 
 class FilterProductController extends Controller
 {
+    public static $entities = [
+        Direction::class,
+        Level::class,
+        Format::class,
+        Subject::class
+    ];
+
+    public function main(Request $request)
+    {
+        $args = [];
+
+        foreach (self::$entities as $ent) {
+            $args[] = QueryBuilder::for($ent)->select('id', 'name')->where('published', 1)->get();
+        }
+
+        return (new FilterProductCollection($args))->additional([
+            'success' => true
+        ]);
+    }
+
     public function catalog(Request $request)
     {
-        $response = [
+        $resource = [
             [
                 'title'     => 'Направления',
                 'filter_by' => 'directions',
@@ -46,7 +68,6 @@ class FilterProductController extends Controller
                 'values'    => $this->getPublishedListByModel(Organization::class),
             ],
             [
-
                 'title'     => 'С трудоустройством',
                 'filter_by' => 'is_employment',
                 'type'      => 'checkbox',
@@ -71,7 +92,7 @@ class FilterProductController extends Controller
 
         return response()->json([
             'success' => true,
-            'data'    => new FilterCollection($response)
+            'data'    => new FilterProductCatalogCollection($resource)
         ]);
     }
 

@@ -4,7 +4,7 @@ namespace App\Http\Resources\Site;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class FilterCollection extends ResourceCollection
+class FilterProductCatalogCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.

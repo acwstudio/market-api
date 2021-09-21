@@ -7,8 +7,6 @@
 #### Навигация
 + [Метод получения меню: menu](#method_menu);
 + [Метод получения главного меню по фильтру: menu/main](#method_menu_main);
-+ [Метод получения фильтра продуктов: filter](#method_filter);
-+ [Метод получения фильтра продуктов на главной странице: filter/products/main](#method_filter_products_main);
 
 #### Организации
 + [Метод получения организаций по фильтру: organizations/list](#method_organizations_list);
@@ -17,6 +15,7 @@
 + [Метод получения конкретной секции организации по фильтру: entities/sections/detail](#method_organizations_sections_detail);
 
 #### Продукты
++ [Метод получения фильтра продуктов на главной странице: filter/products/main](#method_filter_products_main);
 + [Метод получения фильтра продуктов: filters/products/catalog](#method_filter);
 + [Метод получения продуктов по фильтру: products/list](#method_products_list);
 + [Метод получения конкретного продукта по фильтру: products/detail](#method_products_detail);
@@ -944,82 +943,81 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/filter/products/mai
 Пример ответа:
 ```json
 {
-    "data": {
-        "list": [
-            {
-                "name": "Направления",
-                "slug": "directions",
-                "items": [
-                    {
-                        "id": 1,
-                        "name": "Экономика и финансы",
-                        "count": 55,
-                        "page": {
-                            "filter": {
-                                "slug": "catalog"
-                            },
-                            "params": {
-                                "directions": [
-                                    1
-                                ]
-                            }
-                        }
-                    },
-                    {
-                        "id": 2,
-                        "name": "IT",
-                        "count": 68,
-                        "page": {
-                            "filter": {
-                                "slug": "catalog"
-                            },
-                            "params": {
-                                "directions": [
-                                    2
-                                ]
-                            }
+    "data": 
+    [
+        {
+            "name": "Направления",
+            "slug": "directions",
+            "items": [
+                {
+                    "id": 1,
+                    "name": "Экономика и финансы",
+                    "count": 55,
+                    "page": {
+                        "filter": {
+                            "slug": "catalog"
+                        },
+                        "params": {
+                            "directions": [
+                                1
+                            ]
                         }
                     }
-                ]
-            },
-            {
-                "name": "Уровни обучения",
-                "slug": "levels",
-                "items": [
-                    {
-                        "id": 1,
-                        "name": "Школа",
-                        "count": 1,
-                        "page": {
-                            "filter": {
-                                "slug": "catalog"
-                            },
-                            "params": {
-                                "levels": [
-                                    1
-                                ]
-                            }
-                        }
-                    },
-                    {
-                        "id": 2,
-                        "name": "Колледж",
-                        "count": 48,
-                        "page": {
-                            "filter": {
-                                "slug": "catalog"
-                            },
-                            "params": {
-                                "levels": [
-                                    2
-                                ]
-                            }
+                },
+                {
+                    "id": 2,
+                    "name": "IT",
+                    "count": 68,
+                    "page": {
+                        "filter": {
+                            "slug": "catalog"
+                        },
+                        "params": {
+                            "directions": [
+                                2
+                            ]
                         }
                     }
-                ]
-            }
-        ]
-    },
+                }
+            ]
+        },
+        {
+            "name": "Уровни обучения",
+            "slug": "levels",
+            "items": [
+                {
+                    "id": 1,
+                    "name": "Школа",
+                    "count": 1,
+                    "page": {
+                        "filter": {
+                            "slug": "catalog"
+                        },
+                        "params": {
+                            "levels": [
+                                1
+                            ]
+                        }
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "Колледж",
+                    "count": 48,
+                    "page": {
+                        "filter": {
+                            "slug": "catalog"
+                        },
+                        "params": {
+                            "levels": [
+                                2
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ],
     "success": true
 }
 ```
