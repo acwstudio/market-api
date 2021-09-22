@@ -65,7 +65,7 @@ class FilterProductController extends Controller
                 'filter_by' => 'organization_ids',
                 'type'      => 'list',
                 'search'    => true,
-                'values'    => $this->getPublishedListByModel(Organization::class),
+                'values'    => $this->getPublishedOrganizationListByModel(Organization::class),
             ],
             [
                 'title'     => 'С трудоустройством',
@@ -103,6 +103,15 @@ class FilterProductController extends Controller
             ->where('published', 1)
             ->get();
     }
+
+    private function getPublishedOrganizationListByModel($model)
+    {
+        return QueryBuilder::for($model)
+            ->select('id', 'name', 'abbreviation_name')
+            ->where('published', 1)
+            ->get();
+    }
+
 
     private function getListByModel($model)
     {
