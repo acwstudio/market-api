@@ -19,6 +19,7 @@ class Page extends Model
         FIELD_NAME = 'name',
         FIELD_SLUG = 'slug',
         FIELD_PAGE_TYPE = 'page_type',
+        FIELD_ENTITY_TYPE = 'entity_type',
         FIELD_STATIC = 'static',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
@@ -29,6 +30,7 @@ class Page extends Model
         self::FIELD_NAME,
         self::FIELD_SLUG,
         self::FIELD_PAGE_TYPE,
+        self::FIELD_ENTITY_TYPE,
         self::FIELD_STATIC
     ];
 
@@ -50,6 +52,11 @@ class Page extends Model
     public function getPageType()
     {
         return $this->getAttribute(self::FIELD_PAGE_TYPE);
+    }
+
+    public function getEntityType()
+    {
+        return $this->getAttribute(self::FIELD_ENTITY_TYPE);
     }
 
     public function getStatic()

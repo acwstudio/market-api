@@ -4,6 +4,7 @@ namespace App\Http\Resources\Site;
 
 use App\Models\Component;
 use App\Models\ComponentMethod;
+use App\Models\EntitySection;
 use App\Models\Method;
 use App\Models\Page;
 use App\Models\SeoTag;
@@ -13,6 +14,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class PageResource extends JsonResource
 {
     const META_FIELD = 'meta';
+
+    const URL_METHOD_SECTIONS = '/api/v1/entities/sections/detail';
 
     /**
      * Transform the resource into an array.
@@ -37,6 +40,12 @@ class PageResource extends JsonResource
             }
 
             $components[] = $this->getComponent($component, $methods);
+        }
+
+        /** building components for section methods  */
+        if (!is_null($page->getEntityType()) && isset($queryParams['id'])) {
+            $entityComponents = $this->getEntityComponents($page->getEntityType(), $queryParams['id']);
+            $components = array_merge($components, $entityComponents);
         }
 
         return [
@@ -64,6 +73,44 @@ class PageResource extends JsonResource
             Component::FIELD_VIEW_TYPE         => $component->getViewType(),
             Component::ENTITY_RELATIVE_METHODS => $methods
         ];
+    }
+
+    /**
+     * @param $entityType
+     * @param $entityId
+     * @return array
+     */
+    private function getEntityComponents($entityType, $entityId)
+    {
+        $entityComponents = [];
+
+        $entitySectionList = EntitySection::query()->where([
+            EntitySection::FIELD_ENTITY_ID   => $entityId,
+            EntitySection::FIELD_ENTITY_TYPE => $entityType,
+        ])->get();
+
+        /** @var EntitySection $item */
+        foreach ($entitySectionList as $item) {
+            $entityComponents[] = [
+                Component::FIELD_TITLE             => $item->getTitle(),
+                Component::FIELD_KEY               => $item->section->getConfigKey(),
+                Component::FIELD_VIEW_TYPE         => '',
+                Component::ENTITY_RELATIVE_METHODS => [
+                    [
+                        'data' => [
+                            "filter" => [
+                                "section_id"  => $item->getSectionId(),
+                                "entity_id"   => $entityId,
+                                "entity_type" => strtolower(basename(str_replace('\\', '/', $entityType))),
+                            ]
+                        ],
+                        'url'  => self::URL_METHOD_SECTIONS
+                    ]
+                ]
+            ];
+        }
+
+        return $entityComponents;
     }
 
     /**
