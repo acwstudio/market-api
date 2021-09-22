@@ -94,7 +94,7 @@ class PageResource extends JsonResource
             $entityComponents[] = [
                 Component::FIELD_TITLE             => $item->getTitle(),
                 Component::FIELD_KEY               => $item->section->getConfigKey(),
-                Component::FIELD_VIEW_TYPE         => '',
+                Component::FIELD_VIEW_TYPE         => 'json_section',
                 Component::ENTITY_RELATIVE_METHODS => [
                     [
                         'data' => [
