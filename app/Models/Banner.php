@@ -21,7 +21,9 @@ class Banner extends Model
         FIELD_NAME = 'name',
         FIELD_LINK = 'link',
         FIELD_BANNER_TYPE = 'banner_type',
-        FIELD_COLOUR = 'colour',
+        FIELD_COLOR_BG = 'color_bg',
+        FIELD_COLOR_TEXT = 'color_text',
+        FIELD_NAME_SECOND = 'name_second',
         FIELD_DESCRIPTION = 'description',
         FIELD_IMAGE = 'image',
         FIELD_CREATED_AT = 'created_at',
@@ -33,8 +35,10 @@ class Banner extends Model
         self::FIELD_NAME,
         self::FIELD_LINK,
         self::FIELD_BANNER_TYPE,
-        self::FIELD_COLOUR,
         self::FIELD_DESCRIPTION,
+        self::FIELD_COLOR_BG,
+        self::FIELD_COLOR_TEXT,
+        self::FIELD_NAME_SECOND,
         self::FIELD_IMAGE
     ];
 
@@ -73,9 +77,19 @@ class Banner extends Model
         return $this->getAttribute(self::FIELD_BANNER_TYPE);
     }
 
-    public function getColour()
+    public function getColorBg()
     {
-        return $this->getAttribute(self::FIELD_COLOUR);
+        return $this->getAttribute(self::FIELD_COLOR_BG);
+    }
+
+    public function getColorText()
+    {
+        return $this->getAttribute(self::FIELD_COLOR_TEXT);
+    }
+
+    public function getNameSecond()
+    {
+        return $this->getAttribute(self::FIELD_NAME_SECOND);
     }
 
     public function getDescription()
