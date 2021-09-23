@@ -17,6 +17,7 @@
 #### Продукты
 + [Метод получения фильтра продуктов на главной странице: filters/products/main](#method_filter_products_main);
 + [Метод получения фильтра продуктов: filters/products/catalog](#method_filter);
++ [Метод получения пресетов фильтра продуктов: filters/products/presets](#method_filter_presets);
 + [Метод получения продуктов по фильтру: products/list](#method_products_list);
 + [Метод получения конкретного продукта по фильтру: products/detail](#method_products_detail);
 + [Метод получения секций продукта по фильтру: entities/sections/list](#method_products_sections_list);
@@ -794,6 +795,55 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/persons/detail' \
     "log_request_id": ""
 }
  ```
+
+## <a name="method_filter_presets"></a> Метод получения фильтра: filters/products/presets
+Адрес: https://mp.synergy.ru/api/v1/filters/products/presets  
+Тип: POST  
+Формат входных данных: JSON<br>
+
+Входных параметров для запроса нет
+
+Пример запроса:
+
+```bash
+curl --location --request POST 'https://mp.synergy.ru/api/v1/filters/products/presets' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/vnd.api+json' \
+--data-raw ''
+```
+
+Пример ответа:
+```json
+{
+    "success": true,
+    "data": [
+        {
+            "name": "UI\\UX дизайнер",
+            "filter": {
+                "published": true,
+                "direction_ids": [
+                    1
+                ],
+                "level_ids": [
+                    1,
+                    2
+                ]
+            }
+        },
+        {
+            "name": "Менеджер по продажам",
+            "filter": {
+                "published": true,
+                "direction_ids": [
+                    5,
+                    6
+                ]
+            }
+        }
+    ]
+}
+```
+
 
 ## <a name="method_filter"></a> Метод получения фильтра: filters/products/catalog
 Адрес: https://mp.synergy.ru/api/v1/filters/products/catalog  

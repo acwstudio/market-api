@@ -46,6 +46,7 @@ Route::group(['prefix' => '/v1'], function () {
     Route::post('subjects/detail', [SubjectController::class, 'detail']);
     Route::post('filters/products/main', [FilterProductController::class, 'main']);
     Route::post('filters/products/catalog', [FilterProductController::class, 'catalog']);
+    Route::post('filters/products/presets', [FilterProductController::class, 'presets']);
     Route::post('menu', [MenuController::class, 'menu']);
     Route::post('menu/main', [MainMenuController::class, 'menu']);
     Route::post('quizzes/list', [QuizController::class, 'list']);

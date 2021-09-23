@@ -36,6 +36,12 @@ class FilterProductController extends Controller
         ]);
     }
 
+    /**
+     * @todo need refactor
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function catalog(Request $request)
     {
         $resource = [
@@ -95,6 +101,22 @@ class FilterProductController extends Controller
             'data'    => new FilterProductCatalogCollection($resource)
         ]);
     }
+
+
+    /**
+     * @todo need refactor
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function presets(Request $request)
+    {
+        return response()->json([
+            'success' => true,
+            'data'    => config('methods.filters.presets')
+        ]);
+    }
+
 
     private function getPublishedListByModel($model)
     {
