@@ -40,6 +40,9 @@ class OrganizationResource extends JsonResource
             Organization::FIELD_PARENT_ID         => $organization->getParentId(),
             Organization::FIELD_CREATED_AT        => $organization->getCreatedAt(),
             Organization::FIELD_UPDATED_AT        => $organization->getUpdatedAt(),
+            'included'                            => [
+                Organization::ENTITY_RELATIVE_CITY => CityResource::make($this->whenLoaded('city')),
+            ]
         ];
     }
 }

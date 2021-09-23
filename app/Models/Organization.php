@@ -39,7 +39,8 @@ class Organization extends Model
         FIELD_UPDATED_AT = 'updated_at';
 
     const ENTITY_RELATIVE_PERSONS = 'persons',
-        ENTITY_RELATIVE_PRODUCT = 'product';
+        ENTITY_RELATIVE_PRODUCT = 'product',
+        ENTITY_RELATIVE_CITY = 'city';
 
     public $fillable = [
         self::FIELD_ID,
@@ -196,5 +197,10 @@ class Organization extends Model
         return $this->hasMany(EntitySection::class, 'entity_id')
             ->where(EntitySection::FIELD_ENTITY_TYPE, 'App\\Models\\Organization')
             ->orderBy(EntitySection::FIELD_SORT, 'asc');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 }

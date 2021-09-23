@@ -43,6 +43,7 @@ class OrganizationController extends Controller
                 AllowedFilter::exact('product_ids', 'products.id'),
                 AllowedFilter::exact('person_ids', 'persons.id'),
             ])
+            ->allowedIncludes(['city'])
             ->allowedSorts(['id', 'name', 'address']);
 
         $pagination = $request->json()->all()['pagination'] ?? ['page' => 1, 'page_size' => 10];
