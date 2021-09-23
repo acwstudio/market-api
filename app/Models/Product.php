@@ -333,7 +333,8 @@ class Product extends Model
 
     public function persons()
     {
-        return $this->belongsToMany(Person::class);
+//        return $this->belongsToMany(Person::class);
+        return $this->morphedByMany(Person::class, 'productable');
     }
 
     public function entitySection()

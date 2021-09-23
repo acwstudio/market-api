@@ -96,8 +96,13 @@ class Person extends Model
         return $this->getAttribute(self::FIELD_UPDATED_AT);
     }
 
+//    public function products()
+//    {
+//        return $this->belongsToMany(Product::class);
+//    }
+
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->morphToMany(Product::class, 'productable');
     }
 }
