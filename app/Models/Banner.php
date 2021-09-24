@@ -16,6 +16,20 @@ class Banner extends Model
     const MODEL_NAME = 'Баннеры',
         MODEL_LINK = 'banners';
 
+    public const BANNER_TYPES = [
+        'top',
+        'narrow',
+        'side'
+    ];
+
+    public const COLOR_BG_LIST_VALUES = [
+        'accent', 'primary', 'secondary', 'none', 'custom'
+    ];
+    public const COLOR_TEXT_LIST_VALUES = [
+        'default', 'custom'
+    ];
+
+
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',
         FIELD_NAME = 'name',
@@ -23,6 +37,8 @@ class Banner extends Model
         FIELD_BANNER_TYPE = 'banner_type',
         FIELD_COLOR_BG = 'color_bg',
         FIELD_COLOR_TEXT = 'color_text',
+        FIELD_COLOR_BG_LIST = 'color_bg_list',
+        FIELD_COLOR_TEXT_LIST = 'color_text_list',
         FIELD_NAME_SECOND = 'name_second',
         FIELD_DESCRIPTION = 'description',
         FIELD_IMAGE = 'image',
@@ -85,6 +101,16 @@ class Banner extends Model
     public function getColorText()
     {
         return $this->getAttribute(self::FIELD_COLOR_TEXT);
+    }
+
+    public function getColorBgList()
+    {
+        return $this->getAttribute(self::FIELD_COLOR_BG_LIST);
+    }
+
+    public function getColorTextList()
+    {
+        return $this->getAttribute(self::FIELD_COLOR_TEXT_LIST);
     }
 
     public function getNameSecond()
