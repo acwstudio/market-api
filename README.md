@@ -1715,9 +1715,9 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/menu/main' \
 
 Входные параметры для фильтра
 
-| Название поля | Тип | Обязательное | Пример | Комментарий
-| ------------- | ------- | --- | ---------------- | ------------------------------ |
-| published | bool | - | true | Опубликован |
+| Название поля | Тип     | Обязательное | Пример | Комментарий
+| ------------- | ------- | ------------ | ------ | ----------- |
+| published     | bool    | -            | true   | Опубликован |
 
 
 Пример запроса:
@@ -1748,6 +1748,8 @@ curl --location --request POST 'http://localhost:8003/api/v1/quizzes/list' \
             "text": "Ответьте на 6 вопросов <br> и мы подберём Вам нужную программу",
             "button": "Подобрать программу",
             "published": 1,
+            "background_image": "uploads/quizzes/background/M3ntd8Elk7hki8alXeMxVO1LZyws7Q1qejK5jIjf.jpg",
+            "person_image": "uploads/quizzes/person/qVPU3zCsEaSU9p9MGw6hFNBu2HUnwZ2hKjnY7htL.png",
             "questions": [
                 {
                     "id": 1,
@@ -1809,8 +1811,8 @@ curl --location --request POST 'http://localhost:8003/api/v1/quizzes/list' \
 Входные параметры для фильтра
 
 | Название поля | Тип | Обязательное | Пример | Комментарий
-| ------------- | ------- | --- | ---------------- | ------------------------------ |
-| id | id | - | 1 | Идентификатор |
+| ------------- | --- | ------------ | -------| ------------- |
+| id            | id  | -            | 1      | Идентификатор |
 
 Пример запроса:
 ```bash
@@ -1838,6 +1840,8 @@ curl --location --request POST 'http://localhost:8003/api/v1/quizzes/detail' \
         "text": "Ответьте на 6 вопросов <br> и мы подберём Вам нужную программу",
         "button": "Подобрать программу",
         "published": 1,
+        "background_image": "uploads/quizzes/background/M3ntd8Elk7hki8alXeMxVO1LZyws7Q1qejK5jIjf.jpg",
+        "person_image": "uploads/quizzes/person/qVPU3zCsEaSU9p9MGw6hFNBu2HUnwZ2hKjnY7htL.png",
         "questions": [
             {
                 "id": 1,
