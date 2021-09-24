@@ -32,6 +32,8 @@ class Quiz extends Model
         FIELD_TITLE = 'title',
         FIELD_TEXT = 'text',
         FIELD_BUTTON = 'button',
+        FIELD_BACKGROUND_IMAGE = 'background_image',
+        FIELD_PERSON_IMAGE = 'person_image',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
 
@@ -44,7 +46,9 @@ class Quiz extends Model
         self::FIELD_DESCRIPTION,
         self::FIELD_TITLE,
         self::FIELD_TEXT,
-        self::FIELD_BUTTON
+        self::FIELD_BUTTON,
+        self::FIELD_BACKGROUND_IMAGE,
+        self::FIELD_PERSON_IMAGE
     ];
 
     public static function getModelName()
@@ -100,6 +104,26 @@ class Quiz extends Model
     public function getButton()
     {
         return $this->getAttribute(self::FIELD_BUTTON);
+    }
+
+    public function getBackgroundImage()
+    {
+        return $this->getAttribute(self::FIELD_BACKGROUND_IMAGE);
+    }
+
+    public function getBackgroundImageUrl()
+    {
+        return Storage::url($this->getBackgroundImage());
+    }
+
+    public function getPersonImage()
+    {
+        return $this->getAttribute(self::FIELD_PERSON_IMAGE);
+    }
+
+    public function getPersonImageUrl()
+    {
+        return Storage::url($this->getPersonImage());
     }
 
     public function getCreatedAt()
