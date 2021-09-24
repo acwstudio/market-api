@@ -23,6 +23,7 @@ class Section extends Model
         FIELD_NAME = 'name',
         FIELD_IS_GLOBAL = 'is_global',
         FIELD_CONFIG_KEY = 'config_key',
+        FIELD_API_KEY = 'api_key',
         FIELD_PREVIEW_IMAGE = 'preview_image',
         FIELD_GROUP = 'group',
         FIELD_JSON_TEMPLATE = 'json_template',
@@ -34,6 +35,7 @@ class Section extends Model
         self::FIELD_PUBLISHED,
         self::FIELD_NAME,
         self::FIELD_CONFIG_KEY,
+        self::FIELD_API_KEY,
         self::FIELD_PREVIEW_IMAGE,
         self::FIELD_GROUP
     ];
@@ -76,6 +78,11 @@ class Section extends Model
     public function getConfigKey()
     {
         return $this->getAttribute(self::FIELD_CONFIG_KEY);
+    }
+
+    public function getApiKey()
+    {
+        return $this->getAttribute(self::FIELD_API_KEY);
     }
 
     public function getPreviewImage()
