@@ -121,7 +121,7 @@ class FilterProductController extends Controller
     private function getPublishedListByModel($model)
     {
         return QueryBuilder::for($model)
-            ->select('id', 'name')
+            ->select('id', 'name', 'slug')
             ->where('published', 1)
             ->get();
     }
@@ -129,7 +129,7 @@ class FilterProductController extends Controller
     private function getPublishedOrganizationListByModel($model)
     {
         return QueryBuilder::for($model)
-            ->select('id', 'name', 'abbreviation_name')
+            ->select('id', 'name', 'abbreviation_name', 'slug')
             ->where('published', 1)
             ->get();
     }

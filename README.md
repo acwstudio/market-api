@@ -874,11 +874,13 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/filters/products/ca
             "values": [
                 {
                     "id": 1,
-                    "name": "Экономика и финансы"
+                    "name": "Экономика и финансы",
+                    "slug": "ekonomika-i-finansy"
                 },
                 {
                     "id": 2,
-                    "name": "IT"
+                    "name": "IT",
+                    "slug": "it"
                 }
             ]
         },
@@ -890,11 +892,13 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/filters/products/ca
             "values": [
                 {
                     "id": 1,
-                    "name": "Школа"
+                    "name": "Школа",
+                    "slug": "skola"
                 },
                 {
                     "id": 2,
-                    "name": "Колледж"
+                    "name": "Колледж",
+                    "slug": "kolledz"
                 }
             ]
         },
@@ -906,11 +910,13 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/filters/products/ca
             "values": [
                 {
                     "id": 22,
-                    "name": "Очная"
+                    "name": "Очная",
+                    "slug": "ocnaya"
                 },
                 {
                     "id": 23,
-                    "name": "Заочная"
+                    "name": "Заочная",
+                    "slug": "zaocnaya"
                 }
             ]
         },
@@ -922,11 +928,15 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/filters/products/ca
             "values": [
                 {
                     "id": 9,
-                    "name": "333Университет «Синергия»"
+                    "name": "333Университет «Синергия»",
+                    "abbreviation_name": null,
+                    "slug": "333universitet-sinergiya"
                 },
                 {
                     "id": 10,
-                    "name": "Московская академия предпринимательства"
+                    "name": "Московская академия предпринимательства",
+                    "abbreviation_name": null,
+                    "slug": "moskovskaya-akademiya-predprinimatelstva"
                 }
             ]
         },
