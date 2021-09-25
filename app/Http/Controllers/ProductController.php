@@ -76,6 +76,7 @@ class ProductController extends Controller
                 AllowedFilter::exact('id'),
                 AllowedFilter::exact('slug')
             ])
+            ->allowedIncludes(['organization', 'levels', 'directions', 'formats'])
             ->firstOrFail();
 
         return (new ProductResource($query))->additional([
