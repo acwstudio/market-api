@@ -4,6 +4,10 @@ namespace App\Core\Input\Fields\Organization;
 
 use App\Core\FieldSet;
 use App\Core\IField;
+use App\Core\Input\Fields\Organization\Filter\CityIds;
+use App\Core\Input\Fields\Organization\Filter\DirectionIds;
+use App\Core\Input\Fields\Organization\Filter\FormatIds;
+use App\Core\Input\Fields\Organization\Filter\LevelIds;
 use App\Core\Input\Fields\Organization\Filter\IsPublished;
 use App\Core\Input\Fields\Organization\Filter\Id;
 use App\Core\Input\Fields\Organization\Filter\Name;
@@ -56,6 +60,26 @@ class Filter extends FieldSet implements IField
     protected $parent_id = null;
 
     /**
+     * @var CityIds
+     */
+    protected $city_ids = null;
+
+    /**
+     * @var DirectionIds
+     */
+    protected $direction_ids = null;
+
+    /**
+     * @var LevelIds
+     */
+    protected $level_ids = null;
+
+    /**
+     * @var FormatIds
+     */
+    protected $format_ids = null;
+
+    /**
      * @var ProductIds
      */
     protected $product_ids = null;
@@ -77,6 +101,10 @@ class Filter extends FieldSet implements IField
         Ids::FIELD_KEY          => Ids::class,
         Land::FIELD_KEY         => Land::class,
         ParentId::FIELD_KEY     => ParentId::class,
+        CityIds::FIELD_KEY      => CityIds::class,
+        DirectionIds::FIELD_KEY => DirectionIds::class,
+        LevelIds::FIELD_KEY     => LevelIds::class,
+        FormatIds::FIELD_KEY    => FormatIds::class,
         ProductIds::FIELD_KEY   => ProductIds::class,
         PersonIds::FIELD_KEY    => PersonIds::class
     ];
@@ -116,6 +144,38 @@ class Filter extends FieldSet implements IField
     public function getParentId(): ParentId
     {
         return $this->parent_id;
+    }
+
+    /**
+     * @return CityIds
+     */
+    public function getCityIds(): CityIds
+    {
+        return $this->city_ids;
+    }
+
+    /**
+     * @return DirectionIds
+     */
+    public function getDirectionIds(): DirectionIds
+    {
+        return $this->direction_ids;
+    }
+
+    /**
+     * @return LevelIds
+     */
+    public function getLevelIds(): LevelIds
+    {
+        return $this->level_ids;
+    }
+
+    /**
+     * @return FormatIds
+     */
+    public function getFormatIds(): FormatIds
+    {
+        return $this->format_ids;
     }
 
     public function getProductIds(): ProductIds

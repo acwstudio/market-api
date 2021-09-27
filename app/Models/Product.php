@@ -60,7 +60,8 @@ class Product extends Model
         ENTITY_RELATIVE_SUBJECTS     = 'subjects',
         ENTITY_RELATIVE_PERSONS      = 'persons',
         ENTITY_PRODUCT_SECTION       = 'productsection',
-        ENTITY_RELATIVE_ORGANIZATION = 'organization';
+        ENTITY_RELATIVE_ORGANIZATION = 'organization',
+        ENTITY_RELATIVE_PRODUCTABLES = 'productables';
 
     const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
     const DATE_TIME_DISPLAY_FORMAT = 'd.m.Y H:i';

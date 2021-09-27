@@ -38,6 +38,7 @@ class OrganizationResource extends JsonResource
             Organization::FIELD_TYPE_TEXT         => $organization->getTypeText(),
             Organization::FIELD_MAP_LINK          => $organization->getMapLink(),
             Organization::FIELD_PARENT_ID         => $organization->getParentId(),
+            Organization::FIELD_CITY_ID           => $organization->getCityId(),
             Organization::FIELD_CREATED_AT        => $organization->getCreatedAt(),
             Organization::FIELD_UPDATED_AT        => $organization->getUpdatedAt(),
             'included'                            => [
