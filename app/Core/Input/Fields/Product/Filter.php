@@ -5,6 +5,7 @@ namespace App\Core\Input\Fields\Product;
 use App\Core\FieldSet;
 use App\Core\IField;
 use App\Core\Input\Fields\Organization\Filter\Ids;
+use App\Core\Input\Fields\Product\Filter\CityIds;
 use App\Core\Input\Fields\Product\Filter\DirectionIds;
 use App\Core\Input\Fields\Product\Filter\ExpirationDateTime;
 use App\Core\Input\Fields\Product\Filter\FormatIds;
@@ -76,6 +77,11 @@ class Filter extends FieldSet implements IField
     protected $organization_ids = null;
 
     /**
+     * @var CityIds
+     */
+    protected $city_ids = null;
+
+    /**
      * @var SubjectIds
      */
     protected $subject_ids = null;
@@ -114,6 +120,7 @@ class Filter extends FieldSet implements IField
         IsInstallment::FIELD_KEY      => IsInstallment::class,
         IsEmployment::FIELD_KEY       => IsEmployment::class,
         OrganizationIds::FIELD_KEY    => OrganizationIds::class,
+        CityIds::FIELD_KEY            => CityIds::class,
         SubjectIds::FIELD_KEY         => SubjectIds::class,
         FormatIds::FIELD_KEY          => FormatIds::class,
         LevelIds::FIELD_KEY           => LevelIds::class,
@@ -183,6 +190,14 @@ class Filter extends FieldSet implements IField
     public function getOrganizationIds(): OrganizationIds
     {
         return $this->organization_ids;
+    }
+
+    /**
+     * @return CityIds
+     */
+    public function getCityIds(): CityIds
+    {
+        return $this->city_ids;
     }
 
     /**
