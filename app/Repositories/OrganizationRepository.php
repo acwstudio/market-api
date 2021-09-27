@@ -4,9 +4,13 @@ namespace App\Repositories;
 
 use App\Core\Input\Fields\Organization\OrganizationGetDetail;
 use App\Core\Input\Fields\Organization\OrganizationGetList;
+use App\Models\Direction;
+use App\Models\Format;
+use App\Models\Level;
 use App\Models\Organization;
 use App\Models\Person;
 use App\Models\Product;
+use App\Models\Productable;
 
 class OrganizationRepository
 {
@@ -54,16 +58,42 @@ class OrganizationRepository
             ]);
         }
 
+        $cityIds = $filter->getCityIds()->getValue();
+        if (!is_null($cityIds) && is_array($cityIds)) {
+            $query->whereIn(Organization::FIELD_CITY_ID, $cityIds);
+        }
+
+        $directionIds = $filter->getDirectionIds()->getValue();
+        if (!is_null($directionIds) && is_array($directionIds)) {
+            $query->whereHas(Organization::ENTITY_RELATIVE_PRODUCTS, function($subQuery) use ($directionIds) {
+                $subquery->select(Product::FIELD_ORGANIZATION_ID)->join(Product::ENTITY_RELATIVE_PRODUCTABLES, Product::FIELD_ID, Productable::FIELD_PRODUCT_ID)->whereIn(Productable::FIELD_PRODUCTABLE_ID, $directionIds)->where(Productable::FIELD_PRODUCTABLE_TYPE, Direction::class);
+            });
+        }
+
+        $levelIds = $filter->getLevelIds()->getValue();
+        if (!is_null($levelIds) && is_array($levelIds)) {
+            $query->whereHas(Organization::ENTITY_RELATIVE_PRODUCTS, function($subQuery) use ($levelIds) {
+                $subquery->select(Product::FIELD_ORGANIZATION_ID)->join(Product::ENTITY_RELATIVE_PRODUCTABLES, Product::FIELD_ID, Productable::FIELD_PRODUCT_ID)->whereIn(Productable::FIELD_PRODUCTABLE_ID, $levelIds)->where(Productable::FIELD_PRODUCTABLE_TYPE, Level::class);
+            });
+        }
+
+        $formatIds = $filter->getFormatIds()->getValue();
+        if (!is_null($formatIds) && is_array($formatIds)) {
+            $query->whereHas(Organization::ENTITY_RELATIVE_PRODUCTS, function($subQuery) use ($formatIds) {
+                $subquery->select(Product::FIELD_ORGANIZATION_ID)->join(Product::ENTITY_RELATIVE_PRODUCTABLES, Product::FIELD_ID, Productable::FIELD_PRODUCT_ID)->whereIn(Productable::FIELD_PRODUCTABLE_ID, $formatIds)->where(Productable::FIELD_PRODUCTABLE_TYPE, Format::class);
+            });
+        }
+
         $productIds = $filter->getProductIds()->getValue();
         if (!is_null($productIds) && is_array($productIds)) {
-            $query->whereHas(Organization::ENTITY_RELATIVE_PRODUCT, function($subQuery) use($productIds){
+            $query->whereHas(Organization::ENTITY_RELATIVE_PRODUCTS, function($subQuery) use($productIds){
                 $subQuery->whereIn(Product::FIELD_ID, $productIds);
             });
         }
 
         $personIds = $filter->getPersonIds()->getValue();
         if (!is_null($personIds) && is_array($personIds)) {
-//            $query->whereHas(Organization::ENTITY_RELATIVE_PRODUCT, function($subQuery) use($personIds){
+//            $query->whereHas(Organization::ENTITY_RELATIVE_PRODUCTS, function($subQuery) use($personIds){
 //                $subQuery->whereHas(Product::ENTITY_RELATIVE_PERSONS, function ($subSubQuery) use($personIds){
 //                    $subSubQuery->whereIn(Person::FIELD_ID, $personIds);
 //                });

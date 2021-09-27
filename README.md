@@ -3,6 +3,7 @@
 #### Страницы  
 + [Метод получения конкретной страницы: page](#method_page);
 + [Метод получения конкретной секции страницы по фильтру: entities/sections/detail](#method_pages_sections_detail);
++ [Метод получения глобальной информации о сайте: app/site](#method_app_site); 
 
 #### Навигация
 + [Метод получения меню: menu](#method_menu);
@@ -236,18 +237,22 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/directions/detail' 
 
 Входные параметры для фильтра
 
-| Название поля | Тип | Обязательное | Пример | Комментарий
-| ------------- | ------- | --- | ---------------- | ------------------------------ |
-| ids | array int[] | - | [10,11,12,13,14,15,16,17] | Массив идентификаторов |
-| published | bool | - | true | Опубликован |
-| name      | string  | -   | Томский институт бизнеса" | Название |
-| slug      | string  | -   | tomskij-institut-biznesa | slug |
-| land      | string  | -   | null | Распределение лидов |
-| parent_id      | int  | -   | null | Родительский идентификатор |
-| product_ids | array int[] | - | [806] | Массив продуктовых идентификаторов |
-| person_ids | array int[] | - | [425] | Массив идентификаторов личностей |
+| Название поля | Тип         | Обязательное | Пример                    | Комментарий
+| ------------- | ----------- | ------------ | ------------------------- | ---------------------------------- |
+| ids           | array int[] | -            | [10,11,12,13,14,15,16,17] | Массив идентификаторов             |
+| published     | bool        | -            | true                      | Опубликован                        |
+| name          | string      | -            | Томский институт бизнеса  | Название                           |
+| slug          | string      | -            | tomskij-institut-biznesa  | slug                               |
+| land          | string      | -            | null                      | Распределение лидов                |
+| parent_id     | int         | -            | null                      | Родительский идентификатор         |
+| city_ids      | array int[] | -            | [8]                       | Массив идентификаторов городов     |
+| direction_ids | array int[] | -            | [1,2,3]                   | Массив идентификаторов направлений |
+| level_ids     | array int[] | -            | [2,3,4]                   | Массив идентификаторов уровней     |
+| format_ids    | array int[] | -            | [3,4,5]                   | Массив идентификаторов форматов    |
+| product_ids   | array int[] | -            | [806]                     | Массив продуктовых идентификаторов |
+| person_ids    | array int[] | -            | [425]                     | Массив идентификаторов личностей   |
 
-Поля доступные для сотировки: id, name, address
+Поля, доступные для сортировки: id, name, address
 
 Пример запроса:
 ```bash
@@ -262,6 +267,7 @@ curl --location --request POST 'http://https://mp.synergy.ru/api/v1/organization
         "slug": "tomskij-institut-biznesa",
         "land": null,
         "parent_id": null,
+        "city_ids": [8],
         "product_ids": [806],
         "person_ids": [425]
     },
@@ -291,6 +297,7 @@ curl --location --request POST 'http://https://mp.synergy.ru/api/v1/organization
             "type_text": "Негосударственное (частное) образовательное учреждение высшего образования",
             "map_link": "https://www.google.com/maps/place/Томский+институт+бизнеса/@56.484854,84.9489893,17z/data=!3m1!4b1!4m5!3m4!1s0x43269367774db46f:0x483bca3d71669b99!8m2!3d56.4846684!4d84.9510821?hl=ru",
             "parent_id": null,
+            "city_id": 8,
             "created_at": "2021-06-28T06:30:05.000000Z",
             "updated_at": "2021-06-29T09:32:10.000000Z"
         }
@@ -347,6 +354,7 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/organizations/detai
         "type_text": "Негосударственное (частное) образовательное учреждение высшего образования",
         "map_link": "https://www.google.com/maps/place/Томский+институт+бизнеса/@56.484854,84.9489893,17z/data=!3m1!4b1!4m5!3m4!1s0x43269367774db46f:0x483bca3d71669b99!8m2!3d56.4846684!4d84.9510821?hl=ru",
         "parent_id": null,
+        "city_id": 8,
         "created_at": "2021-06-28T06:30:05.000000Z",
         "updated_at": "2021-06-29T09:32:10.000000Z"
     },
@@ -1726,9 +1734,9 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/menu/main' \
 
 Входные параметры для фильтра
 
-| Название поля | Тип     | Обязательное | Пример | Комментарий
-| ------------- | ------- | ------------ | ------ | ----------- |
-| published     | bool    | -            | true   | Опубликован |
+| Название поля | Тип  | Обязательное | Пример | Комментарий
+| ------------- | ---- | ------------ | ------ | ----------- |
+| published     | bool | -            | true   | Опубликован |
 
 
 Пример запроса:
@@ -1822,7 +1830,7 @@ curl --location --request POST 'http://localhost:8003/api/v1/quizzes/list' \
 Входные параметры для фильтра
 
 | Название поля | Тип | Обязательное | Пример | Комментарий
-| ------------- | --- | ------------ | -------| ------------- |
+| ------------- | --- | ------------ | ------ | ------------- |
 | id            | id  | -            | 1      | Идентификатор |
 
 Пример запроса:
@@ -1946,6 +1954,66 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/entities/sections/d
         "json": "{\"items\": {\"data\": [{\"title\": {\"name\": \"Название\", \"type\": \"text\", \"value\": \"Название элемента\"}}], \"name\": \"Элементы\", \"type\": \"list\"}}",
         "created_at": null,
         "updated_at": null
+    }
+}
+```
+
+
+
+## <a name="method_app_site"></a>  Метод получения глобальной информации о сайте: app/site
+Адрес: https://mp.synergy.ru/api/v1/app/site
+Тип: POST  
+Формат входных данных: JSON<br>
+
+Пример запроса:
+```bash
+curl --location --request POST 'http://mp-api.tagiev.site/api/v1/app/site' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/vnd.api+json' \
+--data-raw ''
+ ```
+
+Пример ответа:
+```json
+{
+    "success": true,
+    "data": {
+        "main": {
+            "logo": "https://dev.sys3.ru/marketplace/uploads/logo.jpeg"
+        },
+        "contacts": {
+            "phones": [
+                "+7 495 800-10-01",
+                "8 800 100-00-11"
+            ],
+            "social_networks": [
+                {
+                    "name": "vk",
+                    "icon": "https://sys3.ru/marketplace/uploads/social_network/icons/EhsMb1zQKhfwnRtN0cjujs1EaHaBdrytYP7rrMDw.svg",
+                    "link": "https://vk.com/synergyuniversity"
+                },
+                {
+                    "name": "facebook",
+                    "icon": "https://sys3.ru/marketplace/uploads/social_network/icons/bL2uLI0TahcNfPOAtt5a6r21xrhMvp2Q6KfsKL2u.svg",
+                    "link": "https://www.facebook.com/synergyunivers"
+                },
+                {
+                    "name": "instagram",
+                    "icon": "https://sys3.ru/marketplace/uploads/social_network/icons/8jLa8zAjHl0sPj5zrJT9aDc7uneNsYRA7ooAENYr.svg",
+                    "link": "https://www.instagram.com/synergyuniversity/"
+                },
+                {
+                    "name": "youtube",
+                    "icon": "https://sys3.ru/marketplace/uploads/social_network/icons/XbMDWL8X76oCVd85uAY2ka2YFKaK6STQIYzhMBRD.svg",
+                    "link": "https://www.youtube.com/user/synergytvru"
+                }
+            ]
+        },
+        "copyright": "© 2021 Synergy. Все права защищены",
+        "privacy_policy": {
+            "link": "https://synergy.ru/lp/_chunk/privacy.php?lang=ru",
+            "text": ""
+        }
     }
 }
 ```
