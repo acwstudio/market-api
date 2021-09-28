@@ -51,6 +51,7 @@ class ProductResource extends JsonResource
                 Product::ENTITY_RELATIVE_LEVELS       => LevelResource::collection($this->whenLoaded('levels')),
                 Product::ENTITY_RELATIVE_DIRECTIONS   => DirectionResource::collection($this->whenLoaded('directions')),
                 Product::ENTITY_RELATIVE_FORMATS      => FormatResource::collection($this->whenLoaded('formats')),
+                Product::ENTITY_RELATIVE_CITY         => CityResource::collection($this->whenLoaded('organization.city')),
             ]
         ];
 
