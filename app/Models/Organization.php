@@ -35,11 +35,12 @@ class Organization extends Model
         FIELD_PREVIEW_IMAGE = 'preview_image',
         FIELD_DIGITAL_IMAGE = 'digital_image',
         FIELD_PARENT_ID = 'parent_id',
+        FIELD_CITY_ID = 'city_id',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
 
     const ENTITY_RELATIVE_PERSONS = 'persons',
-        ENTITY_RELATIVE_PRODUCT = 'product',
+        ENTITY_RELATIVE_PRODUCTS = 'products',
         ENTITY_RELATIVE_CITY = 'city';
 
     public $fillable = [
@@ -59,7 +60,8 @@ class Organization extends Model
         self::FIELD_COLOR_CODE_TITLES,
         self::FIELD_ADDRESS,
         self::FIELD_MAP_LINK,
-        self::FIELD_TYPE_TEXT
+        self::FIELD_TYPE_TEXT,
+        self::FIELD_CITY_ID
     ];
 
     public static function getModelName()
@@ -170,6 +172,11 @@ class Organization extends Model
     public function getParentId()
     {
         return $this->getAttribute(self::FIELD_PARENT_ID);
+    }
+
+    public function getCityId()
+    {
+        return $this->getAttribute(self::FIELD_CITY_ID);
     }
 
     public function getCreatedAt()

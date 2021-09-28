@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Site\AppController;
 use App\Http\Controllers\Site\EntitySectionController;
 use App\Http\Controllers\Site\PageController;
 use App\Http\Controllers\Site\FilterProductController;
@@ -28,6 +29,8 @@ use App\Http\Controllers\PersonController;
 */
 
 Route::group(['prefix' => '/v1'], function () {
+    Route::post('app/site', [AppController::class, 'app']);
+
     Route::post('page', [PageController::class, 'page']);
 
     Route::post('products/list', [ProductController::class, 'list']);
