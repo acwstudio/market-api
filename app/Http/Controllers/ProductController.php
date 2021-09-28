@@ -47,7 +47,7 @@ class ProductController extends Controller
                 AllowedFilter::exact('person_ids', 'persons.id'),
             ])
             ->allowedIncludes(['organization', 'levels', 'directions', 'formats'])
-            ->allowedSorts(['name', 'id', 'expiration_date']);
+            ->allowedSorts(['name', 'id', 'expiration_date', 'sort']);
 
         $pagination = $request->json()->all()['pagination'] ?? ['page' => 1, 'page_size' => 10];
         $count = $query->count();
