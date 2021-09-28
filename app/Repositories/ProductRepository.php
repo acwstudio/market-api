@@ -76,6 +76,13 @@ class ProductRepository
             });
         }
 
+        $cityIds = $filter->getCityIds()->getValue();
+        if (!is_null($cityIds) && is_array($cityIds)) {
+            $query->whereHas(Product::ENTITY_RELATIVE_ORGANIZATION, function ($subQuery) use ($cityIds) {
+                $subQuery->whereIn(Organization::FIELD_CITY_ID, $cityIds);
+            });
+        }
+
         $subjectIds = $filter->getSubjectIds()->getValue();
         if (!is_null($subjectIds) && is_array($subjectIds)) {
             $query->whereHas(Product::ENTITY_RELATIVE_SUBJECTS, function ($subQuery) use ($subjectIds) {

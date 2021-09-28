@@ -93,7 +93,7 @@ class PageResource extends JsonResource
         foreach ($entitySectionList as $item) {
             $entityComponents[] = [
                 Component::FIELD_TITLE             => $item->getTitle(),
-                Component::FIELD_KEY               => $item->section->getConfigKey(),
+                Component::FIELD_KEY               => $item->section->getApiKey() ?? $item->section->getConfigKey(),
                 Component::FIELD_VIEW_TYPE         => 'json_section',
                 Component::ENTITY_RELATIVE_METHODS => [
                     [

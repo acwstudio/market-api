@@ -31,7 +31,6 @@ class OrganizationController extends Controller
     }
 
     public function list(Request $request){
-
         $query = QueryBuilder::for(Organization::class)
             ->allowedFilters([
                 AllowedFilter::exact('ids', 'id'),
@@ -40,9 +39,14 @@ class OrganizationController extends Controller
                 AllowedFilter::exact('slug'),
                 AllowedFilter::exact('land'),
                 AllowedFilter::exact('parent_id'),
+                AllowedFilter::exact('city_ids', 'city_id'),
+                AllowedFilter::exact('direction_ids', 'products.directions.id'),
+                AllowedFilter::exact('level_ids', 'products.levels.id'),
+                AllowedFilter::exact('format_ids', 'products.formats.id'),
                 AllowedFilter::exact('product_ids', 'products.id'),
                 AllowedFilter::exact('person_ids', 'persons.id'),
             ])
+            ->allowedIncludes(['city'])
             ->allowedSorts(['id', 'name', 'address']);
 
         $pagination = $request->json()->all()['pagination'] ?? ['page' => 1, 'page_size' => 10];

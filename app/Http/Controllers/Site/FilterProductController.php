@@ -36,6 +36,12 @@ class FilterProductController extends Controller
         ]);
     }
 
+    /**
+     * @todo need refactor
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function catalog(Request $request)
     {
         $resource = [
@@ -96,10 +102,26 @@ class FilterProductController extends Controller
         ]);
     }
 
+
+    /**
+     * @todo need refactor
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function presets(Request $request)
+    {
+        return response()->json([
+            'success' => true,
+            'data'    => config('methods.filters.presets')
+        ]);
+    }
+
+
     private function getPublishedListByModel($model)
     {
         return QueryBuilder::for($model)
-            ->select('id', 'name')
+            ->select('id', 'name', 'slug')
             ->where('published', 1)
             ->get();
     }
@@ -107,7 +129,7 @@ class FilterProductController extends Controller
     private function getPublishedOrganizationListByModel($model)
     {
         return QueryBuilder::for($model)
-            ->select('id', 'name', 'abbreviation_name')
+            ->select('id', 'name', 'abbreviation_name', 'slug')
             ->where('published', 1)
             ->get();
     }
