@@ -81,7 +81,7 @@ class Page extends Model
 
     public function components()
     {
-        return $this->belongsToMany(Component::class);
+        return $this->belongsToMany(Component::class)->orderBy('sort');
     }
 
     public function entitySection()
