@@ -43,8 +43,22 @@ class PageResource extends JsonResource
         }
 
         /** building components for section methods  */
-        if (!is_null($page->getEntityType()) && isset($queryParams['id'])) {
-            $entityComponents = $this->getEntityComponents($page->getEntityType(), $queryParams['id']);
+        if (!is_null($page->getEntityType())) {
+
+            if (!isset($queryParams['id']) && isset($queryParams['slug'])) {
+
+                $entityClassString = $page->getEntityType();
+                $entityClass = (new $entityClassString)->where('slug', $queryParams['slug'])->first();
+                $entityId = (!is_null($entityClass)) ? $entityClass->getId() : null;
+
+            } else if (isset($queryParams['id'])) {
+                $entityId = $queryParams['id'];
+            } else {
+                $entityId = null;
+            }
+
+
+            $entityComponents = $this->getEntityComponents($page->getEntityType(), $entityId);
             $components = array_merge($components, $entityComponents);
         }
 
@@ -124,7 +138,7 @@ class PageResource extends JsonResource
         $methodModel = $componentMethod->method;
 
         return [
-            ComponentMethod::FIELD_DATA => json_decode($this->replaceTemplateToValue($queryParams, $componentMethod->getData())),
+            ComponentMethod::FIELD_DATA => $this->replaceTemplateToValue($queryParams, $componentMethod->getData()),
             Method::FIELD_URL           => $methodModel->getUrl()
         ];
     }
@@ -146,9 +160,9 @@ class PageResource extends JsonResource
     /**
      * @param $queryParams
      * @param $dataString
-     * @return string
+     * @return array
      */
-    private function replaceTemplateToValue($queryParams, $dataString): string
+    private function replaceTemplateToValue($queryParams, $dataString): array
     {
         foreach ($queryParams as $key => $value) {
             $dataString = str_ireplace(
@@ -157,6 +171,18 @@ class PageResource extends JsonResource
                 $dataString
             );
         }
+
+        /** Удаляем поля которые не были переданы */
+        $dataString = preg_replace('/"[A-Za-z_]+":( |)("|){[A-Za-z_]+}("|)( |)(,|)/u', '', $dataString);
+
+        /** Избавляемся от запятой при условии если передан один параметр */
+        if (count($queryParams) == 1) {
+            $dataString = preg_replace('/,/u', '', $dataString);
+        }
+
+
+        $dataString = json_decode($dataString, true);
+
 
         return $dataString;
     }
