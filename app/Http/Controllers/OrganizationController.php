@@ -73,6 +73,7 @@ class OrganizationController extends Controller
                 AllowedFilter::exact('id'),
                 AllowedFilter::exact('slug')
             ])
+            ->allowedIncludes(['city', 'persons'])
             ->firstOrFail();
 
         return (new OrganizationResource($query))

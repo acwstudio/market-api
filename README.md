@@ -600,6 +600,7 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/products/list' \
         "direction_ids": [3,22,11],
         "person_ids": [59,197]
     },
+    "include": ["formats", "levels", "directions", "organization", "organization.city", "persons"]
     "sort": "-id"
 }'
 ```
@@ -666,7 +667,8 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/products/detail' \
 --data-raw '{
     "filter": {
         "slug": "ekonomika-i-buxgalterskii-ucet"
-    }
+    },
+    "include": ["formats", "levels", "directions", "organization", "organization.city", "persons"]
 }'
  ```
 Пример ответа:

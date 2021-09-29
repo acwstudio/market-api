@@ -46,7 +46,7 @@ class ProductController extends Controller
                 AllowedFilter::exact('direction_ids', 'directions.id'),
                 AllowedFilter::exact('person_ids', 'persons.id'),
             ])
-            ->allowedIncludes(['organization', 'levels', 'directions', 'formats'])
+            ->allowedIncludes(['organization', 'levels', 'directions', 'formats', 'organization.city', 'persons'])
             ->allowedSorts(['name', 'id', 'expiration_date', 'sort']);
 
         $pagination = $request->json()->all()['pagination'] ?? ['page' => 1, 'page_size' => 10];
@@ -77,7 +77,7 @@ class ProductController extends Controller
                 AllowedFilter::exact('id'),
                 AllowedFilter::exact('slug')
             ])
-            ->allowedIncludes(['organization', 'levels', 'directions', 'formats', 'organization.city'])
+            ->allowedIncludes(['organization', 'levels', 'directions', 'formats', 'organization.city', 'persons'])
             ->firstOrFail();
 
         return (new ProductResource($query))->additional([
