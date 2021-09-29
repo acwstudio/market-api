@@ -15,6 +15,8 @@ class Category extends Model
     const MODEL_NAME = 'Категории',
         MODEL_LINK = 'categories';
 
+    const FILTER_BY = 'category_ids';
+
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',
         FIELD_NAME = 'name',
@@ -71,6 +73,11 @@ class Category extends Model
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function getFilterBy()
+    {
+        return self::FILTER_BY;
     }
 
     /**

@@ -38,6 +38,7 @@ class ProductController extends Controller
                 AllowedFilter::exact('is_document'),
                 AllowedFilter::exact('is_installment'),
                 AllowedFilter::exact('is_employment'),
+                AllowedFilter::exact('category_ids', 'category_id'),
                 AllowedFilter::exact('organization_ids', 'organization_id'),
                 AllowedFilter::exact('city_ids', 'organization.city_id'),
                 AllowedFilter::exact('subject_ids', 'subjects.id'),

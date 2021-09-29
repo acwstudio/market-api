@@ -15,6 +15,8 @@ class Subject extends Model
     const MODEL_NAME = 'Тематики',
         MODEL_LINK = 'subjects';
 
+    const FILTER_BY = 'subject_ids';
+
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',
         FIELD_NAME = 'name',
@@ -69,6 +71,11 @@ class Subject extends Model
     public function getUpdatedAt()
     {
         return $this->getAttribute(self::FIELD_UPDATED_AT);
+    }
+
+    public function getFilterBy()
+    {
+        return self::FILTER_BY;
     }
 
     public function products()
