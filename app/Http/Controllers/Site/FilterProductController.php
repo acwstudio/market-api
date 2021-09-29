@@ -19,8 +19,8 @@ class FilterProductController extends Controller
     public static $entities = [
         Direction::class,
         Level::class,
-        Format::class,
-        Subject::class
+//        Format::class,
+//        Subject::class
     ];
 
     public function main(Request $request)

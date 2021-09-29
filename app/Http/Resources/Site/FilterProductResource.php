@@ -39,6 +39,7 @@ class FilterProductResource extends JsonResource
         return [
             "name"  => $res->getModelName(),
             "slug"  => $res->table,
+            "filter_by"  => $res->getFilterBy(),
             "items" => $items
         ];
     }
