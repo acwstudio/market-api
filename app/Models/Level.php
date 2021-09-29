@@ -13,7 +13,8 @@ class Level extends Model
     public $table = 'levels';
 
     const MODEL_NAME = 'Уровни обучения',
-        MODEL_LINK = 'levels';
+        MODEL_LINK = 'levels',
+        MODEL_ENTITY = 'level';
 
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',

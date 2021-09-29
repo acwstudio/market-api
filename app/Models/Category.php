@@ -13,7 +13,8 @@ class Category extends Model
     public $table = 'categories';
 
     const MODEL_NAME = 'Категории',
-        MODEL_LINK = 'categories';
+        MODEL_LINK = 'categories',
+        MODEL_ENTITY = 'category';
 
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',
