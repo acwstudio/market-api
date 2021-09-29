@@ -66,7 +66,7 @@ class OrganizationController extends Controller
         ]);
     }
 
-    public function detail(EntityDetailRequest $request)
+    public function detail(Request $request)
     {
         $query = QueryBuilder::for(Organization::class)
             ->allowedFilters([

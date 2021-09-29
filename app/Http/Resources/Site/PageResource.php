@@ -164,6 +164,8 @@ class PageResource extends JsonResource
      */
     private function replaceTemplateToValue($queryParams, $dataString): array
     {
+        $regTemplateParams = '/"[A-Za-z_]+":( |)("|){[A-Za-z_]+}("|)( |)(,|)/u';
+
         foreach ($queryParams as $key => $value) {
             $dataString = str_ireplace(
                 sprintf("{%s}", $key),
@@ -172,12 +174,15 @@ class PageResource extends JsonResource
             );
         }
 
-        /** Удаляем поля которые не были переданы */
-        $dataString = preg_replace('/"[A-Za-z_]+":( |)("|){[A-Za-z_]+}("|)( |)(,|)/u', '', $dataString);
+        if (preg_match($regTemplateParams, $dataString)) {
 
-        /** Избавляемся от запятой при условии если передан один параметр */
-        if (count($queryParams) == 1) {
-            $dataString = preg_replace('/,/u', '', $dataString);
+            /** Удаляем поля которые не были переданы */
+            $dataString = preg_replace($regTemplateParams, '', $dataString);
+
+            /** Избавляемся от запятой при условии если передан один параметр */
+            if (count($queryParams) == 1) {
+                $dataString = preg_replace('/,/u', '', $dataString);
+            }
         }
 
 

@@ -71,7 +71,7 @@ class ProductController extends Controller
     /**
      * @return ProductResource|string
      */
-    public function detail(EntityDetailRequest $request)
+    public function detail(Request $request)
     {
         $query = QueryBuilder::for(Product::class)
             ->allowedFilters([
