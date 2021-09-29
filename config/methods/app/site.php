@@ -34,6 +34,6 @@ return [
     'copyright' => '© 2021 Synergy. Все права защищены',
     'privacy_policy' => [
         'link' => 'https://synergy.ru/lp/_chunk/privacy.php?lang=ru',
-        'text' => ''
+        'text' => 'Политика конфиденциальности'
     ]
 ];
