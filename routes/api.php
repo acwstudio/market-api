@@ -10,6 +10,7 @@ use App\Http\Controllers\Site\MainMenuController;
 use App\Http\Controllers\Site\MenuController;
 use App\Http\Controllers\Site\QuizController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\OrganizationController;
@@ -39,6 +40,8 @@ Route::group(['prefix' => '/v1'], function () {
     Route::post('persons/detail', [PersonController::class, 'detail']);
     Route::post('banners/list', [BannerController::class, 'list']);
     Route::post('banners/detail', [BannerController::class, 'detail']);
+    Route::post('cities/list', [CityController::class, 'list']);
+    Route::post('cities/detail', [CityController::class, 'detail']);
     Route::post('directions/list', [DirectionController::class, 'list']);
     Route::post('directions/detail', [DirectionController::class, 'detail']);
     Route::post('organizations/list', [OrganizationController::class, 'list']);

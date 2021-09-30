@@ -10,6 +10,8 @@
 + [Метод получения главного меню по фильтру: menu/main](#method_menu_main);
 
 #### Организации
++ [Метод получения городов по фильтру: cities/list](#method_cities_list);
++ [Метод получения конкретного города по фильтру: cities/detail](#method_cities_detail);
 + [Метод получения организаций по фильтру: organizations/list](#method_organizations_list);
 + [Метод получения конкретной организации по фильтру: organizations/detail](#method_organizations_detail);
 + [Метод получения секций организации по фильтру: entities/sections/list](#method_organizations_sections_list);
@@ -224,6 +226,98 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/directions/detail' 
         "slug": "biznes",
         "created_at": "2021-05-27T15:12:21.000000Z",
         "updated_at": "2021-07-30T11:07:20.000000Z"
+    },
+    "success": true,
+    "log_request_id": ""
+}
+ ```
+
+## <a name="method_cities_list"></a> Метод получения городов по фильтру: cities/list
+Адрес: https://mp.synergy.ru/api/v1/cities/list  
+Тип: POST  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля   | Тип         | Обязательное | Пример              | Комментарий
+| --------------- | ----------- | ------------ | ------------------- | ---------------------- |
+| ids             | array int[] | -            | [8]                 | Массив идентификаторов |
+| name            | string      | -            | Томск               | Город                  |
+| region_name     | string      | -            | Томская обл         | Регион                 |
+| city_kladr_id   | string      | -            | 7000000100000       | ID города              |
+| region_kladr_id | string      | -            | 7000000000000       | ID региона             |
+
+
+
+Пример запроса:
+```bash
+curl --location --request POST 'https://mp.synergy.ru/api/v1/cities/list' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "ids": [8],
+        "name": "Томск",
+        "region_name": "Томская обл",
+        "city_kladr_id": "7000000100000",
+        "region_kladr_id": "7000000000000"
+    },
+    "sort": "-name"
+}'
+ ```
+Пример ответа:
+```json
+{
+    "data": [
+        {
+            "id": 8,
+            "type": "cities",
+            "name": "Томск",
+            "city_kladr_id": "7000000100000",
+            "region_name": "Томская обл",
+            "region_kladr_id": "7000000000000",
+            "geo_point": "56.4845804,84.9481582"
+        }
+    ],
+    "count": 1,
+    "success": true
+}
+ ```
+
+## <a name="method_cities_detail"></a> Метод получения конкретного города по фильтру: cities/detail
+Адрес: https://mp.synergy.ru/api/v1/cities/detail  
+Тип: POST  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | --- | ------------ | ------ | ------------- |
+| id            | id  | -            | 9      | Идентификатор |
+
+
+Пример запроса:
+```bash
+curl --location --request POST 'https://mp.synergy.ru/api/v1/cities/detail' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "id": 9
+    }
+}'
+ ```
+Пример ответа:
+```json
+{
+    "data": {
+        "id": 9,
+        "type": "cities",
+        "name": "Омск",
+        "city_kladr_id": "5500000100000",
+        "region_name": "Омская обл",
+        "region_kladr_id": "5500000000000",
+        "geo_point": "54.9848566,73.3674517"
     },
     "success": true,
     "log_request_id": ""
