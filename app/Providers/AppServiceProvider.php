@@ -30,8 +30,6 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->bindSearchClient();
-
-//        $this->app->bind(\App\Services\Search\SearchRepository::class, \App\Services\Search\EloquentSearchRepository::class);
     }
 
     /**
@@ -41,14 +39,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-//        $scheme = parse_url(config('app.url'), PHP_URL_SCHEME);
-//        URL::forceScheme($scheme);
+        $scheme = parse_url(config('app.url'), PHP_URL_SCHEME);
+        URL::forceScheme($scheme);
     }
 
     private function bindSearchClient()
     {
         $this->app->bind(Client::class, function ($app) {
-//            dd($app['config']);
             return ClientBuilder::create()
                 ->setHosts($app['config']->get('services.search.hosts'))
                 ->build();

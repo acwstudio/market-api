@@ -6,21 +6,21 @@ use App\Models\Product;
 use Elasticsearch\Client;
 use Illuminate\Console\Command;
 
-class ReindexCommand extends Command
+class ReindexProductsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'search:reindex';
+    protected $signature = 'search:product-reindex';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Indexes all articles to Elasticsearch';
+    protected $description = 'Indexes all products to Elasticsearch';
 
     /** @var \Elasticsearch\Client */
     private $elasticsearch;
@@ -44,7 +44,11 @@ class ReindexCommand extends Command
      */
     public function handle()
     {
-        $this->info('Indexing all articles. This might take a while...');
+        $productCount = Product::count();
+
+        $this->info('Indexing all products. This might take a while...');
+
+        $bar = $this->output->createProgressBar($productCount);
 
         foreach (Product::cursor() as $product)
         {
@@ -55,10 +59,11 @@ class ReindexCommand extends Command
                 'body' => $product->toSearchArray(),
             ]);
 
-            // PHPUnit-style feedback
-            $this->output->write('.');
+            $bar->advance();
         }
+        $bar->finish();
 
-        $this->info("\nDone!");
+        $this->newLine();
+        $this->info('All products indexed!');
     }
 }

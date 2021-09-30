@@ -357,10 +357,10 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-//    public function toElasticsearchDocumentArray(): array
-//    {
-//        // TODO: Implement toElasticsearchDocumentArray() method.
-//        return [];
-//    }
+    public function toSearchArray()
+    {
+        $attributes = $this->getAttributes();
 
+        return \Arr::only($attributes, ['name', 'description']);
+    }
 }

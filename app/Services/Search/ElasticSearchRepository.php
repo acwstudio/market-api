@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Services\Search\SearchRepository;
 use Elasticsearch\Client;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class ElasticSearchRepository implements SearchRepository
 {
@@ -19,16 +20,16 @@ class ElasticSearchRepository implements SearchRepository
         $this->elasticsearch = $elasticsearch;
     }
 
-    public function search(string $query = ''): Collection
+    public function search(string $model, string $query = ''): Collection
     {
-        $items = $this->searchOnElasticsearch($query);
+        $items = $this->searchOnElasticsearch($model, $query);
 
-        return $this->buildCollection($items);
+        return $this->buildCollection($model, $items);
     }
 
-    private function searchOnElasticsearch(string $query = ''): array
+    private function searchOnElasticsearch(string $model, string $query = ''): array
     {
-        $model = new Product;
+        $model = new $model;
 
         $items = $this->elasticsearch->search([
             'index' => $model->getSearchIndex(),
@@ -36,8 +37,8 @@ class ElasticSearchRepository implements SearchRepository
             'body' => [
                 'query' => [
                     'multi_match' => [
-                        'fields' => ['name', 'description'],
                         'query' => $query,
+                        'fields' => ['name^2', 'description'],
                     ],
                 ],
             ],
@@ -46,14 +47,14 @@ class ElasticSearchRepository implements SearchRepository
         return $items;
     }
 
-    private function buildCollection(array $items): Collection
+    private function buildCollection(string $model, array $items): Collection
     {
-//        dd($items['hits']['hits'], '_id');
+        $model = new $model;
+
         $ids = \Arr::pluck($items['hits']['hits'], '_id');
-        dd($ids);
-        return Product::findMany($ids)
-            ->sortBy(function ($product) use ($ids) {
-                return array_search($product->getKey(), $ids);
+        return $model->findMany($ids)
+            ->sortBy(function ($model) use ($ids) {
+                return array_search($model->getKey(), $ids);
             });
     }
 }
