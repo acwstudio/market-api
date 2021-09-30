@@ -1,7 +1,7 @@
 <?php
 return [
     'main' => [
-        'logo' => 'https://dev.sys3.ru/marketplace/uploads/logo.jpeg'
+        'logo' => 'https://dev.sys3.ru/marketplace/uploads/synergy-desktop.svg'
     ],
     'contacts' => [
         'phones' => [
