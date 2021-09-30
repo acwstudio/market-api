@@ -38,7 +38,7 @@ class MainMenuController extends Controller
                 $productsTemplate[$product->id] = [
                     'id'     => $product->id,
                     'anchor' => $product->name,
-                    'link'   => "/products/$product->slug"
+                    'link'   => "/product/$product->slug"
                 ];
             }
             
