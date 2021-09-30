@@ -16,6 +16,8 @@ class Direction extends Model
     const MODEL_NAME = 'Направления',
         MODEL_LINK = 'directions';
 
+    const FILTER_BY = 'direction_ids';
+
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',
         FIELD_NAME = 'name',
@@ -95,6 +97,11 @@ class Direction extends Model
     public function getUpdatedAt()
     {
         return $this->getAttribute(self::FIELD_UPDATED_AT);
+    }
+
+    public function getFilterBy()
+    {
+        return self::FILTER_BY;
     }
 
     public function products()

@@ -47,6 +47,7 @@ class ProductResource extends JsonResource
             Product::FIELD_USER_ID                     => $product->getUserId(),
             'type'                                     => 'products',
             'included'                                 => [
+                Product::ENTITY_RELATIVE_PERSONS      => PersonResource::collection($this->whenLoaded('persons')),
                 Product::ENTITY_RELATIVE_ORGANIZATION => OrganizationResource::make($this->whenLoaded('organization')),
                 Product::ENTITY_RELATIVE_LEVELS       => LevelResource::collection($this->whenLoaded('levels')),
                 Product::ENTITY_RELATIVE_DIRECTIONS   => DirectionResource::collection($this->whenLoaded('directions')),

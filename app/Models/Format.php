@@ -15,6 +15,8 @@ class Format extends Model
     const MODEL_NAME = 'Форматы обучения',
         MODEL_LINK = 'formats';
 
+    const FILTER_BY = 'format_ids';
+
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',
         FIELD_NAME = 'name',
@@ -68,6 +70,11 @@ class Format extends Model
     public function getUpdatedAt()
     {
         return $this->getAttribute(self::FIELD_UPDATED_AT);
+    }
+
+    public function getFilterBy()
+    {
+        return self::FILTER_BY;
     }
 
     public function products()

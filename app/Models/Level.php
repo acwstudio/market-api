@@ -13,7 +13,10 @@ class Level extends Model
     public $table = 'levels';
 
     const MODEL_NAME = 'Уровни обучения',
-        MODEL_LINK = 'levels';
+        MODEL_LINK = 'levels',
+        MODEL_ENTITY = 'level';
+
+    const FILTER_BY = 'level_ids';
 
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',
@@ -67,6 +70,12 @@ class Level extends Model
     {
         return $this->getAttribute(self::FIELD_UPDATED_AT);
     }
+
+    public function getFilterBy()
+    {
+        return self::FILTER_BY;
+    }
+
 
     public function products()
     {

@@ -66,13 +66,14 @@ class OrganizationController extends Controller
         ]);
     }
 
-    public function detail(EntityDetailRequest $request)
+    public function detail(Request $request)
     {
         $query = QueryBuilder::for(Organization::class)
             ->allowedFilters([
                 AllowedFilter::exact('id'),
                 AllowedFilter::exact('slug')
             ])
+            ->allowedIncludes(['city', 'persons'])
             ->firstOrFail();
 
         return (new OrganizationResource($query))

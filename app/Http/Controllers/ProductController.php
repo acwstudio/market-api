@@ -39,6 +39,7 @@ class ProductController extends Controller
                 AllowedFilter::exact('is_document'),
                 AllowedFilter::exact('is_installment'),
                 AllowedFilter::exact('is_employment'),
+                AllowedFilter::exact('category_ids', 'category_id'),
                 AllowedFilter::exact('organization_ids', 'organization_id'),
                 AllowedFilter::exact('city_ids', 'organization.city_id'),
                 AllowedFilter::exact('subject_ids', 'subjects.id'),
@@ -47,7 +48,7 @@ class ProductController extends Controller
                 AllowedFilter::exact('direction_ids', 'directions.id'),
                 AllowedFilter::exact('person_ids', 'persons.id'),
             ])
-            ->allowedIncludes(['organization', 'levels', 'directions', 'formats'])
+            ->allowedIncludes(['organization', 'levels', 'directions', 'formats', 'organization.city', 'persons'])
             ->allowedSorts(['name', 'id', 'expiration_date', 'sort']);
 
         $pagination = $request->json()->all()['pagination'] ?? ['page' => 1, 'page_size' => 10];
@@ -71,14 +72,14 @@ class ProductController extends Controller
     /**
      * @return ProductResource|string
      */
-    public function detail(EntityDetailRequest $request)
+    public function detail(Request $request)
     {
         $query = QueryBuilder::for(Product::class)
             ->allowedFilters([
                 AllowedFilter::exact('id'),
                 AllowedFilter::exact('slug')
             ])
-            ->allowedIncludes(['organization', 'levels', 'directions', 'formats', 'organization.city'])
+            ->allowedIncludes(['organization', 'levels', 'directions', 'formats', 'organization.city', 'persons'])
             ->firstOrFail();
 
         return (new ProductResource($query))->additional([

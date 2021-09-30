@@ -1,7 +1,7 @@
 <?php
 return [
     'main' => [
-        'logo' => 'https://dev.sys3.ru/marketplace/uploads/logo.jpeg'
+        'logo' => 'https://dev.sys3.ru/marketplace/uploads/synergy-desktop.svg'
     ],
     'contacts' => [
         'phones' => [
@@ -34,6 +34,6 @@ return [
     'copyright' => '© 2021 Synergy. Все права защищены',
     'privacy_policy' => [
         'link' => 'https://synergy.ru/lp/_chunk/privacy.php?lang=ru',
-        'text' => ''
+        'text' => 'Политика конфиденциальности'
     ]
 ];
