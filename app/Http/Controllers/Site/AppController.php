@@ -13,7 +13,7 @@ class AppController extends Controller
 {
     public function site(Request $request)
     {
-        $query = QueryBuilder::for(App::class)->where('app', 'site')->get();
+        $query = QueryBuilder::for(App::class)->where(App::FIELD_APP, 'site')->get();
 
         return (new AppResource($query))->additional([
             'success' => true
