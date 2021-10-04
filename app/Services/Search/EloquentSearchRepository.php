@@ -14,8 +14,11 @@ class EloquentSearchRepository implements SearchRepository
 
         return $model->query()
             ->where(fn ($query) => (
-            $query->where('name', 'LIKE', "%{$term}%")
-                ->orWhere('description', 'LIKE', "%{$term}%")
+//            $query->where('name', 'LIKE', "%{$term}%")
+//                ->orWhere('description', 'LIKE', "%{$term}%")
+//            ))
+            $query->where('name', $term)
+//                ->orWhere('description', 'LIKE', "%{$term}%")
             ))
             ->get();
     }
