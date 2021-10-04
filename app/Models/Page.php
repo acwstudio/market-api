@@ -24,7 +24,8 @@ class Page extends Model
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
 
-    const ENTITY_RELATIVE_COMPONENTS = 'components';
+    const ENTITY_RELATIVE_COMPONENTS = 'components',
+        ENTITY_RELATIVE_SEOTAGS = 'seotags';
 
     public $fillable = [
         self::FIELD_NAME,

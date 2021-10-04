@@ -42,8 +42,8 @@ class OrganizationResource extends JsonResource
             Organization::FIELD_CREATED_AT        => $organization->getCreatedAt(),
             Organization::FIELD_UPDATED_AT        => $organization->getUpdatedAt(),
             'included'                            => [
-                Organization::ENTITY_RELATIVE_CITY    => CityResource::make($this->whenLoaded('city')),
-                Organization::ENTITY_RELATIVE_PERSONS => PersonResource::collection($this->whenLoaded('persons')),
+                Organization::ENTITY_RELATIVE_CITY    => CityResource::make($this->whenLoaded(Organization::ENTITY_RELATIVE_CITY)),
+                Organization::ENTITY_RELATIVE_PERSONS => PersonResource::collection($this->whenLoaded(Organization::ENTITY_RELATIVE_PERSONS)),
             ]
         ];
     }

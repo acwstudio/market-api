@@ -15,10 +15,10 @@ class MenuController extends Controller
     {
         $query = QueryBuilder::for(Menu::class)
             ->allowedFilters([
-                AllowedFilter::exact('active')->default(true),
+                AllowedFilter::exact(Menu::FIELD_ACTIVE)->default(true),
             ])
-            ->defaultSort('pointer')
-            ->allowedSorts(['pointer', 'id'])
+            ->defaultSort(Menu::FIELD_POINTER)
+            ->allowedSorts([Menu::FIELD_POINTER, Menu::FIELD_ID])
             ->get();
         
         return (new MenuCollection($query))

@@ -20,6 +20,8 @@ class Question extends Model
         FIELD_QUESTION = 'question',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
+        
+    const ENTITY_RELATIVE_ANSWERS = 'answers';
 
     public $fillable = [
         self::FIELD_ID,

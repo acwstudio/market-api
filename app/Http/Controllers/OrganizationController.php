@@ -11,7 +11,12 @@ use App\Http\Requests\EntityDetailRequest;
 use App\Http\Resources\OrganizationCollection;
 use App\Http\Resources\OrganizationResource;
 use App\Http\Resources\OrganizationListCollection;
+use App\Models\Direction;
+use App\Models\Format;
+use App\Models\Level;
 use App\Models\Organization;
+use App\Models\Product;
+use App\Models\Person;
 use App\Repositories\OrganizationRepository;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -33,21 +38,21 @@ class OrganizationController extends Controller
     public function list(Request $request){
         $query = QueryBuilder::for(Organization::class)
             ->allowedFilters([
-                AllowedFilter::exact('ids', 'id'),
-                AllowedFilter::exact('published'),
-                AllowedFilter::exact('name'),
-                AllowedFilter::exact('slug'),
-                AllowedFilter::exact('land'),
-                AllowedFilter::exact('parent_id'),
-                AllowedFilter::exact('city_ids', 'city_id'),
-                AllowedFilter::exact('direction_ids', 'products.directions.id'),
-                AllowedFilter::exact('level_ids', 'products.levels.id'),
-                AllowedFilter::exact('format_ids', 'products.formats.id'),
-                AllowedFilter::exact('product_ids', 'products.id'),
-                AllowedFilter::exact('person_ids', 'persons.id'),
+                AllowedFilter::exact('ids', Organization::FIELD_ID),
+                AllowedFilter::exact(Organization::FIELD_PUBLISHED),
+                AllowedFilter::exact(Organization::FIELD_NAME),
+                AllowedFilter::exact(Organization::FIELD_SLUG),
+                AllowedFilter::exact(Organization::FIELD_LAND),
+                AllowedFilter::exact(Organization::FIELD_PARENT_ID),
+                AllowedFilter::exact('city_ids', Organization::FIELD_CITY_ID),
+                AllowedFilter::exact('direction_ids', implode('.', [Organization::ENTITY_RELATIVE_PRODUCTS, Product::ENTITY_RELATIVE_DIRECTIONS, Direction::FIELD_ID])),
+                AllowedFilter::exact('level_ids', implode('.', [Organization::ENTITY_RELATIVE_PRODUCTS, Product::ENTITY_RELATIVE_LEVELS, Level::FIELD_ID])),
+                AllowedFilter::exact('format_ids', implode('.', [Organization::ENTITY_RELATIVE_PRODUCTS, Product::ENTITY_RELATIVE_FORMATS, Format::FIELD_ID])),
+                AllowedFilter::exact('product_ids', implode('.', [Organization::ENTITY_RELATIVE_PRODUCTS, Product::FIELD_ID])),
+                AllowedFilter::exact('person_ids', implode('.', [Organization::ENTITY_RELATIVE_PERSONS, Person::FIELD_ID])),
             ])
-            ->allowedIncludes(['city'])
-            ->allowedSorts(['id', 'name', 'address']);
+            ->allowedIncludes([Organization::ENTITY_RELATIVE_CITY])
+            ->allowedSorts([Organization::FIELD_ID, Organization::FIELD_NAME, Organization::FIELD_ADDRESS]);
 
         $pagination = $request->json()->all()['pagination'] ?? ['page' => 1, 'page_size' => 10];
         $count = $query->count();
@@ -70,10 +75,10 @@ class OrganizationController extends Controller
     {
         $query = QueryBuilder::for(Organization::class)
             ->allowedFilters([
-                AllowedFilter::exact('id'),
-                AllowedFilter::exact('slug')
+                AllowedFilter::exact(Organization::FIELD_ID),
+                AllowedFilter::exact(Organization::FIELD_SLUG)
             ])
-            ->allowedIncludes(['city', 'persons'])
+            ->allowedIncludes([Organization::ENTITY_RELATIVE_CITY, Organization::ENTITY_RELATIVE_PERSONS])
             ->firstOrFail();
 
         return (new OrganizationResource($query))

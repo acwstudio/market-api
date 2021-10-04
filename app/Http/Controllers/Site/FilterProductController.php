@@ -28,7 +28,7 @@ class FilterProductController extends Controller
         $args = [];
 
         foreach (self::$entities as $ent) {
-            $args[] = QueryBuilder::for($ent)->select('id', 'name')->where('published', 1)->get();
+            $args[] = QueryBuilder::for($ent)->select($ent::FIELD_ID, $ent::FIELD_NAME)->where($ent::FIELD_PUBLISHED, 1)->get();
         }
 
         return (new FilterProductCollection($args))->additional([
@@ -121,16 +121,16 @@ class FilterProductController extends Controller
     private function getPublishedListByModel($model)
     {
         return QueryBuilder::for($model)
-            ->select('id', 'name', 'slug')
-            ->where('published', 1)
+            ->select($model::FIELD_ID, $model::FIELD_NAME, $model::FIELD_SLUG)
+            ->where($model::FIELD_PUBLISHED, 1)
             ->get();
     }
 
     private function getPublishedOrganizationListByModel($model)
     {
         return QueryBuilder::for($model)
-            ->select('id', 'name', 'abbreviation_name', 'slug')
-            ->where('published', 1)
+            ->select($model::FIELD_ID, $model::FIELD_NAME, $model::FIELD_ABBREVIATION_NAME, $model::FIELD_SLUG)
+            ->where($model::FIELD_PUBLISHED, 1)
             ->get();
     }
 
@@ -138,7 +138,7 @@ class FilterProductController extends Controller
     private function getListByModel($model)
     {
         return QueryBuilder::for($model)
-            ->select('id', 'name')
+            ->select($model::FIELD_ID, $model::FIELD_NAME)
             ->get();
     }
 }

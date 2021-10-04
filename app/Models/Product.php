@@ -27,6 +27,7 @@ class Product extends Model
         FIELD_EXPIRATION_DATE = 'expiration_date',
         FIELD_NAME = 'name',
         FIELD_SLUG = 'slug',
+        FIELD_SORT = 'sort',
         FIELD_PREVIEW_IMAGE = 'preview_image',
         FIELD_DIGITAL_IMAGE = 'digital_image',
         FIELD_LAND = 'land',
@@ -73,6 +74,7 @@ class Product extends Model
         self::FIELD_PUBLISHED,
         self::FIELD_NAME,
         self::FIELD_SLUG,
+        self::FIELD_SORT,
         self::FIELD_PREVIEW_IMAGE,
         self::FIELD_DIGITAL_IMAGE,
         self::FIELD_LAND,
@@ -141,6 +143,11 @@ class Product extends Model
     public function getSlug()
     {
         return $this->getAttribute(self::FIELD_SLUG);
+    }
+
+    public function getSort()
+    {
+        return $this->getAttribute(self::FIELD_SORT);
     }
 
     public function getPreviewImage()
