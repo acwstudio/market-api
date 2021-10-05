@@ -20,15 +20,18 @@ class BannerController extends Controller
     {
         $query = QueryBuilder::for(Banner::class)
             ->allowedFilters([
-                AllowedFilter::exact('ids', 'id'),
-                AllowedFilter::exact('published'),
-                AllowedFilter::exact('name'),
-                AllowedFilter::exact('link'),
-                AllowedFilter::exact('banner_type'),
-                AllowedFilter::exact('colour'),
-                AllowedFilter::exact('description')
+                AllowedFilter::exact('ids', Banner::FIELD_ID),
+                AllowedFilter::exact(Banner::FIELD_PUBLISHED),
+                AllowedFilter::exact(Banner::FIELD_NAME),
+                AllowedFilter::exact(Banner::FIELD_LINK),
+                AllowedFilter::exact(Banner::FIELD_BANNER_TYPE),
+                AllowedFilter::exact(Banner::FIELD_COLOR_BG),
+                AllowedFilter::exact(Banner::FIELD_COLOR_TEXT),
+                AllowedFilter::exact(Banner::FIELD_COLOR_BG_LIST),
+                AllowedFilter::exact(Banner::FIELD_COLOR_TEXT_LIST),
+                AllowedFilter::exact(Banner::FIELD_DESCRIPTION)
             ])
-            ->allowedSorts(['name', 'id'])
+            ->allowedSorts([Banner::FIELD_NAME, Banner::FIELD_ID])
             ->get();
 
         return (new BannerCollection($query))
@@ -45,7 +48,7 @@ class BannerController extends Controller
     {
         $query = QueryBuilder::for(Banner::class)
             ->allowedFilters([
-                AllowedFilter::exact('id')
+                AllowedFilter::exact(Banner::FIELD_ID)
             ])
             ->firstOrFail();
 

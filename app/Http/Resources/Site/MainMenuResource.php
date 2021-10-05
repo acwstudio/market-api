@@ -78,56 +78,5 @@ class MainMenuResource extends JsonResource
             'link'      => "/catalog?${entity}_ids=$model_id",
             'sub_items' => array_values($localDirections)
         ];
-        
-        // OGM-794: предыдущее решение ниже, сейчас не используется
-        $explodeEntity = explode('\\', $this->model);
-        $entity = strtolower(end($explodeEntity));
-
-        //  id продуктов принадлежащих данному пункту меню
-        $idsProducts = $this->menuable->products->pluck('id')->toArray();
-        //  находим все эти продукты
-        $products = Product::find($idsProducts);
-
-        // создаем пустую коллекцию для directions
-        $directions = collect();
-
-        foreach ($products as $product) {
-            foreach ($product->directions as $direction) {
-
-                //  выбираем продукты конкретного направления
-                $directionProducts = Product::whereHas('directions', function ($q) use ($direction) {
-                    $q->where('id', $direction['id']);
-                })->whereIn('id', $idsProducts)->where('deleted_at', null)->get();
-
-                //  Выбираем нужные поля продуктов
-                /** @var Collection $resourceProducts */
-                $resourceProducts = $directionProducts->map(function ($item) {
-
-                    return [
-                        'id' => $item->id,
-                        'anchor' => $item->name,
-                        'link' => "/product/$item->slug",
-                    ];
-
-                });
-
-                //  собираем массив направлений и вложенные в направления продукты
-                $directions = $directions->push([
-
-                    'id' => $direction->id,
-                    'anchor' => $direction->name,
-                    'link' => "/catalog/$entity/$this->model_id/direction/$direction->id",
-                    'products' => $resourceProducts
-
-                ])->unique();
-            }
-        }
-
-        return [
-            'id' => $this->id,
-            'anchor' => $this->anchor ?: $this->menuable->name,
-            'link' => "/catalog/$entity/$this->model_id",
-            'sub_items' => $directions
-        ];
     }
 }

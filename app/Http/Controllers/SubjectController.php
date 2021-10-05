@@ -11,6 +11,7 @@ use App\Core\Response\ResponseTrait;
 use App\Http\Requests\EntityDetailRequest;
 use App\Http\Resources\SubjectCollection;
 use App\Http\Resources\SubjectResource;
+use App\Models\Product;
 use App\Models\Subject;
 use App\Repositories\SubjectRepository;
 use Illuminate\Http\Request;
@@ -34,11 +35,11 @@ class SubjectController extends Controller
 
         $query = QueryBuilder::for(Subject::class)
             ->allowedFilters([
-                AllowedFilter::exact('ids', 'id'),
-                AllowedFilter::exact('published'),
-                AllowedFilter::exact('name'),
-                AllowedFilter::exact('slug'),
-                AllowedFilter::exact('product_ids', 'products.id')
+                AllowedFilter::exact('ids', Subject::FIELD_ID),
+                AllowedFilter::exact(Subject::FIELD_PUBLISHED),
+                AllowedFilter::exact(Subject::FIELD_NAME),
+                AllowedFilter::exact(Subject::FIELD_SLUG),
+                AllowedFilter::exact('product_ids', implode('.', [Subject::ENTITY_RELATIVE_PRODUCT, Product::FIELD_ID]))
             ])
             ->allowedSorts(['name', 'id'])
             ->get();
@@ -57,8 +58,8 @@ class SubjectController extends Controller
     {
         $query = QueryBuilder::for(Subject::class)
             ->allowedFilters([
-                AllowedFilter::exact('id'),
-                AllowedFilter::exact('slug'),
+                AllowedFilter::exact(Subject::FIELD_ID),
+                AllowedFilter::exact(Subject::FIELD_SLUG),
             ])
             ->firstOrFail();
 

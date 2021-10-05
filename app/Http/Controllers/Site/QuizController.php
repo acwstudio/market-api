@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Site\QuizCollection;
 use App\Http\Resources\Site\QuizResource;
+use App\Models\Question;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -16,10 +17,13 @@ class QuizController extends Controller
     {
         $query = QueryBuilder::for(Quiz::class)
             ->allowedFilters([
-                AllowedFilter::exact('published')
+                AllowedFilter::exact(Quiz::FIELD_PUBLISHED)
             ])
-            ->allowedIncludes(['questions', 'questions.answers'])
-            ->allowedSorts(['id'])
+            ->allowedIncludes([
+                Quiz::ENTITY_RELATIVE_QUESTIONS,
+                implode('.', [Quiz::ENTITY_RELATIVE_QUESTIONS, Question::ENTITY_RELATIVE_ANSWERS])
+            ])
+            ->allowedSorts([Quiz::FIELD_ID])
             ->get();
 
         return (new QuizCollection($query))
@@ -33,10 +37,16 @@ class QuizController extends Controller
     {
         $query = QueryBuilder::for(Quiz::class)
             ->allowedFilters([
-                AllowedFilter::exact('id')
+                AllowedFilter::exact(Quiz::FIELD_ID)
             ])
-            ->allowedIncludes(['questions', 'questions.answers'])
-            ->with(['questions', 'questions.answers'])
+            ->allowedIncludes([
+                Quiz::ENTITY_RELATIVE_QUESTIONS,
+                implode('.', [Quiz::ENTITY_RELATIVE_QUESTIONS, Question::ENTITY_RELATIVE_ANSWERS])
+            ])
+            ->with([
+                Quiz::ENTITY_RELATIVE_QUESTIONS,
+                implode('.', [Quiz::ENTITY_RELATIVE_QUESTIONS, Question::ENTITY_RELATIVE_ANSWERS])
+            ])
             ->firstOrFail();
 
         return (new QuizResource($query))

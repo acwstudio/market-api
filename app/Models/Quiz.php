@@ -36,6 +36,8 @@ class Quiz extends Model
         FIELD_PERSON_IMAGE = 'person_image',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
+        
+    const ENTITY_RELATIVE_QUESTIONS = 'questions';
 
     public $fillable = [
         self::FIELD_ID,

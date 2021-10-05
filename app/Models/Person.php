@@ -26,6 +26,8 @@ class Person extends Model
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
 
+    const ENTITY_RELATIVE_PRODUCTS = 'products';
+
     public $fillable = [
         self::FIELD_ID,
         self::FIELD_PUBLISHED,

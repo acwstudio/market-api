@@ -48,7 +48,7 @@ class PageResource extends JsonResource
             if (!isset($queryParams['id']) && isset($queryParams['slug'])) {
 
                 $entityClassString = $page->getEntityType();
-                $entityClass = (new $entityClassString)->where('slug', $queryParams['slug'])->first();
+                $entityClass = (new $entityClassString)->where($entityClassString::FIELD_SLUG, $queryParams['slug'])->first();
                 $entityId = (!is_null($entityClass)) ? $entityClass->getId() : null;
 
             } else if (isset($queryParams['id'])) {

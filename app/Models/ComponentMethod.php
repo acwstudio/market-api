@@ -18,6 +18,8 @@ class ComponentMethod extends Model
         FIELD_DATA = 'data',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
+	
+	const ENTITY_RELATIVE_METHOD = 'method';
 
     public $fillable = [
         self::FIELD_COMPONENT_ID,

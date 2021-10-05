@@ -22,7 +22,7 @@ class FilterProductResource extends JsonResource
             $items[] = [
                 "id"    => $res->id,
                 "name"  => $res->name,
-                "count" => $res->products->where('published', 1)->count(),
+                "count" => $res->products->where(Product::FIELD_PUBLISHED, 1)->count(),
                 "page"  => [
                     "filter" => [
                         "slug" => "catalog"
@@ -37,10 +37,10 @@ class FilterProductResource extends JsonResource
         }
         
         return [
-            "name"  => $res->getModelName(),
-            "slug"  => $res->table,
-            "filter_by"  => $res->getFilterBy(),
-            "items" => $items
+            "name"      => $res->getModelName(),
+            "slug"      => $res->table,
+            "filter_by" => $res->getFilterBy(),
+            "items"     => $items
         ];
     }
 }
