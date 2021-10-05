@@ -26,6 +26,9 @@ global:
       host: mail.default
       port: "25"
 
+    elasticsearch:
+      url: http://msk1-es31.synergy.local:9200
+
   prod:
     app:
       debug: "true"
@@ -46,3 +49,6 @@ global:
     mail:
       host: mail.default
       port: "25"
+
+    elasticsearch:
+      url: http://msk1-es21.synergy.local:9200
