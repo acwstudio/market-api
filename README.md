@@ -669,6 +669,7 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/subjects/detail' \
 | level_ids        | array int[] | -            | [9,2,3]                               | Массив идентификаторов уровней     |
 | direction_ids    | array int[] | -            | [3,22,11]                             | Массив идентификаторов направлений |
 | person_ids       | array int[] | -            | [59,197]                              | Массив идентификаторов персон      |
+| product_place_ids| array int[] | -            | [59,197]                              | Массив идентификаторов мест        |
 
 Поля, доступные для сортировки: name, id, expiration_date, sort
 

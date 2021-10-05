@@ -11,6 +11,7 @@ use App\Models\Level;
 use App\Models\Organization;
 use App\Models\Person;
 use App\Models\Product;
+use App\Models\ProductPlace;
 use App\Models\Subject;
 use App\Repositories\ProductRepository;
 use Illuminate\Database\Eloquent\Builder;
@@ -52,6 +53,7 @@ class ProductController extends Controller
                 AllowedFilter::exact('level_ids', implode('.', [Product::ENTITY_RELATIVE_LEVELS, Level::FIELD_ID])),
                 AllowedFilter::exact('direction_ids', implode('.', [Product::ENTITY_RELATIVE_DIRECTIONS, Direction::FIELD_ID])),
                 AllowedFilter::exact('person_ids', implode('.', [Product::ENTITY_RELATIVE_PERSONS, Person::FIELD_ID])),
+                AllowedFilter::exact('product_place_ids', implode('.', [Product::ENTITY_RELATIVE_PRODUCT_PLACES, ProductPlace::FIELD_ID])),
             ])
             ->allowedIncludes([
                 Product::ENTITY_RELATIVE_ORGANIZATION,

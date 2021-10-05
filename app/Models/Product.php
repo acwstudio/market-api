@@ -3,11 +3,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
@@ -56,11 +54,12 @@ class Product extends Model
         FIELD_UPDATED_AT = 'updated_at';
 
     const ENTITY_RELATIVE_DIRECTIONS = 'directions',
-        ENTITY_RELATIVE_LEVELS       = 'levels',
-        ENTITY_RELATIVE_FORMATS      = 'formats',
-        ENTITY_RELATIVE_SUBJECTS     = 'subjects',
-        ENTITY_RELATIVE_PERSONS      = 'persons',
-        ENTITY_PRODUCT_SECTION       = 'productsection',
+        ENTITY_RELATIVE_LEVELS = 'levels',
+        ENTITY_RELATIVE_FORMATS = 'formats',
+        ENTITY_RELATIVE_SUBJECTS = 'subjects',
+        ENTITY_RELATIVE_PERSONS = 'persons',
+        ENTITY_RELATIVE_PRODUCT_PLACES = 'productplaces',
+        ENTITY_PRODUCT_SECTION = 'productsection',
         ENTITY_RELATIVE_ORGANIZATION = 'organization',
         ENTITY_RELATIVE_CITY = 'city',
         ENTITY_RELATIVE_PRODUCTABLES = 'productables';
@@ -348,7 +347,7 @@ class Product extends Model
 
     public function entitySection()
     {
-        return  $this->hasMany(EntitySection::class, 'entity_id')
+        return $this->hasMany(EntitySection::class, 'entity_id')
             ->where(EntitySection::FIELD_ENTITY_TYPE, 'App\\Models\\Product')
             ->orderBy(EntitySection::FIELD_SORT, 'asc');
     }
@@ -363,5 +362,14 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function seotags()
+    {
+        return $this->hasOne(SeoTag::class, SeoTag::FIELD_MODEL_ID)->where(SeoTag::FIELD_MODEL, Product::class);
+    }
+
+    public function productplaces()
+    {
+        return $this->morphedByMany(ProductPlace::class, 'productable');
+    }
 
 }
