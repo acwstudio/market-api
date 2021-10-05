@@ -22,7 +22,12 @@ class PageController extends Controller
                 AllowedFilter::exact(Page::FIELD_ID),
                 AllowedFilter::exact(Page::FIELD_SLUG),
             ])
-            ->with([Page::ENTITY_RELATIVE_COMPONENTS, implode('.', [Page::ENTITY_RELATIVE_COMPONENTS, Component::ENTITY_RELATIVE_METHODS]), implode('.', [Page::ENTITY_RELATIVE_COMPONENTS, Component::ENTITY_RELATIVE_METHODS, ComponentMethod::ENTITY_RELATIVE_METHOD]), Page::ENTITY_RELATIVE_SEOTAGS])
+            ->with([
+                Page::ENTITY_RELATIVE_COMPONENTS,
+                implode('.', [Page::ENTITY_RELATIVE_COMPONENTS, Component::ENTITY_RELATIVE_METHODS]),
+                implode('.', [Page::ENTITY_RELATIVE_COMPONENTS, Component::ENTITY_RELATIVE_METHODS, ComponentMethod::ENTITY_RELATIVE_METHOD]),
+                Page::ENTITY_RELATIVE_SEOTAGS
+            ])
             ->firstOrFail();
 
         $pageResource = new PageResource($query);

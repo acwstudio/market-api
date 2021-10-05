@@ -19,7 +19,10 @@ class QuizController extends Controller
             ->allowedFilters([
                 AllowedFilter::exact(Quiz::FIELD_PUBLISHED)
             ])
-            ->allowedIncludes([Quiz::ENTITY_RELATIVE_QUESTIONS, implode('.', [Quiz::ENTITY_RELATIVE_QUESTIONS, Question::ENTITY_RELATIVE_ANSWERS])])
+            ->allowedIncludes([
+                Quiz::ENTITY_RELATIVE_QUESTIONS,
+                implode('.', [Quiz::ENTITY_RELATIVE_QUESTIONS, Question::ENTITY_RELATIVE_ANSWERS])
+            ])
             ->allowedSorts([Quiz::FIELD_ID])
             ->get();
 
@@ -36,8 +39,14 @@ class QuizController extends Controller
             ->allowedFilters([
                 AllowedFilter::exact(Quiz::FIELD_ID)
             ])
-            ->allowedIncludes([Quiz::ENTITY_RELATIVE_QUESTIONS, implode('.', [Quiz::ENTITY_RELATIVE_QUESTIONS, Question::ENTITY_RELATIVE_ANSWERS])])
-            ->with([Quiz::ENTITY_RELATIVE_QUESTIONS, implode('.', [Quiz::ENTITY_RELATIVE_QUESTIONS, Question::ENTITY_RELATIVE_ANSWERS])])
+            ->allowedIncludes([
+                Quiz::ENTITY_RELATIVE_QUESTIONS,
+                implode('.', [Quiz::ENTITY_RELATIVE_QUESTIONS, Question::ENTITY_RELATIVE_ANSWERS])
+            ])
+            ->with([
+                Quiz::ENTITY_RELATIVE_QUESTIONS,
+                implode('.', [Quiz::ENTITY_RELATIVE_QUESTIONS, Question::ENTITY_RELATIVE_ANSWERS])
+            ])
             ->firstOrFail();
 
         return (new QuizResource($query))

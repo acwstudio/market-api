@@ -53,7 +53,14 @@ class ProductController extends Controller
                 AllowedFilter::exact('direction_ids', implode('.', [Product::ENTITY_RELATIVE_DIRECTIONS, Direction::FIELD_ID])),
                 AllowedFilter::exact('person_ids', implode('.', [Product::ENTITY_RELATIVE_PERSONS, Person::FIELD_ID])),
             ])
-            ->allowedIncludes([Product::ENTITY_RELATIVE_ORGANIZATION, Product::ENTITY_RELATIVE_LEVELS, Product::ENTITY_RELATIVE_DIRECTIONS, Product::ENTITY_RELATIVE_FORMATS, implode('.', [Product::ENTITY_RELATIVE_ORGANIZATION, Organization::ENTITY_RELATIVE_CITY]), Product::ENTITY_RELATIVE_PERSONS])
+            ->allowedIncludes([
+                Product::ENTITY_RELATIVE_ORGANIZATION,
+                Product::ENTITY_RELATIVE_LEVELS,
+                Product::ENTITY_RELATIVE_DIRECTIONS,
+                Product::ENTITY_RELATIVE_FORMATS,
+                implode('.', [Product::ENTITY_RELATIVE_ORGANIZATION, Organization::ENTITY_RELATIVE_CITY]),
+                Product::ENTITY_RELATIVE_PERSONS
+            ])
             ->allowedSorts([Product::FIELD_NAME, Product::FIELD_ID, Product::FIELD_EXPIRATION_DATE, Product::FIELD_SORT]);
 
         $pagination = $request->json()->all()['pagination'] ?? ['page' => 1, 'page_size' => 10];
@@ -84,7 +91,14 @@ class ProductController extends Controller
                 AllowedFilter::exact(Product::FIELD_ID),
                 AllowedFilter::exact(Product::FIELD_SLUG)
             ])
-            ->allowedIncludes([Product::ENTITY_RELATIVE_ORGANIZATION, Product::ENTITY_RELATIVE_LEVELS, Product::ENTITY_RELATIVE_DIRECTIONS, Product::ENTITY_RELATIVE_FORMATS, implode('.', [Product::ENTITY_RELATIVE_ORGANIZATION, Organization::ENTITY_RELATIVE_CITY]), Product::ENTITY_RELATIVE_PERSONS])
+            ->allowedIncludes([
+                Product::ENTITY_RELATIVE_ORGANIZATION,
+                Product::ENTITY_RELATIVE_LEVELS,
+                Product::ENTITY_RELATIVE_DIRECTIONS,
+                Product::ENTITY_RELATIVE_FORMATS,
+                implode('.', [Product::ENTITY_RELATIVE_ORGANIZATION, Organization::ENTITY_RELATIVE_CITY]),
+                Product::ENTITY_RELATIVE_PERSONS
+            ])
             ->firstOrFail();
 
         return (new ProductResource($query))->additional([
