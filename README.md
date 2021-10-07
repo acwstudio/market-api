@@ -25,6 +25,7 @@
 + [Метод получения конкретного продукта по фильтру: products/detail](#method_products_detail);
 + [Метод получения секций продукта по фильтру: entities/sections/list](#method_products_sections_list);
 + [Метод получения конкретной секции продукта по фильтру: entities/sections/detail](#method_products_sections_detail);
++ [Метод получения продуктов по поиску: entities/products/search](#method_products_search_list);
 
 #### Персоны
 + [Метод получения персон по фильтру: persons/list](#method_persons_list);
@@ -2054,8 +2055,6 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/entities/sections/d
 }
 ```
 
-
-
 ## <a name="method_app_site"></a>  Метод получения глобальной информации о сайте: app/site
 Адрес: https://mp.synergy.ru/api/v1/app/site
 Тип: POST  
@@ -2113,3 +2112,15 @@ curl --location --request POST 'http://mp-api.tagiev.site/api/v1/app/site' \
     }
 }
 ```
+## <a name="#method_products_search_list"></a> Метод получения продуктов по поиску
+
+Адрес: https://mp.synergy.ru/api/v1/products/search?query=Новый продукт
+Тип: GET  
+Формат входных данных: строка<br>
+
+Пример запроса:
+```bash
+curl --location --request GET 'https://mp.synergy.ru/api/v1/products/search?query=%D0%9D%D0%BE%D0%B2%D1%8B%D0%B9%20%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82' \
+--header 'Accept: application/vnd.api+json' \
+--data-raw ''
+ ```

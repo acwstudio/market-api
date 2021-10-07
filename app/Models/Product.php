@@ -357,7 +357,7 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function toSearchArray()
+    public function toSearchArray(): array
     {
         $attributes = $this->getAttributes();
 

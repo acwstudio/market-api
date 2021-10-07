@@ -20,27 +20,27 @@ class ElasticSearchRepository implements SearchRepository
         $this->elasticsearch = $elasticsearch;
     }
 
-    public function search(string $model, string $query = ''): Collection
+    public function search(string $model, string $search = ''): Collection
     {
-        $items = $this->searchOnElasticsearch($model, $query);
+        $items = $this->searchOnElasticsearch($model, $search);
 
         return $this->buildCollection($model, $items);
     }
 
     private function searchOnElasticsearch(string $model, string $query = ''): array
     {
-        $model = new $model;
-
+        /** @var Model|Product $modelObj */
+        $modelObj = new $model;
+        foreach (array_keys(\Arr::dot(config('api.search'))) as $item) {
+            if (str_contains($item, 'query')){
+                config(['api.search.' . $item => $query]);
+            }
+        }
         $items = $this->elasticsearch->search([
-            'index' => $model->getSearchIndex(),
-            'type' => $model->getSearchType(),
+            'index' => $modelObj->getSearchIndex(),
+            'type' => $modelObj->getSearchType(),
             'body' => [
-                'query' => [
-                    'multi_match' => [
-                        'query' => $query,
-                        'fields' => ['name', 'description'],
-                    ],
-                ],
+                'query' => config('api.search')
             ],
         ]);
 

@@ -39,6 +39,7 @@ Route::group(['prefix' => '/v1'], function () {
     Route::post('products/detail', [ProductController::class, 'detail']);
 
     Route::post('products', [ProductController::class, 'store']);
+    Route::delete('products/{id}', [ProductController::class, 'destroy']);
 
     Route::post('persons/list', [PersonController::class, 'list']);
     Route::post('persons/detail', [PersonController::class, 'detail']);

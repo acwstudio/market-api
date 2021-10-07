@@ -4,6 +4,9 @@ namespace App\Services\Search;
 
 use Elasticsearch\Client;
 
+/**
+ * This trait includes model methods for searching
+ */
 trait Searchable
 {
     public static function bootSearchable()
@@ -16,12 +19,18 @@ trait Searchable
         }
     }
 
-    public function getSearchIndex()
+    /**
+     * @return string
+     */
+    public function getSearchIndex(): string
     {
         return $this->getTable();
     }
 
-    public function getSearchType()
+    /**
+     * @return mixed|string
+     */
+    public function getSearchType(): mixed
     {
         if (property_exists($this, 'useSearchType')) {
             return $this->useSearchType;
@@ -30,7 +39,10 @@ trait Searchable
         return $this->getTable();
     }
 
-    public function toSearchArray()
+    /**
+     * @return array
+     */
+    public function toSearchArray(): array
     {
         // By having a custom method that transforms the model
         // to a searchable array allows us to customize the
