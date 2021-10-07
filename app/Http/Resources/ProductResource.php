@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Organization;
 use App\Models\Product;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -47,12 +48,12 @@ class ProductResource extends JsonResource
             Product::FIELD_USER_ID                     => $product->getUserId(),
             'type'                                     => 'products',
             'included'                                 => [
-                Product::ENTITY_RELATIVE_PERSONS      => PersonResource::collection($this->whenLoaded('persons')),
-                Product::ENTITY_RELATIVE_ORGANIZATION => OrganizationResource::make($this->whenLoaded('organization')),
-                Product::ENTITY_RELATIVE_LEVELS       => LevelResource::collection($this->whenLoaded('levels')),
-                Product::ENTITY_RELATIVE_DIRECTIONS   => DirectionResource::collection($this->whenLoaded('directions')),
-                Product::ENTITY_RELATIVE_FORMATS      => FormatResource::collection($this->whenLoaded('formats')),
-                Product::ENTITY_RELATIVE_CITY         => CityResource::collection($this->whenLoaded('organization.city')),
+                Product::ENTITY_RELATIVE_PERSONS      => PersonResource::collection($this->whenLoaded(Product::ENTITY_RELATIVE_PERSONS)),
+                Product::ENTITY_RELATIVE_ORGANIZATION => OrganizationResource::make($this->whenLoaded(Product::ENTITY_RELATIVE_ORGANIZATION)),
+                Product::ENTITY_RELATIVE_LEVELS       => LevelResource::collection($this->whenLoaded(Product::ENTITY_RELATIVE_LEVELS )),
+                Product::ENTITY_RELATIVE_DIRECTIONS   => DirectionResource::collection($this->whenLoaded(Product::ENTITY_RELATIVE_DIRECTIONS)),
+                Product::ENTITY_RELATIVE_FORMATS      => FormatResource::collection($this->whenLoaded(Product::ENTITY_RELATIVE_FORMATS)),
+                Product::ENTITY_RELATIVE_CITY         => CityResource::collection($this->whenLoaded(implode('.', [Product::ENTITY_RELATIVE_ORGANIZATION, Organization::ENTITY_RELATIVE_CITY]))),
             ]
         ];
 

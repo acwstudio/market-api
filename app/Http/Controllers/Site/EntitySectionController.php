@@ -15,24 +15,24 @@ class EntitySectionController extends Controller
     public function list(Request $request)
     {
         $validated = $request->validate([
-            'filter' => 'required|array',
-            'filter.entity_id' => 'required|integer',
-            'filter.entity_type' => 'required|string',
+            'filter'                                     => 'required|array',
+            'filter.' . EntitySection::FIELD_ENTITY_ID   => 'required|integer',
+            'filter.' . EntitySection::FIELD_ENTITY_TYPE => 'required|string',
         ]);
 
         $request->merge([
             'filter' => [
-                'entity_id' => $request->input('filter.entity_id'),
-                'entity_type' => 'App\\Models\\' . ucfirst($request->input('filter.entity_type'))
+                EntitySection::FIELD_ENTITY_ID   => $request->input('filter.' . EntitySection::FIELD_ENTITY_ID),
+                EntitySection::FIELD_ENTITY_TYPE => 'App\\Models\\' . ucfirst($request->input('filter.' . EntitySection::FIELD_ENTITY_TYPE))
             ]
         ]);
 
         $query = QueryBuilder::for(EntitySection::class)
             ->allowedFilters([
-                AllowedFilter::exact('entity_id'),
-                AllowedFilter::exact('entity_type'),
+                AllowedFilter::exact(EntitySection::FIELD_ENTITY_ID),
+                AllowedFilter::exact(EntitySection::FIELD_ENTITY_TYPE),
             ])
-            ->defaultSort('sort')
+            ->defaultSort(EntitySection::FIELD_SORT)
             ->get();
 
         $collection = new EntitySectionCollection($query);
@@ -47,24 +47,24 @@ class EntitySectionController extends Controller
     {
         $request->merge([
             'filter' => [
-                'section_id' => $request->input('filter.section_id'),
-                'entity_id' => $request->input('filter.entity_id'),
-                'entity_type' => 'App\\Models\\' . ucfirst($request->input('filter.entity_type'))
+                EntitySection::FIELD_SECTION_ID  => $request->input('filter.' . EntitySection::FIELD_SECTION_ID),
+                EntitySection::FIELD_ENTITY_ID   => $request->input('filter.' . EntitySection::FIELD_ENTITY_ID),
+                EntitySection::FIELD_ENTITY_TYPE => 'App\\Models\\' . ucfirst($request->input('filter.' . EntitySection::FIELD_ENTITY_TYPE))
             ]
         ]);
 
         $validated = $request->validate([
-            'filter' => 'required|array',
-            'filter.section_id' => 'required|integer',
-            'filter.entity_id' => 'required|integer',
-            'filter.entity_type' => 'required|string',
+            'filter'                                     => 'required|array',
+            'filter.' . EntitySection::FIELD_SECTION_ID  => 'required|integer',
+            'filter.' . EntitySection::FIELD_ENTITY_ID   => 'required|integer',
+            'filter.' . EntitySection::FIELD_ENTITY_TYPE => 'required|string',
         ]);
 
         $query = QueryBuilder::for(EntitySection::class)
             ->allowedFilters([
-                AllowedFilter::exact('entity_id'),
-                AllowedFilter::exact('entity_type'),
-                AllowedFilter::exact('section_id')
+                AllowedFilter::exact(EntitySection::FIELD_ENTITY_ID),
+                AllowedFilter::exact(EntitySection::FIELD_ENTITY_TYPE),
+                AllowedFilter::exact(EntitySection::FIELD_SECTION_ID)
             ])
             ->firstOrFail();
 

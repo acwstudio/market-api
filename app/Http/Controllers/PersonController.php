@@ -7,6 +7,7 @@ use App\Http\Resources\PersonCollection;
 use App\Http\Resources\PersonResource;
 use App\Http\Resources\PersonListCollection;
 use App\Models\Person;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -21,13 +22,13 @@ class PersonController extends Controller
     {
         $query = QueryBuilder::for(Person::class)
             ->allowedFilters([
-                AllowedFilter::exact('ids', 'id'),
-                AllowedFilter::exact('published'),
-                AllowedFilter::exact('name'),
-                AllowedFilter::exact('show_main'),
-                AllowedFilter::exact('product_ids', 'products.id')
+                AllowedFilter::exact('ids', Person::FIELD_ID),
+                AllowedFilter::exact(Person::FIELD_PUBLISHED),
+                AllowedFilter::exact(Person::FIELD_NAME),
+                AllowedFilter::exact(Person::FIELD_SHOW_MAIN),
+                AllowedFilter::exact('product_ids', implode('.', [Person::ENTITY_RELATIVE_PRODUCTS, Product::FIELD_ID]))
             ])
-            ->allowedSorts(['position', 'name', 'id'])
+            ->allowedSorts([Person::FIELD_POSITION, Person::FIELD_NAME, Person::FIELD_ID])
             ->get();
 
         return (new PersonCollection($query))
@@ -44,7 +45,7 @@ class PersonController extends Controller
     {
         $query = QueryBuilder::for(Person::class)
             ->allowedFilters([
-                AllowedFilter::exact('id')
+                AllowedFilter::exact(Person::FIELD_ID)
             ])
             ->firstOrFail();
 

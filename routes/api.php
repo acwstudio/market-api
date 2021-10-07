@@ -31,7 +31,7 @@ use App\Http\Controllers\PersonController;
 */
 
 Route::group(['prefix' => '/v1'], function () {
-    Route::post('app/site', [AppController::class, 'app']);
+    Route::post('app/site', [AppController::class, 'site']);
 
     Route::post('page', [PageController::class, 'page']);
 

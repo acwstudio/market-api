@@ -7,6 +7,7 @@ use App\Http\Requests\EntityDetailRequest;
 use App\Http\Resources\FormatCollection;
 use App\Http\Resources\FormatResource;
 use App\Models\Format;
+use App\Models\Product;
 use App\Repositories\FormatRepository;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -28,13 +29,13 @@ class FormatController extends Controller
     {
         $query = QueryBuilder::for(Format::class)
             ->allowedFilters([
-                AllowedFilter::exact('ids', 'id'),
-                AllowedFilter::exact('published'),
-                AllowedFilter::exact('name'),
-                AllowedFilter::exact('slug'),
-                AllowedFilter::exact('product_ids', 'products.id')
+                AllowedFilter::exact('ids', Format::FIELD_ID),
+                AllowedFilter::exact(Format::FIELD_PUBLISHED),
+                AllowedFilter::exact(Format::FIELD_NAME),
+                AllowedFilter::exact(Format::FIELD_SLUG),
+                AllowedFilter::exact('product_ids', implode('.', [Format::ENTITY_RELATIVE_PRODUCT, Product::FIELD_ID]))
             ])
-            ->allowedSorts(['name', 'id'])
+            ->allowedSorts([Format::FIELD_NAME, Format::FIELD_ID])
             ->get();
 
         return (new FormatCollection($query))
@@ -51,8 +52,8 @@ class FormatController extends Controller
     {
         $query = QueryBuilder::for(Format::class)
             ->allowedFilters([
-                AllowedFilter::exact('id'),
-                AllowedFilter::exact('slug'),
+                AllowedFilter::exact(Format::FIELD_ID),
+                AllowedFilter::exact(Format::FIELD_SLUG),
             ])
             ->firstOrFail();
 

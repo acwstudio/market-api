@@ -18,11 +18,11 @@ class QuestionResource extends JsonResource
         /** @var Question $question */
         $question = $this->resource;
         return [
-            Question::FIELD_ID        => $question->getId(),
-            'type'                    => 'questions',
-            Question::FIELD_QUESTION  => $question->getQuestion(),
-            Question::FIELD_PUBLISHED => $question->getPublished(),
-            'answers' => AnswerResource::collection($this->whenLoaded('answers'))
+            Question::FIELD_ID                => $question->getId(),
+            'type'                            => 'questions',
+            Question::FIELD_QUESTION          => $question->getQuestion(),
+            Question::FIELD_PUBLISHED         => $question->getPublished(),
+            Question::ENTITY_RELATIVE_ANSWERS => AnswerResource::collection($this->whenLoaded(Question::ENTITY_RELATIVE_ANSWERS))
         ];
     }
 }

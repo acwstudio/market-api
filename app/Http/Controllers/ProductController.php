@@ -6,7 +6,14 @@ use App\Http\Requests\EntityDetailRequest;
 use App\Http\Requests\ProductCreateRequest;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\ProductCollection;
+use App\Models\Direction;
+use App\Models\Format;
+use App\Models\Level;
+use App\Models\Organization;
+use App\Models\Person;
 use App\Models\Product;
+use App\Models\ProductPlace;
+use App\Models\Subject;
 use App\Repositories\ProductRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -29,27 +36,35 @@ class ProductController extends Controller
     {
         $query = QueryBuilder::for(Product::class)
             ->allowedFilters([
-                AllowedFilter::exact('ids', 'id'),
-                AllowedFilter::exact('published'),
-                AllowedFilter::exact('name'),
-                AllowedFilter::exact('slug'),
-                AllowedFilter::callback('expiration_date', function (Builder $query, $value) {
-                    $query->whereDate('expiration_date', '<=', date('Y-m-d H:i:s', strtotime($value)));
+                AllowedFilter::exact('ids', Product::FIELD_ID),
+                AllowedFilter::exact(Product::FIELD_PUBLISHED),
+                AllowedFilter::exact(Product::FIELD_NAME),
+                AllowedFilter::exact(Product::FIELD_SLUG),
+                AllowedFilter::callback(Product::FIELD_EXPIRATION_DATE, function (Builder $query, $value) {
+                    $query->whereDate(Product::FIELD_EXPIRATION_DATE, '<=', date('Y-m-d H:i:s', strtotime($value)));
                 }),
-                AllowedFilter::exact('is_document'),
-                AllowedFilter::exact('is_installment'),
-                AllowedFilter::exact('is_employment'),
-                AllowedFilter::exact('category_ids', 'category_id'),
-                AllowedFilter::exact('organization_ids', 'organization_id'),
-                AllowedFilter::exact('city_ids', 'organization.city_id'),
-                AllowedFilter::exact('subject_ids', 'subjects.id'),
-                AllowedFilter::exact('format_ids', 'formats.id'),
-                AllowedFilter::exact('level_ids', 'levels.id'),
-                AllowedFilter::exact('direction_ids', 'directions.id'),
-                AllowedFilter::exact('person_ids', 'persons.id'),
+                AllowedFilter::exact(Product::FIELD_IS_DOCUMENT),
+                AllowedFilter::exact(Product::FIELD_IS_INSTALLMENT),
+                AllowedFilter::exact(Product::FIELD_IS_EMPLOYMENT),
+                AllowedFilter::exact('category_ids', Product::FIELD_CATEGORY_ID),
+                AllowedFilter::exact('organization_ids', Product::FIELD_ORGANIZATION_ID),
+                AllowedFilter::exact('city_ids', implode('.', [Product::ENTITY_RELATIVE_ORGANIZATION, Organization::FIELD_CITY_ID])),
+                AllowedFilter::exact('subject_ids', implode('.', [Product::ENTITY_RELATIVE_SUBJECTS, Subject::FIELD_ID])),
+                AllowedFilter::exact('format_ids', implode('.', [Product::ENTITY_RELATIVE_FORMATS, Format::FIELD_ID])),
+                AllowedFilter::exact('level_ids', implode('.', [Product::ENTITY_RELATIVE_LEVELS, Level::FIELD_ID])),
+                AllowedFilter::exact('direction_ids', implode('.', [Product::ENTITY_RELATIVE_DIRECTIONS, Direction::FIELD_ID])),
+                AllowedFilter::exact('person_ids', implode('.', [Product::ENTITY_RELATIVE_PERSONS, Person::FIELD_ID])),
+                AllowedFilter::exact('product_place_ids', implode('.', [Product::ENTITY_RELATIVE_PRODUCT_PLACES, ProductPlace::FIELD_ID])),
             ])
-            ->allowedIncludes(['organization', 'levels', 'directions', 'formats', 'organization.city', 'persons'])
-            ->allowedSorts(['name', 'id', 'expiration_date', 'sort']);
+            ->allowedIncludes([
+                Product::ENTITY_RELATIVE_ORGANIZATION,
+                Product::ENTITY_RELATIVE_LEVELS,
+                Product::ENTITY_RELATIVE_DIRECTIONS,
+                Product::ENTITY_RELATIVE_FORMATS,
+                implode('.', [Product::ENTITY_RELATIVE_ORGANIZATION, Organization::ENTITY_RELATIVE_CITY]),
+                Product::ENTITY_RELATIVE_PERSONS
+            ])
+            ->allowedSorts([Product::FIELD_NAME, Product::FIELD_ID, Product::FIELD_EXPIRATION_DATE, Product::FIELD_SORT]);
 
         $pagination = $request->json()->all()['pagination'] ?? ['page' => 1, 'page_size' => 10];
         $count = $query->count();
@@ -76,10 +91,17 @@ class ProductController extends Controller
     {
         $query = QueryBuilder::for(Product::class)
             ->allowedFilters([
-                AllowedFilter::exact('id'),
-                AllowedFilter::exact('slug')
+                AllowedFilter::exact(Product::FIELD_ID),
+                AllowedFilter::exact(Product::FIELD_SLUG)
             ])
-            ->allowedIncludes(['organization', 'levels', 'directions', 'formats', 'organization.city', 'persons'])
+            ->allowedIncludes([
+                Product::ENTITY_RELATIVE_ORGANIZATION,
+                Product::ENTITY_RELATIVE_LEVELS,
+                Product::ENTITY_RELATIVE_DIRECTIONS,
+                Product::ENTITY_RELATIVE_FORMATS,
+                implode('.', [Product::ENTITY_RELATIVE_ORGANIZATION, Organization::ENTITY_RELATIVE_CITY]),
+                Product::ENTITY_RELATIVE_PERSONS
+            ])
             ->firstOrFail();
 
         return (new ProductResource($query))->additional([

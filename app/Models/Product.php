@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Services\Search\Searchable;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes, Searchable;
+    use HasFactory, SoftDeletes;
 
     public $table = 'products';
 
@@ -355,6 +354,16 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function seotags()
+    {
+        return $this->hasOne(SeoTag::class, SeoTag::FIELD_MODEL_ID)->where(SeoTag::FIELD_MODEL, Product::class);
+    }
+
+    public function productplaces()
+    {
+        return $this->morphedByMany(ProductPlace::class, 'productable');
     }
 
     public function toSearchArray(): array

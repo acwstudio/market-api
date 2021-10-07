@@ -6,27 +6,27 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Question extends Model
+class App extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public $table = 'questions';
+    public $table = 'apps';
 
-    const MODEL_NAME = 'Вопросы',
-        MODEL_LINK = 'questions';
+    const MODEL_NAME = 'Приложения',
+        MODEL_LINK = 'apps';
 
     const FIELD_ID = 'id',
-        FIELD_PUBLISHED = 'published',
-        FIELD_QUESTION = 'question',
+        FIELD_APP = 'app',
+        FIELD_KEY = 'key',
+        FIELD_VALUE = 'value',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
-        
-    const ENTITY_RELATIVE_ANSWERS = 'answers';
 
     public $fillable = [
         self::FIELD_ID,
-        self::FIELD_PUBLISHED,
-        self::FIELD_QUESTION
+        self::FIELD_APP,
+        self::FIELD_KEY,
+        self::FIELD_VALUE
     ];
 
     public static function getModelName()
@@ -44,19 +44,19 @@ class Question extends Model
         return $this->getAttribute(self::FIELD_ID);
     }
 
-    public function getPublished()
+    public function getApp()
     {
-        return $this->getAttribute(self::FIELD_PUBLISHED);
+        return $this->getAttribute(self::FIELD_APP);
     }
 
-    public function getQuestion()
+    public function getKey()
     {
-        return $this->getAttribute(self::FIELD_QUESTION);
+        return $this->getAttribute(self::FIELD_KEY);
     }
 
-    public function getName()
+    public function getValue()
     {
-        return $this->getAttribute(self::FIELD_QUESTION);
+        return $this->getAttribute(self::FIELD_VALUE);
     }
 
     public function getCreatedAt()
@@ -67,15 +67,5 @@ class Question extends Model
     public function getUpdatedAt()
     {
         return $this->getAttribute(self::FIELD_UPDATED_AT);
-    }
-
-    public function quizzes()
-    {
-        return $this->belongsToMany(Quiz::class);
-    }
-
-    public function answers()
-    {
-        return $this->hasMany(Answer::class);
     }
 }
