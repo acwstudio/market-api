@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Site\SearchProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Site\AppController;
@@ -36,6 +37,10 @@ Route::group(['prefix' => '/v1'], function () {
 
     Route::post('products/list', [ProductController::class, 'list']);
     Route::post('products/detail', [ProductController::class, 'detail']);
+
+    Route::post('products', [ProductController::class, 'store']);
+    Route::delete('products/{id}', [ProductController::class, 'destroy']);
+
     Route::post('persons/list', [PersonController::class, 'list']);
     Route::post('persons/detail', [PersonController::class, 'detail']);
     Route::post('banners/list', [BannerController::class, 'list']);
@@ -59,4 +64,6 @@ Route::group(['prefix' => '/v1'], function () {
     Route::post('quizzes/detail', [QuizController::class, 'detail']);
     Route::post('entities/sections/list', [EntitySectionController::class, 'list']);
     Route::post('entities/sections/detail', [EntitySectionController::class, 'detail']);
+
+    Route::get('products/search', [SearchProductController::class, 'list']);
 });

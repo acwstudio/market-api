@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use App\Services\Search\Searchable;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
 
     public $table = 'products';
 
@@ -25,7 +28,6 @@ class Product extends Model
         FIELD_EXPIRATION_DATE = 'expiration_date',
         FIELD_NAME = 'name',
         FIELD_SLUG = 'slug',
-        FIELD_SORT = 'sort',
         FIELD_PREVIEW_IMAGE = 'preview_image',
         FIELD_DIGITAL_IMAGE = 'digital_image',
         FIELD_LAND = 'land',
@@ -54,12 +56,11 @@ class Product extends Model
         FIELD_UPDATED_AT = 'updated_at';
 
     const ENTITY_RELATIVE_DIRECTIONS = 'directions',
-        ENTITY_RELATIVE_LEVELS = 'levels',
-        ENTITY_RELATIVE_FORMATS = 'formats',
-        ENTITY_RELATIVE_SUBJECTS = 'subjects',
-        ENTITY_RELATIVE_PERSONS = 'persons',
-        ENTITY_RELATIVE_PRODUCT_PLACES = 'productplaces',
-        ENTITY_PRODUCT_SECTION = 'productsection',
+        ENTITY_RELATIVE_LEVELS       = 'levels',
+        ENTITY_RELATIVE_FORMATS      = 'formats',
+        ENTITY_RELATIVE_SUBJECTS     = 'subjects',
+        ENTITY_RELATIVE_PERSONS      = 'persons',
+        ENTITY_PRODUCT_SECTION       = 'productsection',
         ENTITY_RELATIVE_ORGANIZATION = 'organization',
         ENTITY_RELATIVE_CITY = 'city',
         ENTITY_RELATIVE_PRODUCTABLES = 'productables';
@@ -73,7 +74,6 @@ class Product extends Model
         self::FIELD_PUBLISHED,
         self::FIELD_NAME,
         self::FIELD_SLUG,
-        self::FIELD_SORT,
         self::FIELD_PREVIEW_IMAGE,
         self::FIELD_DIGITAL_IMAGE,
         self::FIELD_LAND,
@@ -142,11 +142,6 @@ class Product extends Model
     public function getSlug()
     {
         return $this->getAttribute(self::FIELD_SLUG);
-    }
-
-    public function getSort()
-    {
-        return $this->getAttribute(self::FIELD_SORT);
     }
 
     public function getPreviewImage()
@@ -347,7 +342,7 @@ class Product extends Model
 
     public function entitySection()
     {
-        return $this->hasMany(EntitySection::class, 'entity_id')
+        return  $this->hasMany(EntitySection::class, 'entity_id')
             ->where(EntitySection::FIELD_ENTITY_TYPE, 'App\\Models\\Product')
             ->orderBy(EntitySection::FIELD_SORT, 'asc');
     }
@@ -372,4 +367,10 @@ class Product extends Model
         return $this->morphedByMany(ProductPlace::class, 'productable');
     }
 
+    public function toSearchArray(): array
+    {
+        $attributes = $this->getAttributes();
+
+        return \Arr::only($attributes, ['name', 'description']);
+    }
 }
