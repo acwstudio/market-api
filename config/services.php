@@ -31,7 +31,7 @@ return [
     ],
     'search' => [
         'enabled' => env('ELASTICSEARCH_ENABLED', false),
-        'hosts' => explode(',', env('ELASTICSEARCH_HOSTS')),
+        'hosts' => explode(',', env('ELASTICSEARCH_HOSTS', 'localhost:9200')),
     ],
 
 ];
