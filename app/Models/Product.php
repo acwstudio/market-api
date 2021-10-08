@@ -27,6 +27,7 @@ class Product extends Model
         FIELD_PUBLISHED = 'published',
         FIELD_EXPIRATION_DATE = 'expiration_date',
         FIELD_NAME = 'name',
+        FIELD_SORT = 'sort',
         FIELD_SLUG = 'slug',
         FIELD_PREVIEW_IMAGE = 'preview_image',
         FIELD_DIGITAL_IMAGE = 'digital_image',
@@ -63,6 +64,7 @@ class Product extends Model
         ENTITY_PRODUCT_SECTION       = 'productsection',
         ENTITY_RELATIVE_ORGANIZATION = 'organization',
         ENTITY_RELATIVE_CITY = 'city',
+        ENTITY_RELATIVE_PRODUCT_PLACES = 'productplaces',
         ENTITY_RELATIVE_PRODUCTABLES = 'productables';
 
     const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
