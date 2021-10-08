@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EntityDetailRequest;
+use App\Http\Requests\ProductCreateRequest;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\ProductCollection;
 use App\Models\Direction;
@@ -11,6 +12,7 @@ use App\Models\Level;
 use App\Models\Organization;
 use App\Models\Person;
 use App\Models\Product;
+use App\Models\ProductPlace;
 use App\Models\Subject;
 use App\Repositories\ProductRepository;
 use Illuminate\Database\Eloquent\Builder;
@@ -52,6 +54,7 @@ class ProductController extends Controller
                 AllowedFilter::exact('level_ids', implode('.', [Product::ENTITY_RELATIVE_LEVELS, Level::FIELD_ID])),
                 AllowedFilter::exact('direction_ids', implode('.', [Product::ENTITY_RELATIVE_DIRECTIONS, Direction::FIELD_ID])),
                 AllowedFilter::exact('person_ids', implode('.', [Product::ENTITY_RELATIVE_PERSONS, Person::FIELD_ID])),
+                AllowedFilter::exact('product_place_ids', implode('.', [Product::ENTITY_RELATIVE_PRODUCT_PLACES, ProductPlace::FIELD_ID])),
             ])
             ->allowedIncludes([
                 Product::ENTITY_RELATIVE_ORGANIZATION,
@@ -105,6 +108,37 @@ class ProductController extends Controller
             'success' => true,
             'log_request_id' => ''
         ]);
+    }
+
+    public function store(ProductCreateRequest $request)
+    {
+        $dataAttributes = $request->input('data.attributes');
+
+        $product = Product::create([
+            'is_moderated'    => $dataAttributes['is_moderated'],
+            'name'            => $dataAttributes['name'],
+            'published'       => $dataAttributes['published'],
+            'slug'            => $dataAttributes['slug'],
+            'sort'            => $dataAttributes['sort'],
+            'is_employment'   => $dataAttributes['is_employment'],
+            'is_installment'  => $dataAttributes['is_installment'],
+            'is_document'     => $dataAttributes['is_document'],
+            'color'           => $dataAttributes['color'],
+            'organization_id' => $dataAttributes['organization_id'],
+            'category_id'     => $dataAttributes['category_id'],
+            'user_id'         => $dataAttributes['user_id'],
+        ]);
+
+        return (new ProductResource($product))
+            ->response();
+//            ->header('Location', route('admin.authors.show', [
+//                'author' => $product
+//            ]));
+    }
+
+    public function destroy($id)
+    {
+        return 'ok';
     }
 
 }

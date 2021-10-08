@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\Search\Searchable;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
 
     public $table = 'products';
 
@@ -26,8 +27,8 @@ class Product extends Model
         FIELD_PUBLISHED = 'published',
         FIELD_EXPIRATION_DATE = 'expiration_date',
         FIELD_NAME = 'name',
-        FIELD_SLUG = 'slug',
         FIELD_SORT = 'sort',
+        FIELD_SLUG = 'slug',
         FIELD_PREVIEW_IMAGE = 'preview_image',
         FIELD_DIGITAL_IMAGE = 'digital_image',
         FIELD_LAND = 'land',
@@ -63,6 +64,7 @@ class Product extends Model
         ENTITY_PRODUCT_SECTION       = 'productsection',
         ENTITY_RELATIVE_ORGANIZATION = 'organization',
         ENTITY_RELATIVE_CITY = 'city',
+        ENTITY_RELATIVE_PRODUCT_PLACES = 'productplaces',
         ENTITY_RELATIVE_PRODUCTABLES = 'productables';
 
     const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
@@ -74,7 +76,6 @@ class Product extends Model
         self::FIELD_PUBLISHED,
         self::FIELD_NAME,
         self::FIELD_SLUG,
-        self::FIELD_SORT,
         self::FIELD_PREVIEW_IMAGE,
         self::FIELD_DIGITAL_IMAGE,
         self::FIELD_LAND,
@@ -143,11 +144,6 @@ class Product extends Model
     public function getSlug()
     {
         return $this->getAttribute(self::FIELD_SLUG);
-    }
-
-    public function getSort()
-    {
-        return $this->getAttribute(self::FIELD_SORT);
     }
 
     public function getPreviewImage()
@@ -363,5 +359,20 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function seotags()
+    {
+        return $this->hasOne(SeoTag::class, SeoTag::FIELD_MODEL_ID)->where(SeoTag::FIELD_MODEL, Product::class);
+    }
 
+    public function productplaces()
+    {
+        return $this->morphedByMany(ProductPlace::class, 'productable');
+    }
+
+    public function toSearchArray(): array
+    {
+        $attributes = $this->getAttributes();
+
+        return \Arr::only($attributes, ['name', 'description']);
+    }
 }

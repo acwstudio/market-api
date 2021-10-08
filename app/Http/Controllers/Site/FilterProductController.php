@@ -113,7 +113,7 @@ class FilterProductController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data'    => config('methods.filters.presets')
+            'data'    => [] //config('methods.filters.presets')
         ]);
     }
 
