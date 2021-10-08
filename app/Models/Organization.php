@@ -210,4 +210,9 @@ class Organization extends Model
     {
         return $this->belongsTo(City::class);
     }
+
+    public function seotags()
+    {
+        return $this->hasOne(SeoTag::class, SeoTag::FIELD_MODEL_ID)->where(SeoTag::FIELD_MODEL, Organization::class);
+    }
 }

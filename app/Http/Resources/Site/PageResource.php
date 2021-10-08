@@ -6,7 +6,9 @@ use App\Models\Component;
 use App\Models\ComponentMethod;
 use App\Models\EntitySection;
 use App\Models\Method;
+use App\Models\Organization;
 use App\Models\Page;
+use App\Models\Product;
 use App\Models\SeoTag;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -62,6 +64,13 @@ class PageResource extends JsonResource
             $components = array_merge($components, $entityComponents);
         }
 
+        /** @var Product|Organization $model */
+        $model = new $this->entity_type;
+        $model = $model->find($request->get('params')['id']);
+
+        $typeExplode = explode("\\", $this->entity_type);
+        $modelName = strtolower(end($typeExplode));
+//        dd($model);
         return [
             Page::FIELD_ID                   => $page->getId(),
             Page::FIELD_NAME                 => $page->getName(),
@@ -69,7 +78,10 @@ class PageResource extends JsonResource
             Page::FIELD_STATIC               => (bool)$page->getStatic(),
             Page::FIELD_PAGE_TYPE            => $page->getPageType(),
             Page::ENTITY_RELATIVE_COMPONENTS => $components,
-            self::META_FIELD                 => ($page->seotags instanceof SeoTag) ? $this->getSeoTags($page->seotags) : null
+            self::META_FIELD                 => [
+                'page' => ($page->seotags instanceof SeoTag) ? $this->getSeoTags($page->seotags) : null,
+                $modelName => ($model->seotags instanceof SeoTag) ? $this->getSeoTags($model->seotags) : null
+            ]
         ];
     }
 
