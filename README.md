@@ -43,6 +43,8 @@
 + [Метод получения конкретного формата обучения по фильтру: formats/detail](#method_formats_detail);
 + [Метод получения предметов по фильтру: subjects/list](#method_subjects_list);
 + [Метод получения конкретного предмета по фильтру: subjects/detail](#method_subjects_detail);
++ [Метод получения лендингов по фильтру: landings/list](#method_landings_list);
++ [Метод получения конкретного лендинга по фильтру: landings/detail](#method_landings_detail);
 
 
 ## <a name="method_page"></a> Метод получения конкретной страницы: page
@@ -2125,3 +2127,192 @@ curl --location --request POST 'http://mp-api.tagiev.site/api/v1/app/site' \
     }
 }
 ```
+
+## <a name="method_landings_list"></a> Метод получения лендингов по фильтру: landings/list
+Адрес: https://mp.synergy.ru/api/v1/landings/list  
+Тип: POST  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля    | Тип         | Обязательное | Пример              | Комментарий
+| ---------------- | ----------- | ------------ | ------------------- | --------------------------------------- |
+| ids              | array int[] | -            | [1,2]               | Массив идентификаторов                  |
+| name             | string      | -            | Баннер 1            | Название                                |
+| slug             | string      | -            | mindblowing_landing | Ссылка                                  |
+| description      | string      | -            | Rly mindblowing one | Описание                                |
+| color_bg         | string      | -            | #ff0000             | Цвет фона в шестнадцатеричном формате   |
+| format_ids       | array int[] | -            | [1,2]               | Массив идентификаторов форматов         |
+| level_ids        | array int[] | -            | [2,3]               | Массив идентификаторов уровней          |
+| direction_ids    | array int[] | -            | [3,4]               | Массив идентификаторов направлений      |
+| city_ids         | array int[] | -            | [4,5]               | Массив идентификаторов городов          |
+| organization_ids | array int[] | -            | [5,6]               | Массив идентификаторов организаций      |
+
+
+
+Пример запроса:
+```bash
+curl --location --request POST 'https://mp.synergy.ru/api/v1/landings/list' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "ids": [1,2],
+        "published": true,
+    },
+    "include": [
+        "formats",
+        "levels"
+    ],
+    "sort": "-name"
+}'
+ ```
+Пример ответа:
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "type": "landings",
+            "name": "Лендинг 1",
+            "slug": "mindblowing_landing",
+            "description": "Rly mindblowing one",
+            "color_bg": "#ff0000",
+            "image_src": "uploads\/landings\/whY8Qeezrp3imlyOQfEeAEdWfc19opaRM7UiOqgK.jpg",
+            "created_at": "2021-10-01T14:32:11.000000Z",
+            "updated_at": "2021-10-10T14:35:12.000000Z",
+            "included": {
+                "formats": [
+                    {
+                        "id": 27,
+                        "type": "formats",
+                        "published": 1,
+                        "name": "\u041e\u0447\u043d\u043e-\u0437\u0430\u043e\u0447\u043d\u0430\u044f",
+                        "slug": "ochno-zaochnaya",
+                        "created_at": "2021-06-08T16:33:42.000000Z",
+                        "updated_at": "2021-06-08T16:33:42.000000Z"
+                    }
+                ],
+                "levels": [
+                    {
+                        "id": 1,
+                        "type": "levels",
+                        "published": 1,
+                        "name": "\u0428\u043a\u043e\u043b\u0430",
+                        "slug": "skola",
+                        "created_at": "2021-05-27T15:12:47.000000Z",
+                        "updated_at": "2021-05-27T15:12:47.000000Z"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "type": "landings",
+            "name": "Лендинг 2",
+            "slug": "another_landing",
+            "description": "Nothing special",
+            "color_bg": "#00ff00",
+            "image_src": "uploads\/landings\/whY8Qeezrp3imlyOQfEeAEdWfc19opaRM7UiOqgK.jpg",
+            "created_at": "2021-10-02T14:32:11.000000Z",
+            "updated_at": "2021-10-20T14:35:12.000000Z",
+            "included": {
+                "formats": [
+                    {
+                        "id": 27,
+                        "type": "formats",
+                        "published": 1,
+                        "name": "Очно-заочная",
+                        "slug": "ochno-zaochnaya",
+                        "created_at": "2021-06-08T16:33:42.000000Z",
+                        "updated_at": "2021-06-08T16:33:42.000000Z"
+                    }
+                ],
+                "levels": [
+                    {
+                        "id": 1,
+                        "type": "levels",
+                        "published": 1,
+                        "name": "Школа",
+                        "slug": "skola",
+                        "created_at": "2021-05-27T15:12:47.000000Z",
+                        "updated_at": "2021-05-27T15:12:47.000000Z"
+                    }
+                ]
+            }
+        }
+    ],
+    "count": 2,
+    "success": true
+}
+ ```
+
+## <a name="method_landings_detail"></a> Метод получения конкретного лендинга по фильтру: landings/detail
+Адрес: https://mp.synergy.ru/api/v1/landings/detail  
+Тип: POST  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | --- | ------------ | ------ | ------------- |
+| id            | id  | -            | 2      | Идентификатор |
+
+
+Пример запроса:
+```bash
+curl --location --request POST 'https://mp.synergy.ru/api/v1/landings/detail' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filter": {
+        "id": 2
+    },
+    "include": [
+        "formats",
+        "levels"
+    ]
+}'
+ ```
+Пример ответа:
+```json
+{
+    "data": {
+        "id": 2,
+        "type": "landings",
+        "name": "Лендинг 2",
+        "slug": "another_landing",
+        "description": "Nothing special",
+        "color_bg": "#00ff00",
+        "image_src": "uploads\/landings\/whY8Qeezrp3imlyOQfEeAEdWfc19opaRM7UiOqgK.jpg",
+        "created_at": "2021-10-02T14:32:11.000000Z",
+        "updated_at": "2021-10-20T14:35:12.000000Z",
+        "included": {
+            "formats": [
+                {
+                    "id": 27,
+                    "type": "formats",
+                    "published": 1,
+                    "name": "Очно-заочная",
+                    "slug": "ochno-zaochnaya",
+                    "created_at": "2021-06-08T16:33:42.000000Z",
+                    "updated_at": "2021-06-08T16:33:42.000000Z"
+                }
+            ],
+            "levels": [
+                {
+                    "id": 1,
+                    "type": "levels",
+                    "published": 1,
+                    "name": "Школа",
+                    "slug": "skola",
+                    "created_at": "2021-05-27T15:12:47.000000Z",
+                    "updated_at": "2021-05-27T15:12:47.000000Z"
+                }
+            ]
+        }
+    },
+    "success": true,
+    "log_request_id": ""
+}
+ ```
