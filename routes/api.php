@@ -14,6 +14,7 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DirectionController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\FormatController;
 use App\Http\Controllers\SubjectController;
@@ -64,6 +65,8 @@ Route::group(['prefix' => '/v1'], function () {
     Route::post('quizzes/detail', [QuizController::class, 'detail']);
     Route::post('entities/sections/list', [EntitySectionController::class, 'list']);
     Route::post('entities/sections/detail', [EntitySectionController::class, 'detail']);
+    Route::post('landings/list', [LandingController::class, 'list']);
+    Route::post('landings/detail', [LandingController::class, 'detail']);
 
     Route::get('products/search', [SearchProductController::class, 'list']);
 });
