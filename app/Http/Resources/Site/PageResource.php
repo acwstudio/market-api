@@ -14,6 +14,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class PageResource extends JsonResource
 {
     const META_FIELD = 'meta';
+    const ENTITY_PAGE_FIELD = 'entity_page';
 
     const URL_METHOD_SECTIONS = '/api/v1/entities/sections/detail';
 
@@ -62,12 +63,20 @@ class PageResource extends JsonResource
             $components = array_merge($components, $entityComponents);
         }
 
+        if (isset($entityClass) && !is_null($entityId)) {
+            $entityPage = [
+                'type' => $entityClass->table ?? '',
+                'id'   => $entityId ?? '',
+            ];
+        }
+
         return [
             Page::FIELD_ID                   => $page->getId(),
             Page::FIELD_NAME                 => $page->getName(),
             Page::FIELD_SLUG                 => $page->getSlug(),
             Page::FIELD_STATIC               => (bool)$page->getStatic(),
             Page::FIELD_PAGE_TYPE            => $page->getPageType(),
+            self::ENTITY_PAGE_FIELD          => $entityPage ?? null,
             Page::ENTITY_RELATIVE_COMPONENTS => $components,
             self::META_FIELD                 => ($page->seotags instanceof SeoTag) ? $this->getSeoTags($page->seotags) : null
         ];
