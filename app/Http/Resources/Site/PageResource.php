@@ -59,18 +59,13 @@ class PageResource extends JsonResource
                 $entityId = null;
             }
 
-
             $entityComponents = $this->getEntityComponents($page->getEntityType(), $entityId);
             $components = array_merge($components, $entityComponents);
         }
 
-        /** @var Product|Organization $model */
-        $model = new $this->entity_type;
-        $model = $model->find($request->get('params')['id']);
+        $entityClassStringExplode = explode("\\", $entityClassString);
+        $keyMeta = strtolower(end($entityClassStringExplode));
 
-        $typeExplode = explode("\\", $this->entity_type);
-        $modelName = strtolower(end($typeExplode));
-//        dd($model);
         return [
             Page::FIELD_ID                   => $page->getId(),
             Page::FIELD_NAME                 => $page->getName(),
@@ -80,7 +75,7 @@ class PageResource extends JsonResource
             Page::ENTITY_RELATIVE_COMPONENTS => $components,
             self::META_FIELD                 => [
                 'page' => ($page->seotags instanceof SeoTag) ? $this->getSeoTags($page->seotags) : null,
-                $modelName => ($model->seotags instanceof SeoTag) ? $this->getSeoTags($model->seotags) : null
+                $keyMeta => ($entityClass->seotags instanceof SeoTag) ? $this->getSeoTags($entityClass->seotags) : null
             ]
         ];
     }
@@ -197,9 +192,7 @@ class PageResource extends JsonResource
             }
         }
 
-
         $dataString = json_decode($dataString, true);
-
 
         return $dataString;
     }
