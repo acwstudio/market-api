@@ -63,9 +63,12 @@ class PageResource extends JsonResource
             $components = array_merge($components, $entityComponents);
         }
 
+
         if (isset($entityClass) && !is_null($entityId)) {
+            $entityTypeSingle = strtolower(basename(str_replace('\\', '/', $page->getEntityType())));
+
             $entityPage = [
-                'type' => $entityClass->table ?? '',
+                'type' => $entityTypeSingle ?? '',
                 'id'   => $entityId ?? '',
             ];
         }
