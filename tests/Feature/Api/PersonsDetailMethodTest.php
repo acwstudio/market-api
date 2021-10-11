@@ -46,7 +46,6 @@ class PersonsDetailMethodTest extends TestCase
                 $json
                     ->where($this->apiResponseSuccess, true)
                     ->has($this->apiResponseData, function (AssertableJson $json) {
-                        dd($json->toArray());
                         $json->whereAllType($this->personTest->getFieldsWithTypes());
                         $json->etc();
                     })
