@@ -2,28 +2,29 @@
 
 namespace Tests\Feature\Api;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\Feature\ApiTestTrait;
+use Tests\Feature\EntitiesTest\DirectionTest;
 use Tests\TestCase;
-use Tests\Feature\EntitiesTest\PersonTest;
 
-class PersonMethodsTest extends TestCase
+class DirectionMethodsTest extends TestCase
 {
     use ApiTestTrait;
 
-    const METHOD_LIST_URL = '/api/v1/persons/list';
-    const METHOD_DETAIL_URL = '/api/v1/persons/detail';
+    const METHOD_LIST_URL = '/api/v1/directions/list';
+    const METHOD_DETAIL_URL = '/api/v1/directions/detail';
 
     /**
-     * @var PersonTest
+     * @var Application|mixed
      */
-    public $personTest;
+    private $directionTest;
 
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
 
-        $this->personTest = app(PersonTest::class);
+        $this->directionTest = app(DirectionTest::class);
     }
 
     /**
@@ -37,7 +38,7 @@ class PersonMethodsTest extends TestCase
             ->withHeaders($this->apiHeaders)
             ->postJson(
                 self::METHOD_LIST_URL,
-                array_merge($this->apiBodyJson, $this->personTest->getBodyRequest())
+                array_merge($this->apiBodyJson, $this->directionTest->getBodyRequest())
             );
 
 
@@ -47,7 +48,7 @@ class PersonMethodsTest extends TestCase
                     ->where($this->apiResponseSuccess, true)
                     ->has($this->apiResponseData)
                     ->has($this->apiResponseData . ".0", function (AssertableJson $json) {
-                        $json->whereAllType($this->personTest->getFieldsWithTypes());
+                        $json->whereAllType($this->directionTest->getFieldsWithTypes());
                         $json->etc();
                     })
                     ->etc();
@@ -62,10 +63,10 @@ class PersonMethodsTest extends TestCase
      */
     public function test_detail()
     {
-        $personId = null;
+        $directionId = null;
 
         try {
-            $personId = $this->personTest->getPersonFirstId();
+            $directionId = $this->directionTest->getDirectionFirstId();
         } catch (\Exception $exception) {
             $this->expectErrorMessage($exception->getMessage());
         }
@@ -75,7 +76,7 @@ class PersonMethodsTest extends TestCase
             ->postJson(
                 self::METHOD_DETAIL_URL,
                 array_merge($this->apiBodyJson, [
-                    "filter" => ["id" => $personId]
+                    "filter" => ["id" => $directionId]
                 ])
             );
 
@@ -84,7 +85,7 @@ class PersonMethodsTest extends TestCase
                 $json
                     ->where($this->apiResponseSuccess, true)
                     ->has($this->apiResponseData, function (AssertableJson $json) {
-                        $json->whereAllType($this->personTest->getFieldsWithTypes());
+                        $json->whereAllType($this->directionTest->getFieldsWithTypes());
                         $json->etc();
                     })
                     ->etc();
