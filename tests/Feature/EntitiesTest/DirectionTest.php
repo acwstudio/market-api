@@ -6,7 +6,7 @@ use App\Models\Direction;
 use Illuminate\Support\Facades\DB;
 use Exception;
 
-class DirectionTest
+class DirectionTest implements EntityTestInterface
 {
     public function getBodyRequest()
     {
