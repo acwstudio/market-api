@@ -1793,49 +1793,52 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/menu/main' \
 
 ```json
 {
-  "data": [
-    {
-      "id": 1,
-      "anchor": "Колледж",
-      "link": "/catalog/level/2",
-      "sub_items": [
+  "data": {
+    "list": [
         {
-          "id": 6,
-          "anchor": "Продажи",
-          "link": "/catalog/level/2/direction/6",
-          "products": [
+          "id": 1,
+          "anchor": "Колледж",
+          "link": "/catalog/level/2",
+          "sub_items": [
             {
-              "id": 481,
-              "anchor": "Предпринимательство",
-              "link": "/product/predprinimatelstvo"
+              "id": 6,
+              "anchor": "Продажи",
+              "link": "/catalog/level/2/direction/6",
+              "products": [
+                {
+                  "id": 481,
+                  "anchor": "Предпринимательство",
+                  "link": "/product/predprinimatelstvo"
+                },
+                {
+                  "id": 597,
+                  "anchor": "Электронная коммерция",
+                  "link": "/product/elektronnaya-kommerciya"
+                }
+              ]
             },
             {
-              "id": 597,
-              "anchor": "Электронная коммерция",
-              "link": "/product/elektronnaya-kommerciya"
+              "id": 8,
+              "anchor": "Бизнес",
+              "link": "/catalog/level/2/direction/8",
+              "products": [
+                {
+                  "id": 481,
+                  "anchor": "Предпринимательство",
+                  "link": "/product/predprinimatelstvo"
+                },
+                {
+                  "id": 494,
+                  "anchor": "Банковское дело",
+                  "link": "/product/bankovskoe-delo"
+                }
+              ]
             }
           ]
-        },
-        {
-          "id": 8,
-          "anchor": "Бизнес",
-          "link": "/catalog/level/2/direction/8",
-          "products": [
-            {
-              "id": 481,
-              "anchor": "Предпринимательство",
-              "link": "/product/predprinimatelstvo"
-            },
-            {
-              "id": 494,
-              "anchor": "Банковское дело",
-              "link": "/product/bankovskoe-delo"
-            }
-          ]
-        }
-      ]
-    }
-  ]
+        } 
+      ],
+    "banner_id": 3
+  }
 }
 ```
 
