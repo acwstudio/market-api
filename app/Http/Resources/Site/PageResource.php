@@ -61,7 +61,6 @@ class PageResource extends JsonResource
                 $entityId = null;
             }
 
-
             $entityComponents = $this->getEntityComponents($page->getEntityType(), $entityId);
             $components = array_merge($components, $entityComponents);
         }
@@ -79,7 +78,6 @@ class PageResource extends JsonResource
                 'id'   => $entityId ?? '',
             ];
         }
-
 
         return [
             Page::FIELD_ID                   => $page->getId(),
@@ -205,9 +203,7 @@ class PageResource extends JsonResource
             }
         }
 
-
         $dataString = json_decode($dataString, true);
-
 
         return $dataString;
     }
