@@ -3,6 +3,8 @@
 namespace Tests\Feature\EntitiesTest;
 
 use App\Models\Person;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class PersonTest implements EntityTestInterface
 {
@@ -26,5 +28,19 @@ class PersonTest implements EntityTestInterface
             Person::FIELD_CREATED_AT => ['string', 'null'],
             Person::FIELD_UPDATED_AT => ['string', 'null'],
         ];
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getPersonFirstId()
+    {
+        $person = DB::table('persons')->first();
+
+        if (is_null($person)) {
+            throw new Exception('persons table is empty. need one entry');
+        }
+
+        return $person->id;
     }
 }
