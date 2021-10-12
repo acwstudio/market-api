@@ -60,7 +60,8 @@ class LandingController extends Controller
     {
         $query = QueryBuilder::for(Landing::class)
             ->allowedFilters([
-                AllowedFilter::exact(Landing::FIELD_ID)
+                AllowedFilter::exact(Landing::FIELD_ID),
+                AllowedFilter::exact(Landing::FIELD_SLUG)
             ])
             ->allowedIncludes([
                 Landing::ENTITY_RELATIVE_FORMATS,

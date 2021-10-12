@@ -6,9 +6,7 @@ use App\Models\Component;
 use App\Models\ComponentMethod;
 use App\Models\EntitySection;
 use App\Models\Method;
-use App\Models\Organization;
 use App\Models\Page;
-use App\Models\Product;
 use App\Models\SeoTag;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,6 +14,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class PageResource extends JsonResource
 {
     const META_FIELD = 'meta';
+    const ENTITY_PAGE_FIELD = 'entity_page';
 
     const URL_METHOD_SECTIONS = '/api/v1/entities/sections/detail';
 
@@ -44,6 +43,8 @@ class PageResource extends JsonResource
             $components[] = $this->getComponent($component, $methods);
         }
 
+        $meta = ($page->seotags instanceof SeoTag) ? $this->getSeoTags($page->seotags) : null;
+
         /** building components for section methods  */
         if (!is_null($page->getEntityType())) {
 
@@ -52,6 +53,7 @@ class PageResource extends JsonResource
                 $entityClassString = $page->getEntityType();
                 $entityClass = (new $entityClassString)->where($entityClassString::FIELD_SLUG, $queryParams['slug'])->first();
                 $entityId = (!is_null($entityClass)) ? $entityClass->getId() : null;
+
 
             } else if (isset($queryParams['id'])) {
                 $entityId = $queryParams['id'];
@@ -64,24 +66,30 @@ class PageResource extends JsonResource
             $components = array_merge($components, $entityComponents);
         }
 
-        /** @var Product|Organization $model */
-        $model = new $this->entity_type;
-        $model = $model->find($request->get('params')['id']);
+        if (isset($entityClass) && !is_null($entityId)) {
 
-        $typeExplode = explode("\\", $this->entity_type);
-        $modelName = strtolower(end($typeExplode));
-//        dd($model);
+            if (!is_null($entityClass->seotags)) {
+                $meta = $this->getSeoTags($entityClass->seotags);
+            }
+
+            $entityTypeSingle = strtolower(basename(str_replace('\\', '/', $page->getEntityType())));
+
+            $entityPage = [
+                'type' => $entityTypeSingle ?? '',
+                'id'   => $entityId ?? '',
+            ];
+        }
+
+
         return [
             Page::FIELD_ID                   => $page->getId(),
             Page::FIELD_NAME                 => $page->getName(),
             Page::FIELD_SLUG                 => $page->getSlug(),
             Page::FIELD_STATIC               => (bool)$page->getStatic(),
             Page::FIELD_PAGE_TYPE            => $page->getPageType(),
+            self::ENTITY_PAGE_FIELD          => $entityPage ?? null,
             Page::ENTITY_RELATIVE_COMPONENTS => $components,
-            self::META_FIELD                 => [
-                'page' => ($page->seotags instanceof SeoTag) ? $this->getSeoTags($page->seotags) : null,
-                $modelName => ($model->seotags instanceof SeoTag) ? $this->getSeoTags($model->seotags) : null
-            ]
+            self::META_FIELD                 => $meta
         ];
     }
 
