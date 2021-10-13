@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ErrorManagerProvider::class,
         App\Providers\SearchServiceProvider::class,
+        App\Providers\RepositoryServiceProvider::class,
     ],
 
     /*
