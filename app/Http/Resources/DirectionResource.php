@@ -29,6 +29,7 @@ class DirectionResource extends JsonResource
             Direction::FIELD_SLUG          => $direction->getSlug(),
             Direction::FIELD_CREATED_AT    => $direction->getCreatedAt(),
             Direction::FIELD_UPDATED_AT    => $direction->getUpdatedAt(),
+            'product_count'                => $direction->products->count()
         ];
     }
 }
