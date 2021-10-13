@@ -7,6 +7,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class DirectionResource extends JsonResource
 {
+    public static $isFilterResource;
+    
     /**
      * Transform the resource into an array.
      *
@@ -18,9 +20,9 @@ class DirectionResource extends JsonResource
         /** @var Direction $direction */
         $direction = $this->resource;
 
-        return [
+        $ret = [
             Direction::FIELD_ID            => $direction->getId(),
-            'type'                         => 'directions',
+            'type'                         => self::$isFilterResource ? Direction::VALUE_TYPE : 'directions',
             Direction::FIELD_PUBLISHED     => $direction->getPublished(),
             Direction::FIELD_NAME          => $direction->getName(),
             Direction::FIELD_SHOW_MAIN     => $direction->getShowMain(),
@@ -30,5 +32,11 @@ class DirectionResource extends JsonResource
             Direction::FIELD_CREATED_AT    => $direction->getCreatedAt(),
             Direction::FIELD_UPDATED_AT    => $direction->getUpdatedAt(),
         ];
+        
+        if (self::$isFilterResource) {
+            $ret['search'] = Direction::VALUE_SEARCH;
+        }
+        
+        return $ret;
     }
 }

@@ -7,6 +7,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class FormatResource extends JsonResource
 {
+    public static $isFilterResource;
+    
     /**
      * Transform the resource into an array.
      *
@@ -18,14 +20,20 @@ class FormatResource extends JsonResource
         /** @var Format $format */
         $format = $this->resource;
 
-        return [
+        $ret = [
             Format::FIELD_ID         => $format->getId(),
-            'type'                   => 'formats',
+            'type'                   => self::$isFilterResource ? Format::VALUE_TYPE : 'formats',
             Format::FIELD_PUBLISHED  => $format->getPublished(),
             Format::FIELD_NAME       => $format->getName(),
             Format::FIELD_SLUG       => $format->getSlug(),
             Format::FIELD_CREATED_AT => $format->getCreatedAt(),
             Format::FIELD_UPDATED_AT => $format->getUpdatedAt(),
         ];
+        
+        if (self::$isFilterResource) {
+            $ret['search'] = Format::VALUE_SEARCH;
+        }
+        
+        return $ret;
     }
 }

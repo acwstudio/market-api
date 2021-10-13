@@ -7,6 +7,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrganizationResource extends JsonResource
 {
+    public static $isFilterResource;
+
     /**
      * Transform the resource into an array.
      *
@@ -18,9 +20,9 @@ class OrganizationResource extends JsonResource
         /** @var Organization $organization */
         $organization = $this->resource;
 
-        return [
+        $ret = [
             Organization::FIELD_ID                => $organization->getId(),
-            'type'                                => 'organizations',
+            'type'                                => self::$isFilterResource ? Organization::VALUE_TYPE : 'organizations',
             Organization::FIELD_PUBLISHED         => $organization->getPublished(),
             Organization::FIELD_NAME              => $organization->getName(),
             Organization::FIELD_ABBREVIATION_NAME => $organization->getAbbreviationName(),
@@ -46,5 +48,11 @@ class OrganizationResource extends JsonResource
                 Organization::ENTITY_RELATIVE_PERSONS => PersonResource::collection($this->whenLoaded(Organization::ENTITY_RELATIVE_PERSONS)),
             ]
         ];
+        
+        if (self::$isFilterResource) {
+            $ret['search'] = Organization::VALUE_SEARCH;
+        }
+        
+        return $ret;
     }
 }

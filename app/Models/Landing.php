@@ -30,6 +30,11 @@ class Landing extends Model
         ENTITY_RELATIVE_DIRECTIONS = 'directions',
         ENTITY_RELATIVE_CITIES = 'cities',
         ENTITY_RELATIVE_ORGANIZATIONS = 'organizations',
+        ENTITY_RELATIVE_FORMAT = 'format',
+        ENTITY_RELATIVE_LEVEL = 'level',
+        ENTITY_RELATIVE_DIRECTION = 'direction',
+        ENTITY_RELATIVE_CITY = 'city',
+        ENTITY_RELATIVE_ORGANIZATION = 'organization',
         ENTITY_RELATIVE_LANDINGABLE = 'landingable';
 
     protected $fillable = [
