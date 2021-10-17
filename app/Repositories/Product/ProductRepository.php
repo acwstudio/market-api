@@ -96,10 +96,6 @@ final class ProductRepository implements ProductRepositoryInterface
             ])
             ->firstOrFail();
 
-        return (new ProductResource($query))
-            ->additional([
-                'success' => true,
-                'log_request_id' => '',
-            ]);
+        return (new ProductResource($query));
     }
 }
