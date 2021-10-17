@@ -34,7 +34,12 @@ final class ProductController extends Controller
 
     public function detail(DetailRequest $request): ProductResource
     {
-        return $this->productService->detail($request);
+        return $this->productService
+            ->detail($request)
+            ->additional([
+                'success' => true,
+                'log_request_id' => '',
+            ]);
     }
 
     public function store(CreateRequest $request)
