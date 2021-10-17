@@ -6,7 +6,6 @@ namespace App\Http\Resources;
 
 use App\Models\Organization;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Storage;
 
 final class OrganizationResource extends JsonResource
 {
@@ -33,10 +32,10 @@ final class OrganizationResource extends JsonResource
             Organization::FIELD_DESCRIPTION       => $organization->description,
             Organization::FIELD_HTML_BODY         => $organization->html_body,
             Organization::FIELD_LOGO_CODE         => $organization->logo_code,
-            Organization::FIELD_LOGO              => Storage::url($organization->preview_image),
+            Organization::FIELD_LOGO              => $organization->preview_image,
             Organization::FIELD_COLOR_CODE_TITLES => $organization->color_code_titles,
-            Organization::FIELD_PREVIEW_IMAGE     => Storage::url($organization->preview_image),
-            Organization::FIELD_DIGITAL_IMAGE     => Storage::url($organization->digital_image),
+            Organization::FIELD_PREVIEW_IMAGE     => $organization->preview_image,
+            Organization::FIELD_DIGITAL_IMAGE     => $organization->digital_image,
             Organization::FIELD_ADDRESS           => $organization->address,
             Organization::FIELD_TYPE_TEXT         => $organization->type_text,
             Organization::FIELD_MAP_LINK          => $organization->map_link,
