@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Traits\FieldTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -55,7 +56,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 final class Organization extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, FieldTrait;
 
     public $table = 'organizations';
 
@@ -112,11 +113,6 @@ final class Organization extends Model
         self::FIELD_TYPE_TEXT,
         self::FIELD_CITY_ID
     ];
-
-    public function getField($fieldKey)
-    {
-        return $this->getAttribute($fieldKey);
-    }
 
     public function products(): HasMany
     {

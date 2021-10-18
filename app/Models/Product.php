@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Traits\FieldTrait;
 use App\Services\Search\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -57,7 +58,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 final class Product extends Model
 {
-    use HasFactory, SoftDeletes, Searchable;
+    use HasFactory, SoftDeletes, Searchable, FieldTrait;
 
     public $table = 'products';
 
@@ -140,11 +141,6 @@ final class Product extends Model
         self::FIELD_CREATED_AT,
         self::FIELD_UPDATED_AT,
     ];
-
-    public function getField($fieldKey)
-    {
-        return $this->getAttribute($fieldKey);
-    }
 
     public function subjects(): MorphToMany
     {
