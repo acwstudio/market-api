@@ -15,6 +15,9 @@ class Organization extends Model
 
     const MODEL_NAME = 'Организации',
         MODEL_LINK = 'organizations';
+        
+    const VALUE_SEARCH = true,
+        VALUE_TYPE = 'list';
 
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',

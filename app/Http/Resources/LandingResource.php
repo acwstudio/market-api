@@ -17,6 +17,12 @@ class LandingResource extends JsonResource
     {
         /** @var Landing $landing */
         $landing = $this->resource;
+        
+        FormatResource::$isFilterResource = true;
+        LevelResource::$isFilterResource = true;
+        DirectionResource::$isFilterResource = true;
+        CityResource::$isFilterResource = true;
+        OrganizationResource::$isFilterResource = true;
 
         return [
             Landing::FIELD_ID          => $landing->getId(),
@@ -29,11 +35,11 @@ class LandingResource extends JsonResource
             Landing::FIELD_CREATED_AT  => $landing->getCreatedAt(),
             Landing::FIELD_UPDATED_AT  => $landing->getUpdatedAt(),
             'included'                 => [
-                Landing::ENTITY_RELATIVE_FORMATS       => FormatResource::collection($this->whenLoaded(Landing::ENTITY_RELATIVE_FORMATS)),
-                Landing::ENTITY_RELATIVE_LEVELS        => LevelResource::collection($this->whenLoaded(Landing::ENTITY_RELATIVE_LEVELS)),
-                Landing::ENTITY_RELATIVE_DIRECTIONS    => DirectionResource::collection($this->whenLoaded(Landing::ENTITY_RELATIVE_DIRECTIONS)),
-                Landing::ENTITY_RELATIVE_CITIES        => CityResource::collection($this->whenLoaded(Landing::ENTITY_RELATIVE_CITIES)),
-                Landing::ENTITY_RELATIVE_ORGANIZATIONS => OrganizationResource::collection($this->whenLoaded(Landing::ENTITY_RELATIVE_ORGANIZATIONS))
+                Landing::ENTITY_RELATIVE_FORMAT       => FormatResource::collection($this->whenLoaded(Landing::ENTITY_RELATIVE_FORMATS)),
+                Landing::ENTITY_RELATIVE_LEVEL        => LevelResource::collection($this->whenLoaded(Landing::ENTITY_RELATIVE_LEVELS)),
+                Landing::ENTITY_RELATIVE_DIRECTION    => DirectionResource::collection($this->whenLoaded(Landing::ENTITY_RELATIVE_DIRECTIONS)),
+                Landing::ENTITY_RELATIVE_CITY         => CityResource::collection($this->whenLoaded(Landing::ENTITY_RELATIVE_CITIES)),
+                Landing::ENTITY_RELATIVE_ORGANIZATION => OrganizationResource::collection($this->whenLoaded(Landing::ENTITY_RELATIVE_ORGANIZATIONS))
             ]
         ];
     }
