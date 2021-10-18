@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources;
 
 use App\Models\Organization;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OrganizationResource extends JsonResource
+final class OrganizationResource extends JsonResource
 {
     public static $isFilterResource;
 
@@ -19,7 +21,7 @@ class OrganizationResource extends JsonResource
     {
         /** @var Organization $organization */
         $organization = $this->resource;
-
+        
         $ret = [
             Organization::FIELD_ID                => $organization->getId(),
             'type'                                => self::$isFilterResource ? Organization::VALUE_TYPE : 'organizations',
