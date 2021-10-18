@@ -15,6 +15,9 @@ class Organization extends Model
 
     const MODEL_NAME = 'Организации',
         MODEL_LINK = 'organizations';
+        
+    const VALUE_SEARCH = true,
+        VALUE_TYPE = 'list';
 
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',
@@ -209,5 +212,10 @@ class Organization extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function seotags()
+    {
+        return $this->hasOne(SeoTag::class, SeoTag::FIELD_MODEL_ID)->where(SeoTag::FIELD_MODEL, Organization::class);
     }
 }

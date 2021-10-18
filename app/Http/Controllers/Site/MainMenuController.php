@@ -14,6 +14,8 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class MainMenuController extends Controller
 {
+    const BANNER_ID = 3;
+
     public function menu(Request $request)
     {
         $cacheOptions = $this->getCacheOptions();
@@ -62,7 +64,10 @@ class MainMenuController extends Controller
                 ->get();
 
             return response()->json([
-                'data'    => MainMenuResource::collection($query),
+                'data' => [
+                    'list' => MainMenuResource::collection($query),
+                    'banner_id' => self::BANNER_ID
+                ],
                 'success' => true,
                 'count'   => $query->count()
             ]);

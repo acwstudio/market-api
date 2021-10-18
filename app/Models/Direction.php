@@ -17,6 +17,9 @@ class Direction extends Model
         MODEL_LINK = 'directions';
 
     const FILTER_BY = 'direction_ids';
+    
+    const VALUE_SEARCH = false,
+        VALUE_TYPE = 'list';
 
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',

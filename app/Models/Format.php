@@ -16,6 +16,9 @@ class Format extends Model
         MODEL_LINK = 'formats';
 
     const FILTER_BY = 'format_ids';
+        
+    const VALUE_SEARCH = false,
+        VALUE_TYPE = 'list';
 
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',

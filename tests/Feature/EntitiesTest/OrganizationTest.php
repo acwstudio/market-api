@@ -3,6 +3,8 @@
 namespace Tests\Feature\EntitiesTest;
 
 use App\Models\Organization;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 class OrganizationTest implements EntityTestInterface
 {
@@ -37,5 +39,19 @@ class OrganizationTest implements EntityTestInterface
             Organization::FIELD_UPDATED_AT => ['string', 'null'],
             "included" => ['array'],
         ];
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getOrganizationFirstId()
+    {
+        $organization = DB::table('organizations')->first();
+
+        if (is_null($organization)) {
+            throw new Exception('organizations table is empty. need one entry');
+        }
+
+        return $organization->id;
     }
 }

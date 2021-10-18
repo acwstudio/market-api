@@ -43,6 +43,8 @@ class PageResource extends JsonResource
             $components[] = $this->getComponent($component, $methods);
         }
 
+        $meta = ($page->seotags instanceof SeoTag) ? $this->getSeoTags($page->seotags) : null;
+
         /** building components for section methods  */
         if (!is_null($page->getEntityType())) {
 
@@ -52,19 +54,23 @@ class PageResource extends JsonResource
                 $entityClass = (new $entityClassString)->where($entityClassString::FIELD_SLUG, $queryParams['slug'])->first();
                 $entityId = (!is_null($entityClass)) ? $entityClass->getId() : null;
 
+
             } else if (isset($queryParams['id'])) {
                 $entityId = $queryParams['id'];
             } else {
                 $entityId = null;
             }
 
-
             $entityComponents = $this->getEntityComponents($page->getEntityType(), $entityId);
             $components = array_merge($components, $entityComponents);
         }
 
-
         if (isset($entityClass) && !is_null($entityId)) {
+
+            if (!is_null($entityClass->seotags)) {
+                $meta = $this->getSeoTags($entityClass->seotags);
+            }
+
             $entityTypeSingle = strtolower(basename(str_replace('\\', '/', $page->getEntityType())));
 
             $entityPage = [
@@ -81,7 +87,7 @@ class PageResource extends JsonResource
             Page::FIELD_PAGE_TYPE            => $page->getPageType(),
             self::ENTITY_PAGE_FIELD          => $entityPage ?? null,
             Page::ENTITY_RELATIVE_COMPONENTS => $components,
-            self::META_FIELD                 => ($page->seotags instanceof SeoTag) ? $this->getSeoTags($page->seotags) : null
+            self::META_FIELD                 => $meta
         ];
     }
 
@@ -197,9 +203,7 @@ class PageResource extends JsonResource
             }
         }
 
-
         $dataString = json_decode($dataString, true);
-
 
         return $dataString;
     }
