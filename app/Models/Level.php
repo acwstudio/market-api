@@ -17,6 +17,9 @@ class Level extends Model
         MODEL_ENTITY = 'level';
 
     const FILTER_BY = 'level_ids';
+        
+    const VALUE_SEARCH = false,
+        VALUE_TYPE = 'list';
 
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',

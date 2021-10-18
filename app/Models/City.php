@@ -13,6 +13,9 @@ class City extends Model
 
     const MODEL_NAME = 'Города',
         MODEL_LINK = 'cities';
+        
+    const VALUE_SEARCH = true,
+        VALUE_TYPE = 'list';
 
     const FIELD_ID = 'id',
         FIELD_NAME = 'name',

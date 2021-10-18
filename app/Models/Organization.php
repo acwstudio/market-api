@@ -59,6 +59,12 @@ final class Organization extends Model
 
     public $table = 'organizations';
 
+    const MODEL_NAME = 'Организации',
+        MODEL_LINK = 'organizations';
+        
+    const VALUE_SEARCH = true,
+        VALUE_TYPE = 'list';
+
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',
         FIELD_NAME = 'name',
