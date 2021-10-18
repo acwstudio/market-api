@@ -1,20 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Class Direction
+ * @package App\Models
+ *
+ * @property int $id
+ * @property int $published
+ * @property string $name
+ * @property int $show_main
+ * @property int $sort
+ * @property string $preview_image
+ * @property string $slug
+ * @property string $created_at
+ * @property string $updated_at
+ * @property string $deleted_at
+ */
 class Direction extends Model
 {
     use HasFactory, SoftDeletes;
 
     public $table = 'directions';
-
-    const MODEL_NAME = 'Направления',
-        MODEL_LINK = 'directions';
 
     const FILTER_BY = 'direction_ids';
 
@@ -39,72 +54,10 @@ class Direction extends Model
         self::FIELD_SLUG
     ];
 
-    public static function getModelName()
-    {
-        return self::MODEL_NAME;
-    }
-
-    public static function getModelLink()
-    {
-        return self::MODEL_LINK;
-    }
-
-    public function getId()
-    {
-        return $this->getAttribute(self::FIELD_ID);
-    }
-
-    public function getPublished()
-    {
-        return $this->getAttribute(self::FIELD_PUBLISHED);
-    }
-
-    public function getName()
-    {
-        return $this->getAttribute(self::FIELD_NAME);
-    }
-
-    public function getShowMain()
-    {
-        return $this->getAttribute(self::FIELD_SHOW_MAIN);
-    }
-
-    public function getSort()
-    {
-        return $this->getAttribute(self::FIELD_SORT);
-    }
-
-    public function getPreviewImage()
-    {
-        return $this->getAttribute(self::FIELD_PREVIEW_IMAGE);
-    }
-
-    public function getPreviewImageUrl()
-    {
-        return Storage::url($this->getPreviewImage());
-    }
-
-    public function getSlug()
-    {
-        return $this->getAttribute(self::FIELD_SLUG);
-    }
-
-    public function getCreatedAt()
-    {
-        return $this->getAttribute(self::FIELD_CREATED_AT);
-    }
-
-    public function getUpdatedAt()
-    {
-        return $this->getAttribute(self::FIELD_UPDATED_AT);
-    }
-
-    public function getFilterBy()
-    {
-        return self::FILTER_BY;
-    }
-
-    public function products()
+    /**
+     * @return MorphToMany
+     */
+    public function products(): MorphToMany
     {
         return $this->morphToMany(Product::class, 'productable');
     }
