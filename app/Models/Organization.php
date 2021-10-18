@@ -113,6 +113,11 @@ final class Organization extends Model
         self::FIELD_CITY_ID
     ];
 
+    public function getField($fieldKey)
+    {
+        return $this->getAttribute($fieldKey);
+    }
+
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);

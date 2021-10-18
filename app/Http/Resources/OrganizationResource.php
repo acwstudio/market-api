@@ -21,40 +21,40 @@ final class OrganizationResource extends JsonResource
     {
         /** @var Organization $organization */
         $organization = $this->resource;
-        
+
         $ret = [
-            Organization::FIELD_ID                => $organization->getId(),
+            Organization::FIELD_ID                => $organization->getField(Organization::FIELD_ID),
             'type'                                => self::$isFilterResource ? Organization::VALUE_TYPE : 'organizations',
-            Organization::FIELD_PUBLISHED         => $organization->getPublished(),
-            Organization::FIELD_NAME              => $organization->getName(),
-            Organization::FIELD_ABBREVIATION_NAME => $organization->getAbbreviationName(),
-            Organization::FIELD_SLUG              => $organization->getSlug(),
-            Organization::FIELD_LAND              => $organization->getLand(),
-            Organization::FIELD_SUBTITLE          => $organization->getSubtitle(),
-            Organization::FIELD_DESCRIPTION       => $organization->getDescription(),
-            Organization::FIELD_HTML_BODY         => $organization->getHtmlBody(),
-            Organization::FIELD_LOGO_CODE         => $organization->getLogoCode(),
-            Organization::FIELD_LOGO              => $organization->getPreviewImage(),
-            Organization::FIELD_COLOR_CODE_TITLES => $organization->getColorCodeTitles(),
-            Organization::FIELD_PREVIEW_IMAGE     => $organization->getPreviewImage(),
-            Organization::FIELD_DIGITAL_IMAGE     => $organization->getDigitalImage(),
-            Organization::FIELD_ADDRESS           => $organization->getAddress(),
-            Organization::FIELD_TYPE_TEXT         => $organization->getTypeText(),
-            Organization::FIELD_MAP_LINK          => $organization->getMapLink(),
-            Organization::FIELD_PARENT_ID         => $organization->getParentId(),
-            Organization::FIELD_CITY_ID           => $organization->getCityId(),
-            Organization::FIELD_CREATED_AT        => $organization->getCreatedAt(),
-            Organization::FIELD_UPDATED_AT        => $organization->getUpdatedAt(),
+            Organization::FIELD_PUBLISHED         => $organization->getField(Organization::FIELD_PUBLISHED),
+            Organization::FIELD_NAME              => $organization->getField(Organization::FIELD_NAME),
+            Organization::FIELD_ABBREVIATION_NAME => $organization->getField(Organization::FIELD_ABBREVIATION_NAME),
+            Organization::FIELD_SLUG              => $organization->getField(Organization::FIELD_SLUG),
+            Organization::FIELD_LAND              => $organization->getField(Organization::FIELD_LAND),
+            Organization::FIELD_SUBTITLE          => $organization->getField(Organization::FIELD_SUBTITLE),
+            Organization::FIELD_DESCRIPTION       => $organization->getField(Organization::FIELD_DESCRIPTION),
+            Organization::FIELD_HTML_BODY         => $organization->getField(Organization::FIELD_HTML_BODY),
+            Organization::FIELD_LOGO_CODE         => $organization->getField(Organization::FIELD_LOGO_CODE),
+            Organization::FIELD_LOGO              => $organization->getField(Organization::FIELD_LOGO),
+            Organization::FIELD_COLOR_CODE_TITLES => $organization->getField(Organization::FIELD_COLOR_CODE_TITLES),
+            Organization::FIELD_PREVIEW_IMAGE     => $organization->getField(Organization::FIELD_PREVIEW_IMAGE),
+            Organization::FIELD_DIGITAL_IMAGE     => $organization->getField(Organization::FIELD_DIGITAL_IMAGE),
+            Organization::FIELD_ADDRESS           => $organization->getField(Organization::FIELD_ADDRESS),
+            Organization::FIELD_TYPE_TEXT         => $organization->getField(Organization::FIELD_TYPE_TEXT),
+            Organization::FIELD_MAP_LINK          => $organization->getField(Organization::FIELD_MAP_LINK),
+            Organization::FIELD_PARENT_ID         => $organization->getField(Organization::FIELD_PARENT_ID),
+            Organization::FIELD_CITY_ID           => $organization->getField(Organization::FIELD_CITY_ID),
+            Organization::FIELD_CREATED_AT        => $organization->getField(Organization::FIELD_CREATED_AT),
+            Organization::FIELD_UPDATED_AT        => $organization->getField(Organization::FIELD_UPDATED_AT),
             'included'                            => [
                 Organization::ENTITY_RELATIVE_CITY    => CityResource::make($this->whenLoaded(Organization::ENTITY_RELATIVE_CITY)),
                 Organization::ENTITY_RELATIVE_PERSONS => PersonResource::collection($this->whenLoaded(Organization::ENTITY_RELATIVE_PERSONS)),
             ]
         ];
-        
+
         if (self::$isFilterResource) {
             $ret['search'] = Organization::VALUE_SEARCH;
         }
-        
+
         return $ret;
     }
 }
