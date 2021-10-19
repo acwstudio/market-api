@@ -7,6 +7,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class CityResource extends JsonResource
 {
+    public static $isFilterResource;
+
     /**
      * Transform the resource into an array.
      *
@@ -18,14 +20,20 @@ class CityResource extends JsonResource
         /** @var City $city */
         $city = $this->resource;
 
-        return [
+        $ret = [
             City::FIELD_ID              => $city->getId(),
-            'type'                      => 'cities',
+            'type'                      => self::$isFilterResource ? City::VALUE_TYPE : 'cities',
             City::FIELD_NAME            => $city->getName(),
             City::FIELD_CITY_KLADR_ID   => $city->getCityKladrId(),
             City::FIELD_REGION_NAME     => $city->getRegionName(),
             City::FIELD_REGION_KLADR_ID => $city->getRegionKladrId(),
             City::FIELD_GEO_POINT       => $city->getGeoPoint(),
         ];
+        
+        if (self::$isFilterResource) {
+            $ret['search'] = City::VALUE_SEARCH;
+        }
+        
+        return $ret;
     }
 }

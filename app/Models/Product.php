@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Traits\FieldTrait;
 use App\Services\Search\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -55,10 +56,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Direction $directions
  * @property Format $formats
  */
-
 final class Product extends Model
 {
-    use HasFactory, SoftDeletes, Searchable;
+    use HasFactory, SoftDeletes, Searchable, FieldTrait;
 
     public $table = 'products';
 
@@ -100,11 +100,11 @@ final class Product extends Model
         FIELD_UPDATED_AT = 'updated_at';
 
     const ENTITY_RELATIVE_DIRECTIONS = 'directions',
-        ENTITY_RELATIVE_LEVELS       = 'levels',
-        ENTITY_RELATIVE_FORMATS      = 'formats',
-        ENTITY_RELATIVE_SUBJECTS     = 'subjects',
-        ENTITY_RELATIVE_PERSONS      = 'persons',
-        ENTITY_PRODUCT_SECTION       = 'productsection',
+        ENTITY_RELATIVE_LEVELS = 'levels',
+        ENTITY_RELATIVE_FORMATS = 'formats',
+        ENTITY_RELATIVE_SUBJECTS = 'subjects',
+        ENTITY_RELATIVE_PERSONS = 'persons',
+        ENTITY_PRODUCT_SECTION = 'productsection',
         ENTITY_RELATIVE_ORGANIZATION = 'organization',
         ENTITY_RELATIVE_CITY = 'city',
         ENTITY_RELATIVE_PRODUCT_PLACES = 'productplaces',
@@ -174,7 +174,7 @@ final class Product extends Model
 
     public function entitySection(): HasMany
     {
-        return  $this->hasMany(EntitySection::class, 'entity_id')
+        return $this->hasMany(EntitySection::class, 'entity_id')
             ->where(EntitySection::FIELD_ENTITY_TYPE, 'App\\Models\\Product')
             ->orderBy(EntitySection::FIELD_SORT, 'asc');
     }

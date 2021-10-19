@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Traits\FieldTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -55,9 +56,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 final class Organization extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, FieldTrait;
 
     public $table = 'organizations';
+
+    const MODEL_NAME = 'Организации',
+        MODEL_LINK = 'organizations';
+        
+    const VALUE_SEARCH = true,
+        VALUE_TYPE = 'list';
 
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',

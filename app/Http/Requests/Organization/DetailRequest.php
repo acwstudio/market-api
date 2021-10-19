@@ -18,7 +18,7 @@ final class DetailRequest extends FormRequest
         return [
             'filter.id' => [
                 'integer',
-                'exists:products,id'
+                'exists:organizations,id'
             ],
             'filter.slug' => 'string',
             'include' => 'array',

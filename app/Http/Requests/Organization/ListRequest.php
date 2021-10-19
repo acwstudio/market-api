@@ -17,7 +17,7 @@ final class ListRequest extends FormRequest
     {
         return [
             'filter.ids' => [
-                'integer',
+                'array',
                 'exists:organizations,id'
             ],
             'filter.published' => 'boolean',

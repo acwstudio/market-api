@@ -32,6 +32,9 @@ class Direction extends Model
     public $table = 'directions';
 
     const FILTER_BY = 'direction_ids';
+    
+    const VALUE_SEARCH = false,
+        VALUE_TYPE = 'list';
 
     const VALUE_SEARCH = false,
         VALUE_TYPE = 'list';

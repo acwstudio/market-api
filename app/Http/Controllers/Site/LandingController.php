@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Site;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\EntityDetailRequest;
 use App\Http\Resources\LandingCollection;
 use App\Http\Resources\LandingResource;

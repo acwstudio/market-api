@@ -8,7 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class DirectionResource extends JsonResource
 {
     public static $isFilterResource;
-
+    
     /**
      * Transform the resource into an array.
      *
