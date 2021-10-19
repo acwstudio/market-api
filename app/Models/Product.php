@@ -1,26 +1,69 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
+use App\Models\Traits\FieldTrait;
 use App\Services\Search\Searchable;
-use Carbon\Carbon;
-use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Storage;
 
-class Product extends Model
+/**
+ * Class Product
+ * @package App\Models
+ *
+ * @property int $id
+ * @property int $is_moderated
+ * @property string $land
+ * @property int $published
+ * @property string $expiration_date
+ * @property string $name
+ * @property string $slug
+ * @property int $sort
+ * @property string $preview_image
+ * @property string $digital_image
+ * @property double $price
+ * @property string $start_date
+ * @property int $is_employment
+ * @property int $is_installment
+ * @property int $installment_months
+ * @property int $is_document
+ * @property int $document
+ * @property string $triggers
+ * @property string $begin_duration
+ * @property string $begin_duration_format_value
+ * @property int $duration
+ * @property string $duration_format_value
+ * @property string $description
+ * @property string $color
+ * @property int $organization_id
+ * @property int $category_id
+ * @property int $user_id
+ * @property string $created_at
+ * @property string $updated_at
+ * @property string $deleted_at
+ *
+ * @property Person $persons
+ * @property Organization $organization
+ * @property Level $levels
+ * @property Direction $directions
+ * @property Format $formats
+ */
+final class Product extends Model
 {
-    use HasFactory, SoftDeletes, Searchable;
+    use HasFactory, SoftDeletes, Searchable, FieldTrait;
 
     public $table = 'products';
 
     const MODEL_NAME = 'Продукты',
         MODEL_LINK = 'products';
-
-    const IS_EXPIRATION_DATE = 'is_expiration_date';
 
     const FIELD_ID = 'id',
         FIELD_IS_MODERATED = 'is_moderated',
@@ -57,18 +100,15 @@ class Product extends Model
         FIELD_UPDATED_AT = 'updated_at';
 
     const ENTITY_RELATIVE_DIRECTIONS = 'directions',
-        ENTITY_RELATIVE_LEVELS       = 'levels',
-        ENTITY_RELATIVE_FORMATS      = 'formats',
-        ENTITY_RELATIVE_SUBJECTS     = 'subjects',
-        ENTITY_RELATIVE_PERSONS      = 'persons',
-        ENTITY_PRODUCT_SECTION       = 'productsection',
+        ENTITY_RELATIVE_LEVELS = 'levels',
+        ENTITY_RELATIVE_FORMATS = 'formats',
+        ENTITY_RELATIVE_SUBJECTS = 'subjects',
+        ENTITY_RELATIVE_PERSONS = 'persons',
+        ENTITY_PRODUCT_SECTION = 'productsection',
         ENTITY_RELATIVE_ORGANIZATION = 'organization',
         ENTITY_RELATIVE_CITY = 'city',
         ENTITY_RELATIVE_PRODUCT_PLACES = 'productplaces',
         ENTITY_RELATIVE_PRODUCTABLES = 'productables';
-
-    const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
-    const DATE_TIME_DISPLAY_FORMAT = 'd.m.Y H:i';
 
     protected $fillable = [
         self::FIELD_IS_MODERATED,
@@ -102,269 +142,59 @@ class Product extends Model
         self::FIELD_UPDATED_AT,
     ];
 
-    public static function getModelName()
-    {
-        return self::MODEL_NAME;
-    }
-
-    public static function getModelLink()
-    {
-        return self::MODEL_LINK;
-    }
-
-    public function getId()
-    {
-        return $this->getAttribute(self::FIELD_ID);
-    }
-
-    public function getIsModerated()
-    {
-        return $this->getAttribute(self::FIELD_IS_MODERATED);
-    }
-
-    public function getPublished()
-    {
-        return $this->getAttribute(self::FIELD_PUBLISHED);
-    }
-
-    public function getExpirationDate()
-    {
-        if ($this->getAttribute(self::FIELD_EXPIRATION_DATE)) {
-            return Carbon::parse($this->getAttribute(self::FIELD_EXPIRATION_DATE))->format(self::DATE_TIME_DISPLAY_FORMAT);
-        }
-
-        return null;
-    }
-
-    public function getName()
-    {
-        return $this->getAttribute(self::FIELD_NAME);
-    }
-
-    public function getSlug()
-    {
-        return $this->getAttribute(self::FIELD_SLUG);
-    }
-
-    public function getPreviewImage()
-    {
-        return $this->getAttribute(self::FIELD_PREVIEW_IMAGE);
-    }
-
-    public function getPreviewImageUrl()
-    {
-        return Storage::url($this->getPreviewImage());
-    }
-
-    public function getDigitalImage()
-    {
-        return $this->getAttribute(self::FIELD_DIGITAL_IMAGE);
-    }
-
-    public function getDigitalImageUrl()
-    {
-        return Storage::url($this->getDigitalImage());
-    }
-
-    public function getLand()
-    {
-        return $this->getAttribute(self::FIELD_LAND);
-    }
-
-    public function getPrice()
-    {
-        return $this->getAttribute(self::FIELD_PRICE);
-    }
-
-    public function getStartDate()
-    {
-        if ($this->getAttribute(self::FIELD_START_DATE)) {
-            return Carbon::parse($this->getAttribute(self::FIELD_START_DATE))->format(self::DATE_TIME_DISPLAY_FORMAT);
-        }
-
-        return null;
-    }
-
-    public function getIsInstallment()
-    {
-        return $this->getAttribute(self::FIELD_IS_INSTALLMENT);
-    }
-
-    public function getInstallmentMonths()
-    {
-        return $this->getAttribute(self::FIELD_INSTALLMENT_MONTHS);
-    }
-
-    public function getBeginDuration()
-    {
-        return $this->getAttribute(self::FIELD_BEGIN_DURATION);
-    }
-
-    public function getBeginDurationFormatValue()
-    {
-        return $this->getAttribute(self::FIELD_BEGIN_DURATION_FORMAT_VALUE);
-    }
-
-    public function getDuration()
-    {
-        return $this->getAttribute(self::FIELD_DURATION);
-    }
-
-    public function getDurationFormatValue()
-    {
-        return $this->getAttribute(self::FIELD_DURATION_FORMAT_VALUE);
-    }
-
-    public function getDurationSiteDisplay()
-    {
-        $duration = $this->getDurationFormatValue();
-
-        if (!$duration) {
-            return null;
-        }
-
-        $durationList = explode('-', $duration);
-
-        $display = [];
-        foreach ($durationList as $itemDuration) {
-
-            $type = strtolower(preg_replace('/[^a-zA-Z]/', '', $itemDuration));
-            $value = preg_replace('/[^0-9]/', '', $itemDuration);
-
-            if ($type == 'y') {
-                $display[] = trans_choice(':count год|:count года|:count лет', $value, ['count' => $value]);
-            }
-
-            if ($type == 'm') {
-                $display[] = trans_choice(':count месяц|:count месяца|:count месяцев', $value, ['count' => $value]);
-            }
-
-            if ($type == 'd') {
-                $display[] = trans_choice(':count день|:count дня|:count дней', $value, ['count' => $value]);
-            }
-
-            if ($type == 'h') {
-                $display[] = trans_choice(':count час|:count часа|:count часов', $value, ['count' => $value]);
-            }
-        }
-
-        return implode(' ', $display);
-    }
-
-    public function getIsEmployment()
-    {
-        return $this->getAttribute(self::FIELD_IS_EMPLOYMENT);
-    }
-
-    public function getIsDocument()
-    {
-        return $this->getAttribute(self::FIELD_IS_DOCUMENT);
-    }
-
-    public function getDocument()
-    {
-        return $this->getAttribute(self::FIELD_DOCUMENT);
-    }
-
-    public function getTriggers()
-    {
-        return $this->getAttribute(self::FIELD_TRIGGERS);
-    }
-
-    public function getTriggersArray()
-    {
-        return explode('|', $this->getTriggers());
-    }
-
-    public function getDescription()
-    {
-        return $this->getAttribute(self::FIELD_DESCRIPTION);
-    }
-
-    public function getColor()
-    {
-        return $this->getAttribute(self::FIELD_COLOR);
-    }
-
-    public function getOrganizationId()
-    {
-        return $this->getAttribute(self::FIELD_ORGANIZATION_ID);
-    }
-
-    public function getCategoryId()
-    {
-        return $this->getAttribute(self::FIELD_CATEGORY_ID);
-    }
-
-    public function getUserId()
-    {
-        return $this->getAttribute(self::FIELD_USER_ID);
-    }
-
-    public function getCreatedAt()
-    {
-        return $this->getAttribute(self::FIELD_CREATED_AT);
-    }
-
-    public function getUpdatedAt()
-    {
-        return $this->getAttribute(self::FIELD_UPDATED_AT);
-    }
-
-    public function subjects()
+    public function subjects(): MorphToMany
     {
         return $this->morphedByMany(Subject::class, 'productable');
     }
 
-    public function formats()
+    public function formats(): MorphToMany
     {
         return $this->morphedByMany(Format::class, 'productable');
     }
 
-    public function levels()
+    public function levels(): MorphToMany
     {
         return $this->morphedByMany(Level::class, 'productable');
     }
 
-    public function directions()
+    public function directions(): MorphToMany
     {
         return $this->morphedByMany(Direction::class, 'productable');
     }
 
-    public function sections()
+    public function sections(): BelongsToMany
     {
         return $this->belongsToMany(Section::class);
     }
 
-    public function persons()
+    public function persons(): MorphToMany
     {
-//        return $this->belongsToMany(Person::class);
         return $this->morphedByMany(Person::class, 'productable');
     }
 
-    public function entitySection()
+    public function entitySection(): HasMany
     {
-        return  $this->hasMany(EntitySection::class, 'entity_id')
+        return $this->hasMany(EntitySection::class, 'entity_id')
             ->where(EntitySection::FIELD_ENTITY_TYPE, 'App\\Models\\Product')
             ->orderBy(EntitySection::FIELD_SORT, 'asc');
     }
 
-    public function organization()
+    public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class);
     }
 
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function seotags()
+    public function seotags(): HasOne
     {
         return $this->hasOne(SeoTag::class, SeoTag::FIELD_MODEL_ID)->where(SeoTag::FIELD_MODEL, Product::class);
     }
 
-    public function productplaces()
+    public function productplaces(): MorphToMany
     {
         return $this->morphedByMany(ProductPlace::class, 'productable');
     }
