@@ -21,19 +21,19 @@ class CityResource extends JsonResource
         $city = $this->resource;
 
         $ret = [
-            City::FIELD_ID              => $city->getId(),
+            City::FIELD_ID              => $city->id,
             'type'                      => self::$isFilterResource ? City::VALUE_TYPE : 'cities',
-            City::FIELD_NAME            => $city->getName(),
-            City::FIELD_CITY_KLADR_ID   => $city->getCityKladrId(),
-            City::FIELD_REGION_NAME     => $city->getRegionName(),
-            City::FIELD_REGION_KLADR_ID => $city->getRegionKladrId(),
-            City::FIELD_GEO_POINT       => $city->getGeoPoint(),
+            City::FIELD_NAME            => $city->name,
+            City::FIELD_CITY_KLADR_ID   => $city->city_kladr_id,
+            City::FIELD_REGION_NAME     => $city->region_name,
+            City::FIELD_REGION_KLADR_ID => $city->region_kladr_id,
+            City::FIELD_GEO_POINT       => $city->geo_point,
         ];
-        
+
         if (self::$isFilterResource) {
             $ret['search'] = City::VALUE_SEARCH;
         }
-        
+
         return $ret;
     }
 }
