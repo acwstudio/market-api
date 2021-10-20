@@ -1,19 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class City
+ * @package App\Models
+ *
+ * @property int $id
+ * @property string $country
+ * @property string $name
+ * @property string $region_name
+ * @property string $city_kladr_id
+ * @property string $region_kladr_id
+ * @property string $geoname_id
+ * @property string $geo_point
+ * @property string $updated_at
+ * @property string $deleted_at
+ */
 class City extends Model
 {
     use HasFactory;
-    
+
     public $table = 'cities';
 
-    const MODEL_NAME = 'Города',
-        MODEL_LINK = 'cities';
-        
     const VALUE_SEARCH = true,
         VALUE_TYPE = 'list';
 
@@ -34,56 +48,6 @@ class City extends Model
         self::FIELD_REGION_KLADR_ID,
         self::FIELD_GEO_POINT
     ];
-
-    public static function getModelName()
-    {
-        return self::MODEL_NAME;
-    }
-
-    public static function getModelLink()
-    {
-        return self::MODEL_LINK;
-    }
-
-    public function getId()
-    {
-        return $this->getAttribute(self::FIELD_ID);
-    }
-
-    public function getName()
-    {
-        return $this->getAttribute(self::FIELD_NAME);
-    }
-
-    public function getRegionName()
-    {
-        return $this->getAttribute(self::FIELD_REGION_NAME);
-    }
-
-    public function getCityKladrId()
-    {
-        return $this->getAttribute(self::FIELD_CITY_KLADR_ID);
-    }
-
-    public function getRegionKladrId()
-    {
-        return $this->getAttribute(self::FIELD_REGION_KLADR_ID);
-    }
-
-    public function getGeoPoint()
-    {
-        return $this->getAttribute(self::FIELD_GEO_POINT);
-    }
-
-    public function getCreatedAt()
-    {
-        return $this->getAttribute(self::FIELD_CREATED_AT);
-    }
-
-    public function getUpdatedAt()
-    {
-        return $this->getAttribute(self::FIELD_UPDATED_AT);
-    }
 
     public function organizations()
     {

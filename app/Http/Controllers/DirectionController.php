@@ -1,69 +1,54 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EntityDetailRequest;
-use App\Http\Resources\DirectionCollection;
+use App\Http\Requests\Direction\DetailRequest;
+use App\Http\Requests\Direction\ListRequest;
 use App\Http\Resources\DirectionResource;
-use App\Models\Direction;
-use App\Models\Product;
-use App\Repositories\DirectionRepository;
-use Arr;
-use Illuminate\Http\Request;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
+use App\Services\DirectionService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 
-class DirectionController extends Controller
+final class DirectionController extends Controller
 {
     /**
-     * @var DirectionRepository
+     * @var DirectionService
      */
-    public $directionRepository;
+    public $directionService;
 
-    public function __construct(DirectionRepository $directionRepository)
+    public function __construct(DirectionService $directionService)
     {
-        $this->directionRepository = $directionRepository;
+        $this->directionService = $directionService;
     }
 
-    public function list(Request $request)
+    /**
+     * @param ListRequest $request
+     * @return Application|ResponseFactory|Response
+     */
+    public function list(ListRequest $request): JsonResponse
     {
-        $query = QueryBuilder::for(Direction::class)
-            ->allowedFilters([
-                AllowedFilter::exact('ids', Direction::FIELD_ID),
-                AllowedFilter::exact(Direction::FIELD_PUBLISHED),
-                AllowedFilter::exact(Direction::FIELD_NAME),
-                AllowedFilter::exact(Direction::FIELD_SLUG),
-                AllowedFilter::exact(Direction::FIELD_SHOW_MAIN),
-                AllowedFilter::exact('product_ids', implode('.', [Direction::ENTITY_RELATIVE_PRODUCT, Product::FIELD_ID]))
-            ])
-            ->allowedSorts([Direction::FIELD_SORT, Direction::FIELD_NAME, Direction::FIELD_ID])
-            ->get();
+        $collection = $this->directionService->list($request);
 
-        return (new DirectionCollection($query))
-            ->additional([
-                'count' => $query->count(),
-                'success' => true
-            ]);
+        return response()->json([
+            'success' =>true,
+            'data' => $collection,
+            'count' => $collection->count(),
+        ]);
     }
 
     /**
      * @return DirectionResource|string
      */
-    public function detail(EntityDetailRequest $request)
+    public function detail(DetailRequest $request): JsonResponse
     {
-        $query = QueryBuilder::for(Direction::class)
-            ->allowedFilters([
-                AllowedFilter::exact(Direction::FIELD_ID),
-                AllowedFilter::exact(Direction::FIELD_SLUG),
-            ])
-            ->firstOrFail();
-
-        return (new DirectionResource($query))
-            ->additional([
-                'success' => true,
-                'log_request_id' => ''
-            ]);
-
+        return response()->json([
+            'success' =>true,
+            'data' => $this->directionService->detail($request)
+        ]);
     }
 
 }

@@ -1,21 +1,69 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
+use App\Models\Traits\FieldTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Storage;
 
-class Organization extends Model
+/**
+ * Class Organization
+ * @package App\Models
+ *
+ * @property int $id
+ * @property int $published
+ * @property string $name
+ * @property string $abbreviation_name
+ * @property string $slug
+ * @property int $sort
+ * @property string $land
+ * @property string $subtitle
+ * @property string $description
+ * @property string $site
+ * @property string $email
+ * @property string $phone
+ * @property string $html_body
+ * @property string $classes
+ * @property string $logo_code
+ * @property string $color_code_titles
+ * @property string $preview_image
+ * @property string $digital_image
+ * @property string $address
+ * @property int $is_state
+ * @property int $is_military_center
+ * @property int $is_hostel
+ * @property int $cost_year_study
+ * @property int $budget_places
+ * @property int $budget_year
+ * @property double $budget_points
+ * @property int $contract_places
+ * @property int $contract_year
+ * @property double $contract_points
+ * @property string $type_text
+ * @property string $map_link
+ * @property int $parent_id
+ * @property int $city_id
+ * @property string $created_at
+ * @property string $updated_at
+ * @property string $deleted_at
+ */
+final class Organization extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, FieldTrait;
 
     public $table = 'organizations';
 
     const MODEL_NAME = 'Организации',
         MODEL_LINK = 'organizations';
-        
+
     const VALUE_SEARCH = true,
         VALUE_TYPE = 'list';
 
@@ -44,6 +92,7 @@ class Organization extends Model
 
     const ENTITY_RELATIVE_PERSONS = 'persons',
         ENTITY_RELATIVE_PRODUCTS = 'products',
+        ENTITY_RELATIVE_TRIGGERS = 'triggers',
         ENTITY_RELATIVE_CITY = 'city';
 
     public $fillable = [
@@ -67,155 +116,37 @@ class Organization extends Model
         self::FIELD_CITY_ID
     ];
 
-    public static function getModelName()
-    {
-        return self::MODEL_NAME;
-    }
-
-    public static function getModelLink()
-    {
-        return self::MODEL_LINK;
-    }
-
-    public function getId()
-    {
-        return $this->getAttribute(self::FIELD_ID);
-    }
-
-    public function getPublished()
-    {
-        return $this->getAttribute(self::FIELD_PUBLISHED);
-    }
-
-    public function getName()
-    {
-        return $this->getAttribute(self::FIELD_NAME);
-    }
-
-    public function getAbbreviationName()
-    {
-        return $this->getAttribute(self::FIELD_ABBREVIATION_NAME);
-    }
-
-    public function getSlug()
-    {
-        return $this->getAttribute(self::FIELD_SLUG);
-    }
-
-    public function getLand()
-    {
-        return $this->getAttribute(self::FIELD_LAND);
-    }
-
-    public function getSubtitle()
-    {
-        return $this->getAttribute(self::FIELD_SUBTITLE);
-    }
-
-    public function getDescription()
-    {
-        return $this->getAttribute(self::FIELD_DESCRIPTION);
-    }
-
-    public function getHtmlBody()
-    {
-        return $this->getAttribute(self::FIELD_HTML_BODY);
-    }
-
-    public function getClasses()
-    {
-        return $this->getAttribute(self::FIELD_CLASSES);
-    }
-
-    public function getLogoCode()
-    {
-        return $this->getAttribute(self::FIELD_LOGO_CODE);
-    }
-
-    public function getColorCodeTitles()
-    {
-        return $this->getAttribute(self::FIELD_COLOR_CODE_TITLES);
-    }
-
-    public function getAddress()
-    {
-        return $this->getAttribute(self::FIELD_ADDRESS);
-    }
-
-    public function getMapLink()
-    {
-        return $this->getAttribute(self::FIELD_MAP_LINK);
-    }
-
-    public function getPreviewImage()
-    {
-        return $this->getAttribute(self::FIELD_PREVIEW_IMAGE);
-    }
-
-    public function getPreviewImageUrl()
-    {
-        return Storage::url($this->getPreviewImage());
-    }
-
-    public function getDigitalImage()
-    {
-        return $this->getAttribute(self::FIELD_DIGITAL_IMAGE);
-    }
-
-    public function getDigitalImageUrl()
-    {
-        return Storage::url($this->getDigitalImage());
-    }
-
-    public function getTypeText()
-    {
-        return $this->getAttribute(self::FIELD_TYPE_TEXT);
-    }
-
-    public function getParentId()
-    {
-        return $this->getAttribute(self::FIELD_PARENT_ID);
-    }
-
-    public function getCityId()
-    {
-        return $this->getAttribute(self::FIELD_CITY_ID);
-    }
-
-    public function getCreatedAt()
-    {
-        return $this->getAttribute(self::FIELD_CREATED_AT);
-    }
-
-    public function getUpdatedAt()
-    {
-        return $this->getAttribute(self::FIELD_UPDATED_AT);
-    }
-
-    public function products()
+    public function products(): HasMany
     {
         return $this->hasMany(Product::class);
     }
 
-    public function persons()
+    public function persons(): BelongsToMany
     {
         return $this->belongsToMany(Person::class);
     }
 
-    public function entitySection()
+    public function entitySection(): HasMany
     {
         return $this->hasMany(EntitySection::class, 'entity_id')
             ->where(EntitySection::FIELD_ENTITY_TYPE, 'App\\Models\\Organization')
             ->orderBy(EntitySection::FIELD_SORT, 'asc');
     }
 
-    public function city()
+    public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
     }
 
-    public function seotags()
+    public function seotags(): HasOne
     {
-        return $this->hasOne(SeoTag::class, SeoTag::FIELD_MODEL_ID)->where(SeoTag::FIELD_MODEL, Organization::class);
+        return $this->hasOne(SeoTag::class, SeoTag::FIELD_MODEL_ID)
+            ->where(SeoTag::FIELD_MODEL, Organization::class);
     }
+
+    public function triggers(): MorphToMany
+    {
+        return $this->morphedByMany(OrganizationTrigger::class, 'organizationable');
+    }
+
 }

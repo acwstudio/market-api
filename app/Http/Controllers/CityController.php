@@ -1,58 +1,44 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EntityDetailRequest;
-use App\Http\Resources\CityCollection;
+use App\Http\Requests\City\DetailRequest;
+use App\Http\Requests\City\ListRequest;
 use App\Http\Resources\CityResource;
-use App\Models\City;
+use App\Services\CityService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Http\Response;
 
 class CityController extends Controller
 {
-    /**
-     * @param Request $request
-     * @return CityCollection
-     */
-    public function list(Request $request): CityCollection
-    {
-        $query = QueryBuilder::for(City::class)
-            ->allowedFilters([
-                AllowedFilter::exact('ids', City::FIELD_ID),
-                AllowedFilter::exact(City::FIELD_NAME),
-                AllowedFilter::exact(City::FIELD_REGION_NAME),
-                AllowedFilter::exact(City::FIELD_CITY_KLADR_ID),
-                AllowedFilter::exact(City::FIELD_REGION_KLADR_ID),
-                AllowedFilter::exact(City::FIELD_GEO_POINT)
-            ])
-            ->allowedSorts([City::FIELD_ID, City::FIELD_NAME])
-            ->get();
+    private CityService $cityService;
 
-        return (new CityCollection($query))
-            ->additional([
-                'count' => $query->count(),
-                'success' => true
-            ]);
+    public function __construct(CityService $cityService)
+    {
+        $this->cityService = $cityService;
     }
 
-    /**
-     * @return CityResource|string
-     */
-    public function detail(EntityDetailRequest $request)
+    public function list(ListRequest $request): JsonResponse
     {
-        $query = QueryBuilder::for(City::class)
-            ->allowedFilters([
-                AllowedFilter::exact(City::FIELD_ID)
-            ])
-            ->firstOrFail();
+        $collection = $this->cityService->list($request);
 
-        return (new CityResource($query))
-            ->additional([
-                'success' => true,
-                'log_request_id' => ''
-            ]);
+        return response()->json([
+            'success' => true,
+            'data'    => $collection,
+            'count'   => $collection->count(),
+        ]);
+    }
 
+    public function detail(DetailRequest $request): JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'data'    => $this->cityService->detail($request)
+        ]);
     }
 }

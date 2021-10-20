@@ -1,20 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Storage;
 
-class Landing extends Model
+final class Landing extends Model
 {
     use HasFactory, SoftDeletes;
 
     public $table = 'landings';
-
-    const MODEL_NAME = 'Лендинги',
-        MODEL_LINK = 'landings';
 
     const FIELD_ID = 'id',
         FIELD_NAME = 'name',
@@ -22,6 +21,11 @@ class Landing extends Model
         FIELD_DESCRIPTION = 'description',
         FIELD_COLOR_BG = 'color_bg',
         FIELD_IMAGE_SRC = 'image_src',
+        FIELD_IS_ALL_FORMS = 'is_all_forms',
+        FIELD_IS_ALL_LEVELS = 'is_all_levels',
+        FIELD_IS_ALL_DIRECTIONS = 'is_all_directions',
+        FIELD_IS_ALL_CITIES = 'is_all_cities',
+        FIELD_IS_ALL_ORGANIZATIONS = 'is_all_organizations',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
 
@@ -43,86 +47,36 @@ class Landing extends Model
         self::FIELD_DESCRIPTION,
         self::FIELD_COLOR_BG,
         self::FIELD_IMAGE_SRC,
+        self::FIELD_IS_ALL_FORMS,
+        self::FIELD_IS_ALL_LEVELS,
+        self::FIELD_IS_ALL_DIRECTIONS,
+        self::FIELD_IS_ALL_CITIES,
+        self::FIELD_IS_ALL_ORGANIZATIONS,
         self::FIELD_CREATED_AT,
-        self::FIELD_UPDATED_AT
+        self::FIELD_UPDATED_AT,
     ];
 
-    public static function getModelName()
-    {
-        return self::MODEL_NAME;
-    }
-
-    public static function getModelLink()
-    {
-        return self::MODEL_LINK;
-    }
-
-    public function getId()
-    {
-        return $this->getAttribute(self::FIELD_ID);
-    }
-
-    public function getName()
-    {
-        return $this->getAttribute(self::FIELD_NAME);
-    }
-
-    public function getSlug()
-    {
-        return $this->getAttribute(self::FIELD_SLUG);
-    }
-
-    public function getDescription()
-    {
-        return $this->getAttribute(self::FIELD_DESCRIPTION);
-    }
-
-    public function getColorBg()
-    {
-        return $this->getAttribute(self::FIELD_COLOR_BG);
-    }
-
-    public function getImageSrc()
-    {
-        return $this->getAttribute(self::FIELD_IMAGE_SRC);
-    }
-
-    public function getImageSrcUrl()
-    {
-        return Storage::url($this->getImageSrc());
-    }
-
-    public function getCreatedAt()
-    {
-        return $this->getAttribute(self::FIELD_CREATED_AT);
-    }
-
-    public function getUpdatedAt()
-    {
-        return $this->getAttribute(self::FIELD_UPDATED_AT);
-    }
-
-    public function formats()
+    public function formats(): MorphToMany
     {
         return $this->morphedByMany(Format::class, self::ENTITY_RELATIVE_LANDINGABLE);
     }
 
-    public function levels()
+    public function levels(): MorphToMany
     {
         return $this->morphedByMany(Level::class, self::ENTITY_RELATIVE_LANDINGABLE);
     }
 
-    public function directions()
+    public function directions(): MorphToMany
     {
         return $this->morphedByMany(Direction::class, self::ENTITY_RELATIVE_LANDINGABLE);
     }
 
-    public function cities()
+    public function cities(): MorphToMany
     {
         return $this->morphedByMany(City::class, self::ENTITY_RELATIVE_LANDINGABLE);
     }
 
-    public function organizations()
+    public function organizations(): MorphToMany
     {
         return $this->morphedByMany(Organization::class, self::ENTITY_RELATIVE_LANDINGABLE);
     }
