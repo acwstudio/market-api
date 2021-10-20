@@ -7,14 +7,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\City\DetailRequest;
 use App\Http\Requests\City\ListRequest;
 use App\Http\Resources\CityResource;
-use App\Models\City;
 use App\Services\CityService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class CityController extends Controller
 {
@@ -29,28 +27,25 @@ class CityController extends Controller
      * @param Request $request
      * @return Application|ResponseFactory|Response
      */
-    public function list(ListRequest $request): Application|ResponseFactory|Response
+    public function list(ListRequest $request): JsonResponse
     {
         $collection = $this->cityService->list($request);
 
-        return response([
-            'data' => $collection,
-            'success' =>true,
-            'count' => $collection->count(),
+        return response()->json([
+            'success' => true,
+            'data'    => $collection,
+            'count'   => $collection->count(),
         ]);
     }
 
     /**
      * @return CityResource|string
      */
-    public function detail(DetailRequest $request)
+    public function detail(DetailRequest $request): JsonResponse
     {
-        return $this->cityService
-            ->detail($request)
-            ->additional([
-                'success' => true,
-                'log_request_id' => ''
-            ]);
-
+        return response()->json([
+            'success' => true,
+            'data'    => $this->cityService->detail($request)
+        ]);
     }
 }

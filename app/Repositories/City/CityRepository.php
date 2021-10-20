@@ -35,11 +35,7 @@ class CityRepository implements CityRepositoryInterface
             ->allowedSorts([City::FIELD_ID, City::FIELD_NAME])
             ->get();
 
-        return (new CityCollection($query))
-            ->additional([
-                'count' => $query->count(),
-                'success' => true
-            ]);
+        return new CityCollection($query);
     }
 
     public function getCityDetailByFilters(DetailRequest $request): CityResource
@@ -50,10 +46,6 @@ class CityRepository implements CityRepositoryInterface
             ])
             ->firstOrFail();
 
-        return (new CityResource($query))
-            ->additional([
-                'success' => true,
-                'log_request_id' => ''
-            ]);
+        return new CityResource($query);
     }
 }
