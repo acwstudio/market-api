@@ -116,6 +116,16 @@ final class Organization extends Model
         self::FIELD_CITY_ID
     ];
 
+    public static function getModelName()
+    {
+        return self::MODEL_NAME;
+    }
+
+    public static function getModelLink()
+    {
+        return self::MODEL_LINK;
+    }
+
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);

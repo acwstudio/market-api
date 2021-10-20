@@ -31,6 +31,9 @@ class Direction extends Model
 
     public $table = 'directions';
 
+    const MODEL_NAME = 'Направления',
+        MODEL_LINK = 'directions';
+
     const FILTER_BY = 'direction_ids';
     
     const VALUE_SEARCH = false,
@@ -56,6 +59,11 @@ class Direction extends Model
         self::FIELD_PREVIEW_IMAGE,
         self::FIELD_SLUG
     ];
+
+    public function getFilterBy()
+    {
+        return self::FILTER_BY;
+    }
 
     /**
      * @return MorphToMany
