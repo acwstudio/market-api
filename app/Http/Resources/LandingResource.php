@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
+use App\Models\City;
 use App\Models\Direction;
 use App\Models\Format;
 use App\Models\Landing;
@@ -39,20 +40,20 @@ final class LandingResource extends JsonResource
             Landing::FIELD_CREATED_AT  => $landing->getAttribute(Landing::FIELD_CREATED_AT),
             Landing::FIELD_UPDATED_AT  => $landing->getAttribute(Landing::FIELD_UPDATED_AT),
             'included'                 => [
-                Landing::ENTITY_RELATIVE_FORMAT       => $landing->getAttribute(Landing::FIELD_IS_ALL_FORMS) ?
+                Landing::ENTITY_RELATIVE_FORMAT => $landing->getAttribute(Landing::FIELD_IS_ALL_FORMS) ?
                     FormatResource::collection(Format::all()) :
                     FormatResource::collection($this->whenLoaded(Landing::ENTITY_RELATIVE_FORMATS)),
 
-                Landing::ENTITY_RELATIVE_LEVEL        => $landing->getAttribute(Landing::FIELD_IS_ALL_LEVELS) ?
+                Landing::ENTITY_RELATIVE_LEVEL => $landing->getAttribute(Landing::FIELD_IS_ALL_LEVELS) ?
                     LevelResource::collection(Level::all()) :
                     LevelResource::collection($this->whenLoaded(Landing::ENTITY_RELATIVE_LEVELS)),
 
-                Landing::ENTITY_RELATIVE_DIRECTION    => $landing->getAttribute(Landing::FIELD_IS_ALL_DIRECTIONS) ?
+                Landing::ENTITY_RELATIVE_DIRECTION => $landing->getAttribute(Landing::FIELD_IS_ALL_DIRECTIONS) ?
                     DirectionResource::collection(Direction::all()) :
                     DirectionResource::collection($this->whenLoaded(Landing::ENTITY_RELATIVE_DIRECTIONS)),
 
-                Landing::ENTITY_RELATIVE_CITY         => $landing->getAttribute(Landing::FIELD_IS_ALL_CITIES) ?
-                    CityResource::collection(Landing::ENTITY_RELATIVE_CITIES) :
+                Landing::ENTITY_RELATIVE_CITY => $landing->getAttribute(Landing::FIELD_IS_ALL_CITIES) ?
+                    CityResource::collection(City::all()) :
                     CityResource::collection($this->whenLoaded(Landing::ENTITY_RELATIVE_CITIES)),
 
                 Landing::ENTITY_RELATIVE_ORGANIZATION => $landing->getAttribute(Landing::FIELD_IS_ALL_ORGANIZATIONS) ?
