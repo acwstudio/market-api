@@ -26,7 +26,7 @@ final class ProductsTest extends TestCase
          * @todo костыль с json_decode(collection->toJson()) связан с тем, что метод collection->toArray(Request)
          * в качестве аргумента принимает Request. Нужно подумать, как можно сделать красивее
          */
-        $this->postJson('/api/v1/products/list', ['filter' => ['ids' => $product->id]])
+        $this->postJson('/api/v1/products/list', ['filter' => ['ids' => [$product->id]]])
             ->assertStatus(200)
             ->assertJson([
                 'data' => json_decode($productCollection->toJson(), true),
@@ -49,8 +49,7 @@ final class ProductsTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'data' => json_decode($productResource, true),
-                'success' => true,
-                'log_request_id' => ''
+                'success' => true
             ]);
     }
 }
