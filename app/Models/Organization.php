@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -62,7 +63,7 @@ final class Organization extends Model
 
     const MODEL_NAME = 'Организации',
         MODEL_LINK = 'organizations';
-        
+
     const VALUE_SEARCH = true,
         VALUE_TYPE = 'list';
 
@@ -91,6 +92,7 @@ final class Organization extends Model
 
     const ENTITY_RELATIVE_PERSONS = 'persons',
         ENTITY_RELATIVE_PRODUCTS = 'products',
+        ENTITY_RELATIVE_TRIGGERS = 'triggers',
         ENTITY_RELATIVE_CITY = 'city';
 
     public $fillable = [
@@ -141,4 +143,10 @@ final class Organization extends Model
         return $this->hasOne(SeoTag::class, SeoTag::FIELD_MODEL_ID)
             ->where(SeoTag::FIELD_MODEL, Organization::class);
     }
+
+    public function triggers(): MorphToMany
+    {
+        return $this->morphedByMany(OrganizationTrigger::class, 'organizationable');
+    }
+
 }

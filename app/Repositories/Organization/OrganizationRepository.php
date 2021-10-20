@@ -63,7 +63,11 @@ final class OrganizationRepository implements OrganizationRepositoryInterface
                 AllowedFilter::exact(Organization::FIELD_ID),
                 AllowedFilter::exact(Organization::FIELD_SLUG)
             ])
-            ->allowedIncludes([Organization::ENTITY_RELATIVE_CITY, Organization::ENTITY_RELATIVE_PERSONS])
+            ->allowedIncludes([
+                Organization::ENTITY_RELATIVE_CITY,
+                Organization::ENTITY_RELATIVE_PERSONS,
+                Organization::ENTITY_RELATIVE_TRIGGERS
+            ])
             ->firstOrFail();
 
         return new OrganizationResource($query);

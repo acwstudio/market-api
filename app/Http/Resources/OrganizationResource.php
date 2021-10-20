@@ -14,7 +14,7 @@ final class OrganizationResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
@@ -46,8 +46,9 @@ final class OrganizationResource extends JsonResource
             Organization::FIELD_CREATED_AT        => $organization->getField(Organization::FIELD_CREATED_AT),
             Organization::FIELD_UPDATED_AT        => $organization->getField(Organization::FIELD_UPDATED_AT),
             'included'                            => [
-                Organization::ENTITY_RELATIVE_CITY    => CityResource::make($this->whenLoaded(Organization::ENTITY_RELATIVE_CITY)),
-                Organization::ENTITY_RELATIVE_PERSONS => PersonResource::collection($this->whenLoaded(Organization::ENTITY_RELATIVE_PERSONS)),
+                Organization::ENTITY_RELATIVE_CITY     => CityResource::make($this->whenLoaded(Organization::ENTITY_RELATIVE_CITY)),
+                Organization::ENTITY_RELATIVE_PERSONS  => PersonResource::collection($this->whenLoaded(Organization::ENTITY_RELATIVE_PERSONS)),
+                Organization::ENTITY_RELATIVE_TRIGGERS => OrganizationTriggerResource::collection($this->whenLoaded(Organization::ENTITY_RELATIVE_TRIGGERS)),
             ]
         ];
 
