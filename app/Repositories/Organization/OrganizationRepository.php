@@ -19,7 +19,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 final class OrganizationRepository implements OrganizationRepositoryInterface
 {
-    private $organization;
+    private Organization $organization;
 
     public function __construct(Organization $organization)
     {

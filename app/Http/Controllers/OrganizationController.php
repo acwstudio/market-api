@@ -6,9 +6,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Organization\DetailRequest;
 use App\Http\Requests\Organization\ListRequest;
-use App\Http\Resources\OrganizationResource;
 use App\Services\OrganizationService;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 
 final class OrganizationController extends Controller
 {
@@ -19,24 +18,22 @@ final class OrganizationController extends Controller
         $this->organizationService = $organizationService;
     }
 
-    public function list(ListRequest $request): Response
+    public function list(ListRequest $request): JsonResponse
     {
         $collection = $this->organizationService->list($request);
 
-        return response([
-            'data' => $collection,
-            'success' =>true,
-            'count' => $collection->total(),
+        return response()->json([
+            'success' => true,
+            'data'    => $collection,
+            'count'   => $collection->total(),
         ]);
     }
 
-    public function detail(DetailRequest $request): OrganizationResource
+    public function detail(DetailRequest $request): JsonResponse
     {
-        return $this->organizationService
-            ->detail($request)
-            ->additional([
-                'success' => true,
-                'log_request_id' => ''
-            ]);
+        return response()->json([
+            'success' => true,
+            'data'    => $this->organizationService->detail($request)
+        ]);
     }
 }

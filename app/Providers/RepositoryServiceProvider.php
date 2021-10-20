@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Repositories\City\CachedCityRepository;
+use App\Repositories\City\CityRepository;
+use App\Repositories\City\CityRepositoryInterface;
 use App\Repositories\Landing\CachedLandingRepository;
 use App\Repositories\Landing\LandingRepository;
 use App\Repositories\Landing\LandingRepositoryInterface;
@@ -38,10 +41,19 @@ final class RepositoryServiceProvider extends ServiceProvider
             ->give(OrganizationRepository::class);
 
         $this->app->bind(
+            CityRepositoryInterface::class,
+            CachedCityRepository::class
+        );
+
+        $this->app->when(CachedCityRepository::class)
+            ->needs(CityRepositoryInterface::class)
+            ->give(CityRepository::class);
+        
+        $this->app->bind(
             LandingRepositoryInterface::class,
             CachedLandingRepository::class
         );
-
+        
         $this->app->when(CachedLandingRepository::class)
             ->needs(LandingRepositoryInterface::class)
             ->give(LandingRepository::class);
