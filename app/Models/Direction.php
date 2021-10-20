@@ -60,6 +60,16 @@ class Direction extends Model
         self::FIELD_SLUG
     ];
 
+    public static function getModelName()
+    {
+        return self::MODEL_NAME;
+    }
+
+    public static function getModelLink()
+    {
+        return self::MODEL_LINK;
+    }
+
     public function getFilterBy()
     {
         return self::FILTER_BY;
