@@ -37,7 +37,9 @@ final class ProductRepository implements ProductRepositoryInterface
 
     public function getProductsByFilters(ListRequest $request): ProductCollection
     {
-        $query = QueryBuilder::for(Product::class)
+        $queryBuilder = new QueryBuilder($this->productModel->newQuery(), $request);
+
+        $query = $queryBuilder
             ->allowedFilters([
                 AllowedFilter::exact('ids', Product::FIELD_ID),
                 AllowedFilter::exact(Product::FIELD_PUBLISHED),
@@ -81,7 +83,9 @@ final class ProductRepository implements ProductRepositoryInterface
 
     public function getProductDetailByFilters(DetailRequest $request): ProductResource
     {
-        $query = QueryBuilder::for(Product::class)
+        $queryBuilder = new QueryBuilder($this->productModel->newQuery(), $request);
+
+        $query = $queryBuilder
             ->allowedFilters([
                 AllowedFilter::exact(Product::FIELD_ID),
                 AllowedFilter::exact(Product::FIELD_SLUG)

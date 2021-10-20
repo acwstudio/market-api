@@ -19,10 +19,18 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 final class LandingRepository implements LandingRepositoryInterface
 {
+    private $landing;
+
+    public function __construct(Landing $landing)
+    {
+        $this->landing = $landing;
+    }
 
     public function getLandingsByFilters(ListRequest $request): LandingCollection
     {
-        $query = QueryBuilder::for(Landing::class)
+        $queryBuilder = new QueryBuilder($this->landing->newQuery(), $request);
+
+        $query = $queryBuilder
             ->allowedFilters([
                 AllowedFilter::exact('ids', Landing::FIELD_ID),
                 AllowedFilter::exact(Landing::FIELD_NAME),
@@ -50,7 +58,9 @@ final class LandingRepository implements LandingRepositoryInterface
 
     public function getLandingDetailByFilters(EntityDetailRequest $request): LandingResource
     {
-        $query = QueryBuilder::for(Landing::class)
+        $queryBuilder = new QueryBuilder($this->landing->newQuery(), $request);
+
+        $query = $queryBuilder
             ->allowedFilters([
                 AllowedFilter::exact(Landing::FIELD_ID),
                 AllowedFilter::exact(Landing::FIELD_SLUG)

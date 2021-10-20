@@ -28,7 +28,9 @@ final class OrganizationRepository implements OrganizationRepositoryInterface
 
     public function getOrganizationsByFilters(ListRequest $request): OrganizationCollection
     {
-        $query = QueryBuilder::for(Organization::class)
+        $queryBuilder = new QueryBuilder($this->organization->newQuery(), $request);
+
+        $query = $queryBuilder
             ->allowedFilters([
                 AllowedFilter::exact('ids', Organization::FIELD_ID),
                 AllowedFilter::exact(Organization::FIELD_PUBLISHED),
@@ -58,7 +60,9 @@ final class OrganizationRepository implements OrganizationRepositoryInterface
 
     public function getOrganizationDetailByFilters(DetailRequest $request): OrganizationResource
     {
-        $query = QueryBuilder::for(Organization::class)
+        $queryBuilder = new QueryBuilder($this->organization->newQuery(), $request);
+
+        $query = $queryBuilder
             ->allowedFilters([
                 AllowedFilter::exact(Organization::FIELD_ID),
                 AllowedFilter::exact(Organization::FIELD_SLUG)

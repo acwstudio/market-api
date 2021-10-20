@@ -13,6 +13,9 @@ use App\Repositories\City\CityRepositoryInterface;
 use App\Repositories\Landing\CachedLandingRepository;
 use App\Repositories\Landing\LandingRepository;
 use App\Repositories\Landing\LandingRepositoryInterface;
+use App\Repositories\Person\CachedPersonRepository;
+use App\Repositories\Person\PersonRepository;
+use App\Repositories\Person\PersonRepositoryInterface;
 use App\Repositories\Product\CachedProductRepository;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
@@ -60,14 +63,23 @@ final class RepositoryServiceProvider extends ServiceProvider
         $this->app->when(CachedCityRepository::class)
             ->needs(CityRepositoryInterface::class)
             ->give(CityRepository::class);
-        
+
         $this->app->bind(
             LandingRepositoryInterface::class,
             CachedLandingRepository::class
         );
-        
+
         $this->app->when(CachedLandingRepository::class)
             ->needs(LandingRepositoryInterface::class)
             ->give(LandingRepository::class);
+
+        $this->app->bind(
+            PersonRepositoryInterface::class,
+            CachedPersonRepository::class
+        );
+
+        $this->app->when(CachedPersonRepository::class)
+            ->needs(PersonRepositoryInterface::class)
+            ->give(PersonRepository::class);
     }
 }

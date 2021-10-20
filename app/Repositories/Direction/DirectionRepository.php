@@ -24,7 +24,9 @@ final class DirectionRepository  implements DirectionRepositoryInterface
 
     public function getDirectionsByFilters(ListRequest $request): DirectionCollection
     {
-        $query = QueryBuilder::for(Direction::class)
+        $queryBuilder = new QueryBuilder($this->direction->newQuery(), $request);
+
+        $query = $queryBuilder
             ->allowedFilters([
                 AllowedFilter::exact('ids', Direction::FIELD_ID),
                 AllowedFilter::exact(Direction::FIELD_PUBLISHED),
@@ -41,7 +43,9 @@ final class DirectionRepository  implements DirectionRepositoryInterface
 
     public function getDirectionDetailByFilters(DetailRequest $request): DirectionResource
     {
-        $query = QueryBuilder::for(Direction::class)
+        $queryBuilder = new QueryBuilder($this->direction->newQuery(), $request);
+
+        $query = $queryBuilder
             ->allowedFilters([
                 AllowedFilter::exact(Direction::FIELD_ID),
                 AllowedFilter::exact(Direction::FIELD_SLUG),
