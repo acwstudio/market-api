@@ -24,7 +24,7 @@ final class PersonController extends Controller
 
         return response()->json([
             'success' => true,
-            'date' => $collection,
+            'data' => $collection,
             'count' => $collection->count(),
         ]);
     }
@@ -34,7 +34,7 @@ final class PersonController extends Controller
         return response()->json([
             'success' => true,
             'log_request_id' => '',
-            'date' => $this->personService->detail($request),
+            'data' => $this->personService->detail($request),
         ]);
     }
 }
