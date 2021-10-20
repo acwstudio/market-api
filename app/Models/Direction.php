@@ -36,9 +36,6 @@ class Direction extends Model
     const VALUE_SEARCH = false,
         VALUE_TYPE = 'list';
 
-    const VALUE_SEARCH = false,
-        VALUE_TYPE = 'list';
-
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',
         FIELD_NAME = 'name',

@@ -36,11 +36,7 @@ final class DirectionRepository  implements DirectionRepositoryInterface
             ->allowedSorts([Direction::FIELD_SORT, Direction::FIELD_NAME, Direction::FIELD_ID])
             ->get();
 
-        return (new DirectionCollection($query))
-            ->additional([
-                'count' => $query->count(),
-                'success' => true
-            ]);
+        return new DirectionCollection($query);
     }
 
     public function getDirectionDetailByFilters(DetailRequest $request): DirectionResource
@@ -52,10 +48,6 @@ final class DirectionRepository  implements DirectionRepositoryInterface
             ])
             ->firstOrFail();
 
-        return (new DirectionResource($query))
-            ->additional([
-                'success' => true,
-                'log_request_id' => ''
-            ]);
+        return new DirectionResource($query);
     }
 }
