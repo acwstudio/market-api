@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Repositories\Landing\CachedLandingRepository;
+use App\Repositories\Landing\LandingRepository;
+use App\Repositories\Landing\LandingRepositoryInterface;
 use App\Repositories\Product\CachedProductRepository;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
@@ -33,5 +36,14 @@ final class RepositoryServiceProvider extends ServiceProvider
         $this->app->when(CachedOrganizationRepository::class)
             ->needs(OrganizationRepositoryInterface::class)
             ->give(OrganizationRepository::class);
+
+        $this->app->bind(
+            LandingRepositoryInterface::class,
+            CachedLandingRepository::class
+        );
+
+        $this->app->when(CachedLandingRepository::class)
+            ->needs(LandingRepositoryInterface::class)
+            ->give(LandingRepository::class);
     }
 }
