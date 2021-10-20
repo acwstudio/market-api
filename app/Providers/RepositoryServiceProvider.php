@@ -10,6 +10,9 @@ use App\Repositories\Direction\DirectionRepositoryInterface;
 use App\Repositories\City\CachedCityRepository;
 use App\Repositories\City\CityRepository;
 use App\Repositories\City\CityRepositoryInterface;
+use App\Repositories\Format\CachedFormatRepository;
+use App\Repositories\Format\FormatRepository;
+use App\Repositories\Format\FormatRepositoryInterface;
 use App\Repositories\Landing\CachedLandingRepository;
 use App\Repositories\Landing\LandingRepository;
 use App\Repositories\Landing\LandingRepositoryInterface;
@@ -81,5 +84,14 @@ final class RepositoryServiceProvider extends ServiceProvider
         $this->app->when(CachedPersonRepository::class)
             ->needs(PersonRepositoryInterface::class)
             ->give(PersonRepository::class);
+
+        $this->app->bind(
+            FormatRepositoryInterface::class,
+            CachedFormatRepository::class
+        );
+
+        $this->app->when(CachedFormatRepository::class)
+            ->needs(FormatRepositoryInterface::class)
+            ->give(FormatRepository::class);
     }
 }
