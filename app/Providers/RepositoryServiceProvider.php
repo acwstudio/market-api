@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Repositories\Direction\CachedDirectionRepository;
+use App\Repositories\Direction\DirectionRepository;
+use App\Repositories\Direction\DirectionRepositoryInterface;
 use App\Repositories\City\CachedCityRepository;
 use App\Repositories\City\CityRepository;
 use App\Repositories\City\CityRepositoryInterface;
@@ -39,6 +42,15 @@ final class RepositoryServiceProvider extends ServiceProvider
         $this->app->when(CachedOrganizationRepository::class)
             ->needs(OrganizationRepositoryInterface::class)
             ->give(OrganizationRepository::class);
+
+        $this->app->bind(
+            DirectionRepositoryInterface::class,
+            CachedDirectionRepository::class
+        );
+
+        $this->app->when(CachedDirectionRepository::class)
+            ->needs(DirectionRepositoryInterface::class)
+            ->give(DirectionRepository::class);
 
         $this->app->bind(
             CityRepositoryInterface::class,
