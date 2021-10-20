@@ -23,7 +23,9 @@ class CityRepository implements CityRepositoryInterface
 
     public function getCitiesByFilters(ListRequest $request): CityCollection
     {
-        $query = QueryBuilder::for(City::class)
+        $queryBuilder = new QueryBuilder($this->city->newQuery(), $request);
+
+        $query = $queryBuilder
             ->allowedFilters([
                 AllowedFilter::exact('ids', City::FIELD_ID),
                 AllowedFilter::exact(City::FIELD_NAME),
@@ -40,7 +42,9 @@ class CityRepository implements CityRepositoryInterface
 
     public function getCityDetailByFilters(DetailRequest $request): CityResource
     {
-        $query = QueryBuilder::for(City::class)
+        $queryBuilder = new QueryBuilder($this->city->newQuery(), $request);
+
+        $query = $queryBuilder
             ->allowedFilters([
                 AllowedFilter::exact(City::FIELD_ID)
             ])

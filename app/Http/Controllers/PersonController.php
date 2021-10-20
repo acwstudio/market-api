@@ -1,60 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EntityDetailRequest;
-use App\Http\Resources\PersonCollection;
-use App\Http\Resources\PersonResource;
-use App\Http\Resources\PersonListCollection;
-use App\Models\Person;
-use App\Models\Product;
-use Illuminate\Http\Request;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
+use App\Http\Requests\Person\ListRequest;
+use App\Services\PersonService;
+use Illuminate\Http\JsonResponse;
 
-class PersonController extends Controller
+final class PersonController extends Controller
 {
-    /**
-     * @param Request $request
-     * @return PersonCollection
-     */
-    public function list(Request $request): PersonCollection
-    {
-        $query = QueryBuilder::for(Person::class)
-            ->allowedFilters([
-                AllowedFilter::exact('ids', Person::FIELD_ID),
-                AllowedFilter::exact(Person::FIELD_PUBLISHED),
-                AllowedFilter::exact(Person::FIELD_NAME),
-                AllowedFilter::exact(Person::FIELD_SHOW_MAIN),
-                AllowedFilter::exact('product_ids', implode('.', [Person::ENTITY_RELATIVE_PRODUCTS, Product::FIELD_ID]))
-            ])
-            ->allowedSorts([Person::FIELD_POSITION, Person::FIELD_NAME, Person::FIELD_ID])
-            ->get();
+    private $personService;
 
-        return (new PersonCollection($query))
-            ->additional([
-                'count' => $query->count(),
-                'success' => true
-            ]);
+    public function __construct(PersonService $personService)
+    {
+        $this->personService = $personService;
     }
 
-    /**
-     * @return PersonResource|string
-     */
-    public function detail(EntityDetailRequest $request)
+    public function list(ListRequest $request): JsonResponse
     {
-        $query = QueryBuilder::for(Person::class)
-            ->allowedFilters([
-                AllowedFilter::exact(Person::FIELD_ID)
-            ])
-            ->firstOrFail();
+        $collection = $this->personService->list($request);
 
-        return (new PersonResource($query))
-            ->additional([
-                'success' => true,
-                'log_request_id' => ''
-            ]);
-
+        return response()->json([
+            'success' => true,
+            'date' => $collection,
+            'count' => $collection->count(),
+        ]);
     }
 
+    public function detail(EntityDetailRequest $request): JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'log_request_id' => '',
+            'date' => $this->personService->detail($request),
+        ]);
+    }
 }

@@ -23,10 +23,6 @@ class CityController extends Controller
         $this->cityService = $cityService;
     }
 
-    /**
-     * @param Request $request
-     * @return Application|ResponseFactory|Response
-     */
     public function list(ListRequest $request): JsonResponse
     {
         $collection = $this->cityService->list($request);
@@ -38,9 +34,6 @@ class CityController extends Controller
         ]);
     }
 
-    /**
-     * @return CityResource|string
-     */
     public function detail(DetailRequest $request): JsonResponse
     {
         return response()->json([
