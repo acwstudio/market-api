@@ -71,13 +71,16 @@ final class ProductRepository implements ProductRepositoryInterface
             ])
             ->allowedSorts([Product::FIELD_NAME, Product::FIELD_ID, Product::FIELD_EXPIRATION_DATE, Product::FIELD_SORT]);
 
-        $pagination = $request->get('pagination') ?? ['page' => 1, 'page_size' => 10];
+        $page = 1;
+        $pageSize = 10;
+
+        $pagination = $request->get('pagination') ?? ['page' => $page, 'page_size' => $pageSize];
 
         return new ProductCollection($query->paginate(
-            $pagination['page_size'],
+            $pagination['page_size'] ?? $pageSize,
             $columns = ['*'],
             $pageName = 'page',
-            $pagination['page'],
+            $pagination['page'] ?? $page
         ));
     }
 

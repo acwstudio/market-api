@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Models\Traits\FieldTrait;
 use App\Services\Search\Searchable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -141,6 +142,19 @@ final class Product extends Model
         self::FIELD_CREATED_AT,
         self::FIELD_UPDATED_AT,
     ];
+
+    const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+    const DATE_TIME_DISPLAY_FORMAT = 'd.m.Y H:i';
+
+
+    public function getDateTimeDisplay($attribute)
+    {
+        if ($this->getAttribute($attribute)) {
+            return Carbon::parse($this->getAttribute($attribute))->format(self::DATE_TIME_DISPLAY_FORMAT);
+        }
+
+        return null;
+    }
 
     public function subjects(): MorphToMany
     {
