@@ -21,6 +21,7 @@ final class DetailRequest extends FormRequest
                 'exists:organizations,id'
             ],
             'filter.slug' => 'string',
+            'filter.product_ids' => 'array',
             'include' => 'array',
         ];
     }

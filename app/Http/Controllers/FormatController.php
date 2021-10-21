@@ -1,66 +1,40 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EntityDetailRequest;
-use App\Http\Resources\FormatCollection;
-use App\Http\Resources\FormatResource;
-use App\Models\Format;
-use App\Models\Product;
-use App\Repositories\FormatRepository;
-use Illuminate\Http\Request;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
+use App\Http\Requests\Format\DetailRequest;
+use App\Http\Requests\Format\ListRequest;
+use App\Services\FormatService;
+use Illuminate\Http\JsonResponse;
 
 class FormatController extends Controller
 {
-    /**
-     * @var FormatRepository
-     */
-    public $formatRepository;
+    public $formatService;
 
-    public function __construct(FormatRepository $formatRepository)
+    public function __construct(FormatService $formatService)
     {
-        $this->formatRepository = $formatRepository;
+        $this->formatService = $formatService;
     }
 
-    public function list(Request $request)
+    public function list(ListRequest $request): JsonResponse
     {
-        $query = QueryBuilder::for(Format::class)
-            ->allowedFilters([
-                AllowedFilter::exact('ids', Format::FIELD_ID),
-                AllowedFilter::exact(Format::FIELD_PUBLISHED),
-                AllowedFilter::exact(Format::FIELD_NAME),
-                AllowedFilter::exact(Format::FIELD_SLUG),
-                AllowedFilter::exact('product_ids', implode('.', [Format::ENTITY_RELATIVE_PRODUCT, Product::FIELD_ID]))
-            ])
-            ->allowedSorts([Format::FIELD_NAME, Format::FIELD_ID])
-            ->get();
+        $collection = $this->formatService->list($request);
 
-        return (new FormatCollection($query))
-            ->additional([
-                'count' => $query->count(),
-                'success' => true
-            ]);
-    }
-
-    /**
-     * @return FormatResource
-     */
-    public function detail(EntityDetailRequest $request)
-    {
-        $query = QueryBuilder::for(Format::class)
-            ->allowedFilters([
-                AllowedFilter::exact(Format::FIELD_ID),
-                AllowedFilter::exact(Format::FIELD_SLUG),
-            ])
-            ->firstOrFail();
-
-        return (new FormatResource($query))
-            ->additional([
+        return response()->json([
                 'success' => true,
-                'log_request_id' => ''
+                'data' => $collection,
+                'count' => $collection->count(),
             ]);
+    }
+
+    public function detail(DetailRequest $request): JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'data' => $this->formatService->detail($request),
+            'log_request_id' => ''
+        ]);
     }
 }

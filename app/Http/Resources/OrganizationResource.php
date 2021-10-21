@@ -34,7 +34,7 @@ final class OrganizationResource extends JsonResource
             Organization::FIELD_DESCRIPTION       => $organization->getField(Organization::FIELD_DESCRIPTION),
             Organization::FIELD_HTML_BODY         => $organization->getField(Organization::FIELD_HTML_BODY),
             Organization::FIELD_LOGO_CODE         => $organization->getField(Organization::FIELD_LOGO_CODE),
-            Organization::FIELD_LOGO              => $organization->getField(Organization::FIELD_LOGO),
+            Organization::FIELD_LOGO              => $organization->getField(Organization::FIELD_PREVIEW_IMAGE),
             Organization::FIELD_COLOR_CODE_TITLES => $organization->getField(Organization::FIELD_COLOR_CODE_TITLES),
             Organization::FIELD_PREVIEW_IMAGE     => $organization->getField(Organization::FIELD_PREVIEW_IMAGE),
             Organization::FIELD_DIGITAL_IMAGE     => $organization->getField(Organization::FIELD_DIGITAL_IMAGE),

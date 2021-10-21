@@ -48,13 +48,16 @@ final class OrganizationRepository implements OrganizationRepositoryInterface
             ->allowedIncludes([Organization::ENTITY_RELATIVE_CITY])
             ->allowedSorts([Organization::FIELD_ID, Organization::FIELD_NAME, Organization::FIELD_ADDRESS]);
 
-        $pagination = $request->get('pagination') ?? ['page' => 1, 'page_size' => 10];
+        $page = 1;
+        $pageSize = 10;
+
+        $pagination = $request->get('pagination') ?? ['page' => $page, 'page_size' => $pageSize];
 
         return new OrganizationCollection($query->paginate(
-            $pagination['page_size'],
+            $pagination['page_size'] ?? $pageSize,
             $columns = ['*'],
             $pageName = 'page',
-            $pagination['page']
+            $pagination['page'] ?? $page
         ));
     }
 
@@ -65,7 +68,8 @@ final class OrganizationRepository implements OrganizationRepositoryInterface
         $query = $queryBuilder
             ->allowedFilters([
                 AllowedFilter::exact(Organization::FIELD_ID),
-                AllowedFilter::exact(Organization::FIELD_SLUG)
+                AllowedFilter::exact(Organization::FIELD_SLUG),
+                AllowedFilter::exact('product_id', implode('.', [Organization::ENTITY_RELATIVE_PRODUCTS, Product::FIELD_ID])),
             ])
             ->allowedIncludes([
                 Organization::ENTITY_RELATIVE_CITY,

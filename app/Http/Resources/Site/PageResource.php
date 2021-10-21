@@ -52,7 +52,7 @@ class PageResource extends JsonResource
 
                 $entityClassString = $page->getEntityType();
                 $entityClass = (new $entityClassString)->where($entityClassString::FIELD_SLUG, $queryParams['slug'])->first();
-                $entityId = (!is_null($entityClass)) ? $entityClass->getId() : null;
+                $entityId = (!is_null($entityClass)) ? $entityClass->id : null;
 
 
             } else if (isset($queryParams['id'])) {
@@ -205,6 +205,6 @@ class PageResource extends JsonResource
 
         $dataString = json_decode($dataString, true);
 
-        return $dataString;
+        return $dataString ?? [];
     }
 }
