@@ -68,7 +68,8 @@ final class OrganizationRepository implements OrganizationRepositoryInterface
         $query = $queryBuilder
             ->allowedFilters([
                 AllowedFilter::exact(Organization::FIELD_ID),
-                AllowedFilter::exact(Organization::FIELD_SLUG)
+                AllowedFilter::exact(Organization::FIELD_SLUG),
+                AllowedFilter::exact('product_id', implode('.', [Organization::ENTITY_RELATIVE_PRODUCTS, Product::FIELD_ID])),
             ])
             ->allowedIncludes([
                 Organization::ENTITY_RELATIVE_CITY,
