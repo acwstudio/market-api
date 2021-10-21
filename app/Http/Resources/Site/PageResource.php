@@ -205,6 +205,6 @@ class PageResource extends JsonResource
 
         $dataString = json_decode($dataString, true);
 
-        return $dataString;
+        return $dataString ?? [];
     }
 }
