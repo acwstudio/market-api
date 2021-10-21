@@ -33,8 +33,7 @@ final class PersonController extends Controller
     {
         return response()->json([
             'success' => true,
-            'log_request_id' => '',
-            'data' => $this->personService->detail($request),
+            'data' => $this->personService->detail($request)
         ]);
     }
 }

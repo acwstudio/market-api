@@ -48,13 +48,16 @@ final class OrganizationRepository implements OrganizationRepositoryInterface
             ->allowedIncludes([Organization::ENTITY_RELATIVE_CITY])
             ->allowedSorts([Organization::FIELD_ID, Organization::FIELD_NAME, Organization::FIELD_ADDRESS]);
 
-        $pagination = $request->get('pagination') ?? ['page' => 1, 'page_size' => 10];
+        $page = 1;
+        $pageSize = 10;
+
+        $pagination = $request->get('pagination') ?? ['page' => $page, 'page_size' => $pageSize];
 
         return new OrganizationCollection($query->paginate(
-            $pagination['page_size'],
+            $pagination['page_size'] ?? $pageSize,
             $columns = ['*'],
             $pageName = 'page',
-            $pagination['page']
+            $pagination['page'] ?? $page
         ));
     }
 
