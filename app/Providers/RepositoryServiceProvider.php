@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Repositories\Banner\BannerRepositoryInterface;
+use App\Repositories\Banner\BannerRepository;
+use App\Repositories\Banner\CachedBannerRepository;
 use App\Repositories\Direction\CachedDirectionRepository;
 use App\Repositories\Direction\DirectionRepository;
 use App\Repositories\Direction\DirectionRepositoryInterface;
@@ -25,6 +28,9 @@ use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Organization\CachedOrganizationRepository;
 use App\Repositories\Organization\OrganizationRepository;
 use App\Repositories\Organization\OrganizationRepositoryInterface;
+use App\Repositories\Subject\CachedSubjectRepository;
+use App\Repositories\Subject\SubjectRepository;
+use App\Repositories\Subject\SubjectRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 final class RepositoryServiceProvider extends ServiceProvider
@@ -86,6 +92,24 @@ final class RepositoryServiceProvider extends ServiceProvider
             ->give(PersonRepository::class);
 
         $this->app->bind(
+            SubjectRepositoryInterface::class,
+            CachedSubjectRepository::class
+        );
+
+        $this->app->when(CachedSubjectRepository::class)
+            ->needs(SubjectRepositoryInterface::class)
+            ->give(SubjectRepository::class);
+
+        $this->app->bind(
+            BannerRepositoryInterface::class,
+            CachedBannerRepository::class
+        );
+
+        $this->app->when(CachedBannerRepository::class)
+            ->needs(BannerRepositoryInterface::class)
+            ->give(BannerRepository::class);
+        
+        $this->app->bind(
             FormatRepositoryInterface::class,
             CachedFormatRepository::class
         );
@@ -94,4 +118,5 @@ final class RepositoryServiceProvider extends ServiceProvider
             ->needs(FormatRepositoryInterface::class)
             ->give(FormatRepository::class);
     }
+
 }
