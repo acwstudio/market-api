@@ -22,6 +22,9 @@ use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Organization\CachedOrganizationRepository;
 use App\Repositories\Organization\OrganizationRepository;
 use App\Repositories\Organization\OrganizationRepositoryInterface;
+use App\Repositories\Subject\CachedSubjectRepository;
+use App\Repositories\Subject\SubjectRepository;
+use App\Repositories\Subject\SubjectRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 final class RepositoryServiceProvider extends ServiceProvider
@@ -81,5 +84,16 @@ final class RepositoryServiceProvider extends ServiceProvider
         $this->app->when(CachedPersonRepository::class)
             ->needs(PersonRepositoryInterface::class)
             ->give(PersonRepository::class);
+
+
+        $this->app->bind(
+            SubjectRepositoryInterface::class,
+            CachedSubjectRepository::class
+        );
+
+        $this->app->when(CachedSubjectRepository::class)
+            ->needs(SubjectRepositoryInterface::class)
+            ->give(SubjectRepository::class);
     }
+
 }
