@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Repositories\Banner\BannerRepositoryInterface;
+use App\Repositories\Banner\BannerRepository;
+use App\Repositories\Banner\CachedBannerRepository;
 use App\Repositories\Direction\CachedDirectionRepository;
 use App\Repositories\Direction\DirectionRepository;
 use App\Repositories\Direction\DirectionRepositoryInterface;
@@ -85,7 +88,6 @@ final class RepositoryServiceProvider extends ServiceProvider
             ->needs(PersonRepositoryInterface::class)
             ->give(PersonRepository::class);
 
-
         $this->app->bind(
             SubjectRepositoryInterface::class,
             CachedSubjectRepository::class
@@ -94,6 +96,15 @@ final class RepositoryServiceProvider extends ServiceProvider
         $this->app->when(CachedSubjectRepository::class)
             ->needs(SubjectRepositoryInterface::class)
             ->give(SubjectRepository::class);
+
+        $this->app->bind(
+            BannerRepositoryInterface::class,
+            CachedBannerRepository::class
+        );
+
+        $this->app->when(CachedBannerRepository::class)
+            ->needs(BannerRepositoryInterface::class)
+            ->give(BannerRepository::class);
     }
 
 }
