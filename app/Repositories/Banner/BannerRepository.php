@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Repositories\Banner;
 
-use App\Http\Requests\EntityDetailRequest;
+use App\Http\Requests\Banner\DetailRequest;
+use App\Http\Requests\Banner\ListRequest;
+use App\Http\Resources\BannerCollection;
 use App\Http\Resources\BannerResource;
 use App\Models\Banner;
-use App\Http\Resources\BannerCollection;
-use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -21,7 +21,7 @@ final class BannerRepository implements BannerRepositoryInterface
         $this->bannerModel = $banner;
     }
 
-    public function getBannersByFilters(Request $request): BannerCollection
+    public function getBannersByFilters(ListRequest $request): BannerCollection
     {
         $queryBuilder = new QueryBuilder($this->bannerModel->newQuery(), $request);
 
@@ -44,7 +44,7 @@ final class BannerRepository implements BannerRepositoryInterface
         return new BannerCollection($query);
     }
 
-    public function getBannerDetailByFilters(EntityDetailRequest $request): BannerResource
+    public function getBannerDetailByFilters(DetailRequest $request): BannerResource
     {
         $queryBuilder = new QueryBuilder($this->bannerModel->newQuery(), $request);
 
@@ -54,11 +54,7 @@ final class BannerRepository implements BannerRepositoryInterface
             ])
             ->firstOrFail();
 
-        return (new BannerResource($query))
-            ->additional([
-                'success'        => true,
-                'log_request_id' => ''
-            ]);
+        return new BannerResource($query);
     }
 
 }

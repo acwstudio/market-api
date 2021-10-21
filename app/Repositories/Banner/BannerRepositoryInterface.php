@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Repositories\Banner;
 
-use App\Http\Requests\EntityDetailRequest;
+use App\Http\Requests\Banner\DetailRequest;
+use App\Http\Requests\Banner\ListRequest;
 use App\Http\Resources\BannerCollection;
 use App\Http\Resources\BannerResource;
-use Illuminate\Http\Request;
 
 interface BannerRepositoryInterface
 {
-    public function getBannersByFilters(Request $request): BannerCollection;
+    public function getBannersByFilters(ListRequest $request): BannerCollection;
 
-    public function getBannerDetailByFilters(EntityDetailRequest $request): BannerResource;
+    public function getBannerDetailByFilters(DetailRequest $request): BannerResource;
 }

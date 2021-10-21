@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Http\Requests\EntityDetailRequest;
+use App\Http\Requests\Banner\DetailRequest;
+use App\Http\Requests\Banner\ListRequest;
 use App\Http\Resources\BannerResource;
 use App\Repositories\Banner\BannerRepositoryInterface;
 use App\Http\Resources\BannerCollection;
@@ -19,12 +20,12 @@ final class BannerService
         $this->bannerRepository = $bannerRepository;
     }
 
-    public function list(Request $request): BannerCollection
+    public function list(ListRequest $request): BannerCollection
     {
         return $this->bannerRepository->getBannersByFilters($request);
     }
 
-    public function detail(EntityDetailRequest $request): BannerResource
+    public function detail(DetailRequest $request): BannerResource
     {
         return $this->bannerRepository->getBannerDetailByFilters($request);
     }

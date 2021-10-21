@@ -1,17 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EntityDetailRequest;
-use App\Http\Resources\BannerCollection;
+use App\Http\Requests\Banner\DetailRequest;
+use App\Http\Requests\Banner\ListRequest;
 use App\Http\Resources\BannerResource;
-use App\Models\Banner;
 use App\Services\BannerService;
-use App\Services\ProductService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class BannerController extends Controller
 {
@@ -26,7 +24,7 @@ class BannerController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function list(Request $request): JsonResponse
+    public function list(ListRequest $request): JsonResponse
     {
         $collection = $this->bannerService->list($request);
 
@@ -40,11 +38,11 @@ class BannerController extends Controller
     /**
      * @return BannerResource|string
      */
-    public function detail(EntityDetailRequest $request)
+    public function detail(DetailRequest $request): JsonResponse
     {
         return response()->json([
-            'success' => true,
-            'data' => $this->bannerService->detail($request),
+            'success'        => true,
+            'data'           => $this->bannerService->detail($request),
             'log_request_id' => ''
         ]);
     }

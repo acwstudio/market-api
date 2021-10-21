@@ -24,7 +24,7 @@ class DetailRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'filter.id' => 'integer'
         ];
     }
 }

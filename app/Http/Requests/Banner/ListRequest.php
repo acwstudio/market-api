@@ -24,7 +24,10 @@ class ListRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'filter.ids' => 'array',
+            'filter.published' => 'boolean',
+            'filter.name' => 'string',
+            'filter.banner_type' => 'string'
         ];
     }
 }
