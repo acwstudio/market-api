@@ -34,7 +34,12 @@ class MainMenuController extends Controller
             }
             
             // Собираем все опубликованные product'ы и готовим шаблоны для использования в выдаче
-            $products = Product::where('published', 1)->get();
+            // $products = Product::where('published', 1)->get();
+            $products = Product::selectRaw(sprintf('ANY_VALUE(`%1$s`) AS `%1$s`, `%2$s`, ANY_VALUE(`%3$s`) as `%3$s`', Product::FIELD_ID, Product::FIELD_NAME, Product::FIELD_SLUG))
+                               ->where(Product::FIELD_PUBLISHED, 1)
+                               ->groupBy(Product::FIELD_NAME)
+                               ->get();
+
             $productsTemplate = [];
             foreach ($products as $product) {
                 $productsTemplate[$product->id] = [
