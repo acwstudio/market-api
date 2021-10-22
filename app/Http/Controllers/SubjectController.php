@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EntityDetailRequest;
-use App\Repositories\Subject\SubjectRepository;
+use App\Http\Requests\Subject\DetailRequest;
+use App\Http\Requests\Subject\ListRequest;
 use App\Services\SubjectService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 final class SubjectController extends Controller
 {
@@ -22,7 +21,7 @@ final class SubjectController extends Controller
         $this->subjectService = $subjectService;
     }
 
-    public function list(Request $request): JsonResponse
+    public function list(ListRequest $request): JsonResponse
     {
         $collection = $this->subjectService->list($request);
 
@@ -34,10 +33,10 @@ final class SubjectController extends Controller
     }
 
     /**
-     * @param EntityDetailRequest $request
+     * @param DetailRequest $request
      * @return JsonResponse
      */
-    public function detail(EntityDetailRequest $request): JsonResponse
+    public function detail(DetailRequest $request): JsonResponse
     {
         return response()->json([
             'success' => true,
