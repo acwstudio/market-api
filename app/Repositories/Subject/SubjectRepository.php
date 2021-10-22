@@ -53,11 +53,7 @@ final class SubjectRepository implements SubjectRepositoryInterface
             ])
             ->firstOrFail();
 
-        return (new SubjectResource($query))
-            ->additional([
-                'success'        => true,
-                'log_request_id' => ''
-            ]);
+        return new SubjectResource($query);
     }
 
 }
