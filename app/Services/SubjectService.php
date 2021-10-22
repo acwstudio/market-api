@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Http\Requests\EntityDetailRequest;
+use App\Http\Requests\Subject\DetailRequest;
+use App\Http\Requests\Subject\ListRequest;
 use App\Http\Resources\SubjectResource;
 use App\Repositories\Subject\SubjectRepositoryInterface;
 use App\Http\Resources\SubjectCollection;
-use Illuminate\Http\Request;
 
 final class SubjectService
 {
@@ -19,12 +19,12 @@ final class SubjectService
         $this->subjectRepository = $subjectRepository;
     }
 
-    public function list(Request $request): SubjectCollection
+    public function list(ListRequest $request): SubjectCollection
     {
         return $this->subjectRepository->getSubjectsByFilters($request);
     }
 
-    public function detail(EntityDetailRequest $request): SubjectResource
+    public function detail(DetailRequest $request): SubjectResource
     {
         return $this->subjectRepository->getSubjectDetailByFilters($request);
     }

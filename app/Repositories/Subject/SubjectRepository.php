@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Repositories\Subject;
 
-use App\Http\Requests\EntityDetailRequest;
+use App\Http\Requests\Subject\DetailRequest;
+use App\Http\Requests\Subject\ListRequest;
 use App\Http\Resources\SubjectResource;
 use App\Models\Product;
 use App\Models\Subject;
 use App\Http\Resources\SubjectCollection;
-use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -25,7 +25,7 @@ final class SubjectRepository implements SubjectRepositoryInterface
         $this->subjectModel = $subject;
     }
 
-    public function getSubjectsByFilters(Request $request): SubjectCollection
+    public function getSubjectsByFilters(ListRequest $request): SubjectCollection
     {
         $queryBuilder = new QueryBuilder($this->subjectModel->newQuery(), $request);
 
@@ -43,7 +43,7 @@ final class SubjectRepository implements SubjectRepositoryInterface
         return new SubjectCollection($query);
     }
 
-    public function getSubjectDetailByFilters(EntityDetailRequest $request): SubjectResource
+    public function getSubjectDetailByFilters(DetailRequest $request): SubjectResource
     {
         $queryBuilder = new QueryBuilder($this->subjectModel->newQuery(), $request);
 
@@ -53,11 +53,7 @@ final class SubjectRepository implements SubjectRepositoryInterface
             ])
             ->firstOrFail();
 
-        return (new SubjectResource($query))
-            ->additional([
-                'success'        => true,
-                'log_request_id' => ''
-            ]);
+        return new SubjectResource($query);
     }
 
 }

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Repositories\Subject;
 
-use App\Http\Requests\EntityDetailRequest;
+use App\Http\Requests\Subject\DetailRequest;
+use App\Http\Requests\Subject\ListRequest;
 use App\Http\Resources\SubjectCollection;
 use App\Http\Resources\SubjectResource;
-use Illuminate\Http\Request;
 
 interface SubjectRepositoryInterface
 {
-    public function getSubjectsByFilters(Request $request): SubjectCollection;
+    public function getSubjectsByFilters(ListRequest $request): SubjectCollection;
 
-    public function getSubjectDetailByFilters(EntityDetailRequest $request): SubjectResource;
+    public function getSubjectDetailByFilters(DetailRequest $request): SubjectResource;
 }
