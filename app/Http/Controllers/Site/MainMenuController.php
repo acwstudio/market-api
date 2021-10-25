@@ -34,15 +34,34 @@ class MainMenuController extends Controller
             }
             
             // Собираем все опубликованные product'ы и готовим шаблоны для использования в выдаче
-            $products = Product::where('published', 1)->get();
             $productsTemplate = [];
+
+            // @todo OGM-1034: Ужасный костыль, связанный с тем, что на проде сейчас используется устаревшая версия БД (MariaDB 10.4.12),
+            //       которая не поддерживает ANY_VALUE, и sql_mode=only_full_group_by, запрещающий "голые" GROUP BY.
+            $products = Product::where(Product::FIELD_PUBLISHED, 1)->get();
+            $usedProductNames = [];
             foreach ($products as $product) {
-                $productsTemplate[$product->id] = [
-                    'id'     => $product->id,
-                    'anchor' => $product->name,
-                    'link'   => "/product/$product->slug"
-                ];
+                if (!in_array($product->name, $usedProductNames)) {
+                    $productsTemplate[$product->id] = [
+                        'id'     => $product->id,
+                        'anchor' => $product->name,
+                        'link'   => "/product/$product->slug"
+                    ];
+                    $usedProductNames[] = $product->name;
+                }
             }
+            // @todo OGM-1034: после обновления БД удалить код выше и раскомментировать код ниже.
+            // $products = Product::selectRaw(sprintf('ANY_VALUE(`%1$s`) AS `%1$s`, `%2$s`, ANY_VALUE(`%3$s`) as `%3$s`', Product::FIELD_ID, Product::FIELD_NAME, Product::FIELD_SLUG))
+            //                   ->where(Product::FIELD_PUBLISHED, 1)
+            //                   ->groupBy(Product::FIELD_NAME)
+            //                   ->get();
+            // foreach ($products as $product) {
+            //     $productsTemplate[$product->id] = [
+            //         'id'     => $product->id,
+            //         'anchor' => $product->name,
+            //         'link'   => "/product/$product->slug"
+            //     ];
+            // }
             
             // Собираем массив, содержащий связь в формате direction_id => [ product_ids... ]
             // При этом исключаем direction'ы и product'ы, не попавшие в массивы выше

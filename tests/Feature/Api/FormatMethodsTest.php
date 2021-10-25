@@ -2,29 +2,28 @@
 
 namespace Tests\Feature\Api;
 
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\Feature\ApiTestTrait;
-use Tests\Feature\EntitiesTest\DirectionTest;
+use Tests\Feature\EntitiesTest\FormatTest;
 use Tests\TestCase;
 
-class DirectionMethodsTest extends TestCase
+class FormatMethodsTest extends TestCase
 {
     use ApiTestTrait;
 
-    const METHOD_LIST_URL = '/api/v1/directions/list';
-    const METHOD_DETAIL_URL = '/api/v1/directions/detail';
+    const METHOD_LIST_URL = '/api/v1/formats/list';
+    const METHOD_DETAIL_URL = '/api/v1/formats/detail';
 
     /**
-     * @var Application|mixed
+     * @var FormatTest
      */
-    private $directionTest;
+    public $formatTest;
 
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
 
-        $this->directionTest = app(DirectionTest::class);
+        $this->formatTest = app(FormatTest::class);
     }
 
     /**
@@ -38,8 +37,9 @@ class DirectionMethodsTest extends TestCase
             ->withHeaders($this->apiHeaders)
             ->postJson(
                 self::METHOD_LIST_URL,
-                array_merge($this->apiBodyJson, $this->directionTest->getBodyRequest())
+                array_merge($this->apiBodyJson, $this->formatTest->getBodyRequest())
             );
+
 
         $response
             ->assertJson(function (AssertableJson $json) {
@@ -47,7 +47,7 @@ class DirectionMethodsTest extends TestCase
                     ->where($this->apiResponseSuccess, true)
                     ->has($this->apiResponseData)
                     ->has($this->apiResponseData . ".0", function (AssertableJson $json) {
-                        $json->whereAllType($this->directionTest->getFieldsWithTypes());
+                        $json->whereAllType($this->formatTest->getFieldsWithTypes());
                         $json->etc();
                     })
                     ->etc();
@@ -62,10 +62,10 @@ class DirectionMethodsTest extends TestCase
      */
     public function test_detail()
     {
-        $directionId = null;
+        $formatId = null;
 
         try {
-            $directionId = $this->directionTest->getDirectionFirstId();
+            $formatId = $this->formatTest->getFormatFirstId();
         } catch (\Exception $exception) {
             $this->expectErrorMessage($exception->getMessage());
         }
@@ -75,7 +75,7 @@ class DirectionMethodsTest extends TestCase
             ->postJson(
                 self::METHOD_DETAIL_URL,
                 array_merge($this->apiBodyJson, [
-                    "filter" => ["id" => $directionId]
+                    "filter" => ["id" => $formatId]
                 ])
             );
 
@@ -84,7 +84,7 @@ class DirectionMethodsTest extends TestCase
                 $json
                     ->where($this->apiResponseSuccess, true)
                     ->has($this->apiResponseData, function (AssertableJson $json) {
-                        $json->whereAllType($this->directionTest->getFieldsWithTypes());
+                        $json->whereAllType($this->formatTest->getFieldsWithTypes());
                         $json->etc();
                     })
                     ->etc();

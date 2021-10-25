@@ -116,7 +116,7 @@ class PageResource extends JsonResource
     {
         $entityComponents = [];
 
-        $entitySectionList = EntitySection::query()->where([
+        $entitySectionList = EntitySection::query()->orderBy(EntitySection::FIELD_SORT)->where([
             EntitySection::FIELD_ENTITY_ID   => $entityId,
             EntitySection::FIELD_ENTITY_TYPE => $entityType,
         ])->get();
@@ -205,6 +205,6 @@ class PageResource extends JsonResource
 
         $dataString = json_decode($dataString, true);
 
-        return $dataString;
+        return $dataString ?? [];
     }
 }

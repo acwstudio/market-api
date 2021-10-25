@@ -1,63 +1,50 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EntityDetailRequest;
-use App\Http\Resources\BannerCollection;
+use App\Http\Requests\Banner\DetailRequest;
+use App\Http\Requests\Banner\ListRequest;
 use App\Http\Resources\BannerResource;
-use App\Models\Banner;
+use App\Services\BannerService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class BannerController extends Controller
 {
+    public $bannerService;
+
+    public function __construct(BannerService $bannerService)
+    {
+        $this->bannerService = $bannerService;
+    }
+
     /**
      * @param Request $request
-     * @return BannerCollection
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function list(Request $request): BannerCollection
+    public function list(ListRequest $request): JsonResponse
     {
-        $query = QueryBuilder::for(Banner::class)
-            ->allowedFilters([
-                AllowedFilter::exact('ids', Banner::FIELD_ID),
-                AllowedFilter::exact(Banner::FIELD_PUBLISHED),
-                AllowedFilter::exact(Banner::FIELD_NAME),
-                AllowedFilter::exact(Banner::FIELD_LINK),
-                AllowedFilter::exact(Banner::FIELD_BANNER_TYPE),
-                AllowedFilter::exact(Banner::FIELD_COLOR_BG),
-                AllowedFilter::exact(Banner::FIELD_COLOR_TEXT),
-                AllowedFilter::exact(Banner::FIELD_COLOR_BG_LIST),
-                AllowedFilter::exact(Banner::FIELD_COLOR_TEXT_LIST),
-                AllowedFilter::exact(Banner::FIELD_DESCRIPTION)
-            ])
-            ->allowedSorts([Banner::FIELD_NAME, Banner::FIELD_ID])
-            ->get();
+        $collection = $this->bannerService->list($request);
 
-        return (new BannerCollection($query))
-            ->additional([
-                'count' => $query->count(),
-                'success' => true
-            ]);
+        return response()->json([
+            'success' => true,
+            'count'   => $collection->count(),
+            'data'    => $collection,
+        ]);
     }
 
     /**
      * @return BannerResource|string
      */
-    public function detail(EntityDetailRequest $request)
+    public function detail(DetailRequest $request): JsonResponse
     {
-        $query = QueryBuilder::for(Banner::class)
-            ->allowedFilters([
-                AllowedFilter::exact(Banner::FIELD_ID)
-            ])
-            ->firstOrFail();
-
-        return (new BannerResource($query))
-            ->additional([
-                'success' => true,
-                'log_request_id' => ''
-            ]);
-
+        return response()->json([
+            'success'        => true,
+            'data'           => $this->bannerService->detail($request),
+            'log_request_id' => ''
+        ]);
     }
 
 }

@@ -1,44 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\Feature\ApiTestTrait;
-use Tests\Feature\EntitiesTest\DirectionTest;
+use Tests\Feature\EntitiesTest\SubjectTest;
 use Tests\TestCase;
 
-class DirectionMethodsTest extends TestCase
+class SubjectMethodsTest extends TestCase
 {
     use ApiTestTrait;
 
-    const METHOD_LIST_URL = '/api/v1/directions/list';
-    const METHOD_DETAIL_URL = '/api/v1/directions/detail';
+    const METHOD_LIST_URL = '/api/v1/subjects/list';
+    const METHOD_DETAIL_URL = '/api/v1/subjects/detail';
 
     /**
      * @var Application|mixed
      */
-    private $directionTest;
+    private $subjectTest;
 
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
 
-        $this->directionTest = app(DirectionTest::class);
+        $this->subjectTest = app(SubjectTest::class);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_list()
     {
         $response = $this
             ->withHeaders($this->apiHeaders)
             ->postJson(
                 self::METHOD_LIST_URL,
-                array_merge($this->apiBodyJson, $this->directionTest->getBodyRequest())
+                array_merge($this->apiBodyJson, $this->subjectTest->getBodyRequest())
             );
 
         $response
@@ -47,7 +44,7 @@ class DirectionMethodsTest extends TestCase
                     ->where($this->apiResponseSuccess, true)
                     ->has($this->apiResponseData)
                     ->has($this->apiResponseData . ".0", function (AssertableJson $json) {
-                        $json->whereAllType($this->directionTest->getFieldsWithTypes());
+                        $json->whereAllType($this->subjectTest->getFieldsWithTypes());
                         $json->etc();
                     })
                     ->etc();
@@ -55,17 +52,12 @@ class DirectionMethodsTest extends TestCase
             ->assertStatus(200);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_detail()
     {
-        $directionId = null;
+        $subjectId = null;
 
         try {
-            $directionId = $this->directionTest->getDirectionFirstId();
+            $subjectId = $this->subjectTest->getDirectionFirstId();
         } catch (\Exception $exception) {
             $this->expectErrorMessage($exception->getMessage());
         }
@@ -75,7 +67,7 @@ class DirectionMethodsTest extends TestCase
             ->postJson(
                 self::METHOD_DETAIL_URL,
                 array_merge($this->apiBodyJson, [
-                    "filter" => ["id" => $directionId]
+                    "filter" => ["id" => $subjectId]
                 ])
             );
 
@@ -84,11 +76,12 @@ class DirectionMethodsTest extends TestCase
                 $json
                     ->where($this->apiResponseSuccess, true)
                     ->has($this->apiResponseData, function (AssertableJson $json) {
-                        $json->whereAllType($this->directionTest->getFieldsWithTypes());
+                        $json->whereAllType($this->subjectTest->getFieldsWithTypes());
                         $json->etc();
                     })
                     ->etc();
             })
             ->assertStatus(200);
     }
+
 }
