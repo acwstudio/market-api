@@ -1,58 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Site\QuizCollection;
-use App\Http\Resources\Site\QuizResource;
-use App\Models\Question;
-use App\Models\Quiz;
-use Illuminate\Http\Request;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
+use App\Http\Requests\Quiz\DetailRequest;
+use App\Http\Requests\Quiz\ListRequest;
+use App\Services\QuizService;
+use Illuminate\Http\JsonResponse;
 
-class QuizController extends Controller
+final class QuizController extends Controller
 {
-    public function list()
-    {
-        $query = QueryBuilder::for(Quiz::class)
-            ->allowedFilters([
-                AllowedFilter::exact(Quiz::FIELD_PUBLISHED)
-            ])
-            ->allowedIncludes([
-                Quiz::ENTITY_RELATIVE_QUESTIONS,
-                implode('.', [Quiz::ENTITY_RELATIVE_QUESTIONS, Question::ENTITY_RELATIVE_ANSWERS])
-            ])
-            ->allowedSorts([Quiz::FIELD_ID])
-            ->get();
+    private $quizService;
 
-        return (new QuizCollection($query))
-            ->additional([
-                'count' => $query->count(),
-                'success' => true
-            ]);
+    public function __construct(QuizService $quizService)
+    {
+        $this->quizService = $quizService;
     }
 
-    public function detail()
+    public function list(ListRequest $request): JsonResponse
     {
-        $query = QueryBuilder::for(Quiz::class)
-            ->allowedFilters([
-                AllowedFilter::exact(Quiz::FIELD_ID)
-            ])
-            ->allowedIncludes([
-                Quiz::ENTITY_RELATIVE_QUESTIONS,
-                implode('.', [Quiz::ENTITY_RELATIVE_QUESTIONS, Question::ENTITY_RELATIVE_ANSWERS])
-            ])
-            ->with([
-                Quiz::ENTITY_RELATIVE_QUESTIONS,
-                implode('.', [Quiz::ENTITY_RELATIVE_QUESTIONS, Question::ENTITY_RELATIVE_ANSWERS])
-            ])
-            ->firstOrFail();
+        $collection = $this->quizService->list($request);
 
-        return (new QuizResource($query))
-            ->additional([
-                'success' => true,
-                'log_request_id' => ''
-            ]);
+        return response()->json([
+            'success' => true,
+            'data'    => $collection,
+            'count'   => $collection->total(),
+        ]);
+    }
+
+    public function detail(DetailRequest $request): JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'data'    => $this->quizService->detail($request)
+        ]);
     }
 }

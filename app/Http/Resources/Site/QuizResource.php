@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources\Site;
 
 use App\Models\Quiz;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class QuizResource extends JsonResource
+final class QuizResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

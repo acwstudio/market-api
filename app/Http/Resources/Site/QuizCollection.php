@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources\Site;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class QuizCollection extends ResourceCollection
+final class QuizCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
