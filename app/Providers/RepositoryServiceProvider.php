@@ -13,6 +13,9 @@ use App\Repositories\Direction\DirectionRepositoryInterface;
 use App\Repositories\City\CachedCityRepository;
 use App\Repositories\City\CityRepository;
 use App\Repositories\City\CityRepositoryInterface;
+use App\Repositories\EntitySection\CachedEntitySectionRepository;
+use App\Repositories\EntitySection\EntitySectionRepository;
+use App\Repositories\EntitySection\EntitySectionRepositoryInterface;
 use App\Repositories\Format\CachedFormatRepository;
 use App\Repositories\Format\FormatRepository;
 use App\Repositories\Format\FormatRepositoryInterface;
@@ -92,6 +95,15 @@ final class RepositoryServiceProvider extends ServiceProvider
             ->give(PersonRepository::class);
 
         $this->app->bind(
+            EntitySectionRepositoryInterface::class,
+            CachedEntitySectionRepository::class
+        );
+
+        $this->app->when(CachedEntitySectionRepository::class)
+            ->needs(EntitySectionRepositoryInterface::class)
+            ->give(EntitySectionRepository::class);
+
+        $this->app->bind(
             SubjectRepositoryInterface::class,
             CachedSubjectRepository::class
         );
@@ -108,7 +120,7 @@ final class RepositoryServiceProvider extends ServiceProvider
         $this->app->when(CachedBannerRepository::class)
             ->needs(BannerRepositoryInterface::class)
             ->give(BannerRepository::class);
-        
+
         $this->app->bind(
             FormatRepositoryInterface::class,
             CachedFormatRepository::class
@@ -118,5 +130,4 @@ final class RepositoryServiceProvider extends ServiceProvider
             ->needs(FormatRepositoryInterface::class)
             ->give(FormatRepository::class);
     }
-
 }
