@@ -23,6 +23,7 @@ class Person extends Model
         FIELD_SHOW_MAIN = 'show_main',
         FIELD_DESCRIPTION = 'description',
         FIELD_PREVIEW_IMAGE = 'preview_image',
+        FIELD_DELETED_AT = 'deleted_at',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
 

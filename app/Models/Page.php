@@ -18,9 +18,11 @@ class Page extends Model
     const FIELD_ID = 'id',
         FIELD_NAME = 'name',
         FIELD_SLUG = 'slug',
+        FIELD_SORT = 'sort',
         FIELD_PAGE_TYPE = 'page_type',
         FIELD_ENTITY_TYPE = 'entity_type',
         FIELD_STATIC = 'static',
+        FIELD_DELETED_AT = 'deleted_at',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
 
@@ -30,6 +32,7 @@ class Page extends Model
     public $fillable = [
         self::FIELD_NAME,
         self::FIELD_SLUG,
+        self::FIELD_SORT,
         self::FIELD_PAGE_TYPE,
         self::FIELD_ENTITY_TYPE,
         self::FIELD_STATIC

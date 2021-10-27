@@ -97,6 +97,7 @@ final class Product extends Model
         FIELD_THEME_ID = 'theme_id',
         FIELD_CATEGORY_ID = 'category_id',
         FIELD_USER_ID = 'user_id',
+        FIELD_DELETED_AT = 'deleted_at',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
 
@@ -139,6 +140,7 @@ final class Product extends Model
         self::FIELD_THEME_ID,
         self::FIELD_CATEGORY_ID,
         self::FIELD_USER_ID,
+        self::FIELD_DELETED_AT,
         self::FIELD_CREATED_AT,
         self::FIELD_UPDATED_AT,
     ];
