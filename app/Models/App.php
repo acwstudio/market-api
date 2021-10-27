@@ -20,6 +20,7 @@ class App extends Model
         FIELD_KEY = 'key',
         FIELD_VALUE = 'value',
         FIELD_CREATED_AT = 'created_at',
+        FIELD_DELETED_AT = 'deleted_at',
         FIELD_UPDATED_AT = 'updated_at';
 
     public $fillable = [

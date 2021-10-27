@@ -35,7 +35,7 @@ class Direction extends Model
         MODEL_LINK = 'directions';
 
     const FILTER_BY = 'direction_ids';
-    
+
     const VALUE_SEARCH = false,
         VALUE_TYPE = 'list';
 
@@ -47,6 +47,7 @@ class Direction extends Model
         FIELD_PREVIEW_IMAGE = 'preview_image',
         FIELD_SLUG = 'slug',
         FIELD_CREATED_AT = 'created_at',
+        FIELD_DELETED_AT = 'deleted_at',
         FIELD_UPDATED_AT = 'updated_at';
 
     const ENTITY_RELATIVE_PRODUCT = 'products';

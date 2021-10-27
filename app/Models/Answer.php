@@ -19,13 +19,14 @@ class Answer extends Model
         FIELD_QUESTION_ID = 'question_id',
         FIELD_ANSWER = 'answer',
         FIELD_NEXT_QUESTION_ID = 'next_question_id',
+        FIELD_DELETED_AT = 'deleted_at',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
 
     public $fillable = [
         self::FIELD_QUESTION_ID,
         self::FIELD_ANSWER,
-        self::FIELD_NEXT_QUESTION_ID,
+        self::FIELD_NEXT_QUESTION_ID
     ];
 
     public static function getModelName()

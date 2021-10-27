@@ -24,6 +24,7 @@ class Menu extends Model
         FIELD_POINTER    = 'pointer',
         FIELD_LINK       = 'link',
         FIELD_ANCHOR     = 'anchor',
+        FIELD_DELETED_AT = 'deleted_at',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
 
