@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Traits\ChunkValueSeeder;
 use Illuminate\Database\Seeder;
 use Schema;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -9,6 +10,8 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 class ProductablesDataSeeder extends Seeder
 {
+    use ChunkValueSeeder;
+
     /**
      * Run the database seeds.
      *
@@ -16,8 +19,10 @@ class ProductablesDataSeeder extends Seeder
      */
     public function run()
     {
-        $realProductables = \DB::connection('mysql_t')->table('productables')->get();
+        $realProductables = \DB::connection('mysql_t')->table('productables');
         $testProductables = \DB::connection('mysql')->table('productables');
+
+        $chunk = $this->chunkValue($realProductables->count());
 
         Schema::disableForeignKeyConstraints();
 
@@ -31,15 +36,18 @@ class ProductablesDataSeeder extends Seeder
         $this->command->newLine();
         $progressBar->start();
 
-        foreach ($realProductables as $realProductable) {
-            $testProductables->insert([
-                'product_id'       => $realProductable->product_id,
-                'productable_id'   => $realProductable->productable_id,
-                'productable_type' => $realProductable->productable_type,
-            ]);
-
-            $progressBar->advance();
-        }
+        $realProductables->orderBy('product_id')
+            ->chunk($chunk, function ($productables) use ($testProductables, $progressBar) {
+                foreach ($productables as $productable) {
+                    $testProductable[] = [
+                        'product_id'       => $productable->product_id,
+                        'productable_id'   => $productable->productable_id,
+                        'productable_type' => $productable->productable_type,
+                    ];
+                }
+                $testProductables->insert($testProductable);
+                $progressBar->advance($productables->count());
+            });
 
         Schema::enableForeignKeyConstraints();
 

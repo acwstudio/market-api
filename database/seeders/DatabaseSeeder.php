@@ -33,7 +33,6 @@ class DatabaseSeeder extends Seeder
          $this->call(MethodDataSeeder::class);
          $this->call(OptionDataSeeder::class);
          $this->call(OrganizationablesDataSeeder::class);
-         $this->call(OrganizationablesDataSeeder::class);
          $this->call(OrganizationDataSeeder::class);
          $this->call(OrganizationPersonDataSeeder::class);
          $this->call(OrganizationTriggersDataSeeder::class);

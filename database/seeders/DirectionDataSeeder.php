@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Direction;
+use Database\Seeders\Traits\ChunkValueSeeder;
 use Illuminate\Database\Seeder;
 use Schema;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -10,6 +11,8 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 class DirectionDataSeeder extends Seeder
 {
+    use ChunkValueSeeder;
+
     /**
      * Run the database seeds.
      *
@@ -17,8 +20,10 @@ class DirectionDataSeeder extends Seeder
      */
     public function run()
     {
-        $realDirections = \DB::connection('mysql_t')->table('directions')->get();
+        $realDirections = \DB::connection('mysql_t')->table('directions');
         $testDirections = \DB::connection('mysql')->table('directions');
+
+        $chunk = $this->chunkValue($realDirections->count());
 
         Schema::disableForeignKeyConstraints();
 
@@ -32,23 +37,25 @@ class DirectionDataSeeder extends Seeder
         $this->command->newLine();
         $progressBar->start();
 
-        /** @var Direction $realDirection */
-        foreach ($realDirections as $realDirection) {
-            $testDirections->insert([
-                Direction::FIELD_ID            => $realDirection->id,
-                Direction::FIELD_PUBLISHED     => $realDirection->published,
-                Direction::FIELD_NAME          => $realDirection->name,
-                Direction::FIELD_SHOW_MAIN     => $realDirection->show_main,
-                Direction::FIELD_SORT          => $realDirection->sort,
-                Direction::FIELD_PREVIEW_IMAGE => $realDirection->preview_image,
-                Direction::FIELD_SLUG          => $realDirection->slug,
-                Direction::FIELD_DELETED_AT    => $realDirection->deleted_at,
-                Direction::FIELD_CREATED_AT    => $realDirection->created_at,
-                Direction::FIELD_UPDATED_AT    => $realDirection->updated_at,
-            ]);
-
-            $progressBar->advance();
-        }
+        $realDirections->orderBy('id')
+            ->chunk($chunk, function ($directions) use ($testDirections, $progressBar) {
+                foreach ($directions as $direction) {
+                    $testDirection[] = [
+                        Direction::FIELD_ID            => $direction->id,
+                        Direction::FIELD_PUBLISHED     => $direction->published,
+                        Direction::FIELD_NAME          => $direction->name,
+                        Direction::FIELD_SHOW_MAIN     => $direction->show_main,
+                        Direction::FIELD_SORT          => $direction->sort,
+                        Direction::FIELD_PREVIEW_IMAGE => $direction->preview_image,
+                        Direction::FIELD_SLUG          => $direction->slug,
+                        Direction::FIELD_DELETED_AT    => $direction->deleted_at,
+                        Direction::FIELD_CREATED_AT    => $direction->created_at,
+                        Direction::FIELD_UPDATED_AT    => $direction->updated_at,
+                    ];
+                }
+                $testDirections->insert($testDirection);
+                $progressBar->advance($directions->count());
+            });
 
         Schema::enableForeignKeyConstraints();
 

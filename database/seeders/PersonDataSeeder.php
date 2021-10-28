@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Person;
+use Database\Seeders\Traits\ChunkValueSeeder;
 use Illuminate\Database\Seeder;
 use Schema;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -10,6 +11,8 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 class PersonDataSeeder extends Seeder
 {
+    use ChunkValueSeeder;
+
     /**
      * Run the database seeds.
      *
@@ -17,8 +20,10 @@ class PersonDataSeeder extends Seeder
      */
     public function run()
     {
-        $realPersons = \DB::connection('mysql_t')->table('persons')->get();
+        $realPersons = \DB::connection('mysql_t')->table('persons');
         $testPersons = \DB::connection('mysql')->table('persons');
+
+        $chunk = $this->chunkValue($realPersons->count());
 
         Schema::disableForeignKeyConstraints();
 
@@ -32,23 +37,25 @@ class PersonDataSeeder extends Seeder
         $this->command->newLine();
         $progressBar->start();
 
-        /** @var Person $realPerson */
-        foreach ($realPersons as $realPerson) {
-            $testPersons->insert([
-                Person::FIELD_ID              => $realPerson->id,
-                Person::FIELD_PUBLISHED              => $realPerson->published,
-                Person::FIELD_NAME            => $realPerson->name,
-                Person::FIELD_POSITION         => $realPerson->position,
-                Person::FIELD_SHOW_MAIN     => $realPerson->show_main,
-                Person::FIELD_DESCRIPTION   => $realPerson->description,
-                Person::FIELD_PREVIEW_IMAGE => $realPerson->preview_image,
-                Person::FIELD_DELETED_AT       => $realPerson->deleted_at,
-                Person::FIELD_CREATED_AT      => $realPerson->created_at,
-                Person::FIELD_UPDATED_AT      => $realPerson->updated_at,
-            ]);
-
-            $progressBar->advance();
-        }
+        $realPersons->orderBy('id')
+            ->chunk($chunk, function ($persons) use ($testPersons, $progressBar) {
+                foreach ($persons as $person) {
+                    $testPerson[] = [
+                        Person::FIELD_ID            => $person->id,
+                        Person::FIELD_PUBLISHED     => $person->published,
+                        Person::FIELD_NAME          => $person->name,
+                        Person::FIELD_POSITION      => $person->position,
+                        Person::FIELD_SHOW_MAIN     => $person->show_main,
+                        Person::FIELD_DESCRIPTION   => $person->description,
+                        Person::FIELD_PREVIEW_IMAGE => $person->preview_image,
+                        Person::FIELD_DELETED_AT    => $person->deleted_at,
+                        Person::FIELD_CREATED_AT    => $person->created_at,
+                        Person::FIELD_UPDATED_AT    => $person->updated_at,
+                    ];
+                }
+                $testPersons->insert($testPerson);
+                $progressBar->advance($persons->count());
+            });
 
         Schema::enableForeignKeyConstraints();
 

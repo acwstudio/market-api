@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Component;
+use Database\Seeders\Traits\ChunkValueSeeder;
 use Illuminate\Database\Seeder;
 use Schema;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -10,6 +11,8 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 class ComponentDataSeeder extends Seeder
 {
+    use ChunkValueSeeder;
+
     /**
      * Run the database seeds.
      *
@@ -17,8 +20,10 @@ class ComponentDataSeeder extends Seeder
      */
     public function run()
     {
-        $realComponents = \DB::connection('mysql_t')->table('components')->get();
+        $realComponents = \DB::connection('mysql_t')->table('components');
         $testComponents = \DB::connection('mysql')->table('components');
+
+        $chunk = $this->chunkValue($realComponents->count());
 
         Schema::disableForeignKeyConstraints();
 
@@ -32,20 +37,22 @@ class ComponentDataSeeder extends Seeder
         $this->command->newLine();
         $progressBar->start();
 
-        /** @var Component $realComponent */
-        foreach ($realComponents as $realComponent) {
-            $testComponents->insert([
-                Component::FIELD_ID         => $realComponent->id,
-                Component::FIELD_TITLE      => $realComponent->title,
-                Component::FIELD_KEY        => $realComponent->key,
-                Component::FIELD_VIEW_TYPE  => $realComponent->view_type,
-                Component::FIELD_SORT       => $realComponent->sort,
-                Component::FIELD_CREATED_AT => $realComponent->created_at,
-                Component::FIELD_UPDATED_AT => $realComponent->updated_at,
-            ]);
-
-            $progressBar->advance();
-        }
+        $realComponents->orderBy('id')
+            ->chunk($chunk, function ($components) use ($testComponents, $progressBar) {
+                foreach ($components as $component) {
+                    $testComponent[] = [
+                        Component::FIELD_ID         => $component->id,
+                        Component::FIELD_TITLE      => $component->title,
+                        Component::FIELD_KEY        => $component->key,
+                        Component::FIELD_VIEW_TYPE  => $component->view_type,
+                        Component::FIELD_SORT       => $component->sort,
+                        Component::FIELD_CREATED_AT => $component->created_at,
+                        Component::FIELD_UPDATED_AT => $component->updated_at,
+                    ];
+                }
+                $testComponents->insert($testComponent);
+                $progressBar->advance($components->count());
+            });
 
         Schema::enableForeignKeyConstraints();
 

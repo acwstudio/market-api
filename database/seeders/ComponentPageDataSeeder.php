@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Traits\ChunkValueSeeder;
 use Illuminate\Database\Seeder;
 use Schema;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -9,6 +10,8 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 class ComponentPageDataSeeder extends Seeder
 {
+    use ChunkValueSeeder;
+
     /**
      * Run the database seeds.
      *
@@ -16,8 +19,10 @@ class ComponentPageDataSeeder extends Seeder
      */
     public function run()
     {
-        $realComponentPages = \DB::connection('mysql_t')->table('component_page')->get();
+        $realComponentPages = \DB::connection('mysql_t')->table('component_page');
         $testComponentPages = \DB::connection('mysql')->table('component_page');
+
+        $chunk = $this->chunkValue($realComponentPages->count());
 
         Schema::disableForeignKeyConstraints();
 
@@ -31,14 +36,17 @@ class ComponentPageDataSeeder extends Seeder
         $this->command->newLine();
         $progressBar->start();
 
-        foreach ($realComponentPages as $realComponentPage) {
-            $testComponentPages->insert([
-                'component_id' => $realComponentPage->component_id,
-                'page_id'      => $realComponentPage->page_id,
-            ]);
-
-            $progressBar->advance();
-        }
+        $realComponentPages->orderBy('component_id')
+            ->chunk($chunk, function ($componentPages) use ($testComponentPages, $progressBar) {
+                foreach ($componentPages as $componentPage) {
+                    $testComponentPage[] = [
+                        'component_id' => $componentPage->component_id,
+                        'page_id'      => $componentPage->page_id,
+                    ];
+                }
+                $testComponentPages->insert($testComponentPage);
+                $progressBar->advance($componentPages->count());
+            });
 
         Schema::enableForeignKeyConstraints();
 

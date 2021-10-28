@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Method;
+use Database\Seeders\Traits\ChunkValueSeeder;
 use Illuminate\Database\Seeder;
 use Schema;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -10,6 +11,8 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 class MethodDataSeeder extends Seeder
 {
+    use ChunkValueSeeder;
+
     /**
      * Run the database seeds.
      *
@@ -17,8 +20,10 @@ class MethodDataSeeder extends Seeder
      */
     public function run()
     {
-        $realMethods = \DB::connection('mysql_t')->table('methods')->get();
+        $realMethods = \DB::connection('mysql_t')->table('methods');
         $testMethods = \DB::connection('mysql')->table('methods');
+
+        $chunk = $this->chunkValue($realMethods->count());
 
         Schema::disableForeignKeyConstraints();
 
@@ -32,17 +37,28 @@ class MethodDataSeeder extends Seeder
         $this->command->newLine();
         $progressBar->start();
 
+        $realMethods->orderBy('id')
+            ->chunk($chunk, function ($methods) use ($testMethods, $progressBar) {
+                foreach ($methods as $method) {
+                    $testMethod[] = [
+                        Method::FIELD_ID          => $method->id,
+                        Method::FIELD_NAME        => $method->name,
+                        Method::FIELD_URL         => $method->url,
+                        Method::FIELD_CREATED_AT  => $method->created_at,
+                        Method::FIELD_UPDATED_AT  => $method->updated_at,
+                    ];
+                }
+                $testMethods->insert($testMethod);
+                $progressBar->advance($methods->count());
+            });
+
         /** @var Method $realMethod */
         foreach ($realMethods as $realMethod) {
             $testMethods->insert([
-                Method::FIELD_ID          => $realMethod->id,
-                Method::FIELD_NAME        => $realMethod->name,
-                Method::FIELD_URL         => $realMethod->url,
-                Method::FIELD_CREATED_AT  => $realMethod->created_at,
-                Method::FIELD_UPDATED_AT  => $realMethod->updated_at,
+
             ]);
 
-            $progressBar->advance();
+
         }
 
         Schema::enableForeignKeyConstraints();

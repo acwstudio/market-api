@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\OrganizationTrigger;
+use Database\Seeders\Traits\ChunkValueSeeder;
 use Illuminate\Database\Seeder;
 use Schema;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -10,6 +11,8 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 class OrganizationTriggersDataSeeder extends Seeder
 {
+    use ChunkValueSeeder;
+
     /**
      * Run the database seeds.
      *
@@ -17,8 +20,10 @@ class OrganizationTriggersDataSeeder extends Seeder
      */
     public function run()
     {
-        $realOrganizationTriggers = \DB::connection('mysql_t')->table('organization_triggers')->get();
+        $realOrganizationTriggers = \DB::connection('mysql_t')->table('organization_triggers');
         $testOrganizationTriggers = \DB::connection('mysql')->table('organization_triggers');
+
+        $chunk = $this->chunkValue($realOrganizationTriggers->count());
 
         Schema::disableForeignKeyConstraints();
 
@@ -32,18 +37,20 @@ class OrganizationTriggersDataSeeder extends Seeder
         $this->command->newLine();
         $progressBar->start();
 
-        /** @var OrganizationTrigger $realOrganizationTrigger */
-        foreach ($realOrganizationTriggers as $realOrganizationTrigger) {
-            $testOrganizationTriggers->insert([
-                OrganizationTrigger::FIELD_ID          => $realOrganizationTrigger->id,
-                OrganizationTrigger::FIELD_NAME        => $realOrganizationTrigger->name,
-                OrganizationTrigger::FIELD_DESCRIPTION => $realOrganizationTrigger->description,
-                OrganizationTrigger::FIELD_CREATED_AT  => $realOrganizationTrigger->created_at,
-                OrganizationTrigger::FIELD_UPDATED_AT  => $realOrganizationTrigger->updated_at,
-            ]);
-
-            $progressBar->advance();
-        }
+        $realOrganizationTriggers->orderBy('id')
+            ->chunk($chunk, function ($organizationTriggers) use ($testOrganizationTriggers, $progressBar) {
+               foreach ($organizationTriggers as $organizationTrigger) {
+                   $testOrganizationTrigger[] = [
+                       OrganizationTrigger::FIELD_ID          => $organizationTrigger->id,
+                       OrganizationTrigger::FIELD_NAME        => $organizationTrigger->name,
+                       OrganizationTrigger::FIELD_DESCRIPTION => $organizationTrigger->description,
+                       OrganizationTrigger::FIELD_CREATED_AT  => $organizationTrigger->created_at,
+                       OrganizationTrigger::FIELD_UPDATED_AT  => $organizationTrigger->updated_at,
+                   ];
+               }
+                $testOrganizationTriggers->insert($testOrganizationTrigger);
+                $progressBar->advance($organizationTriggers->count());
+            });
 
         Schema::enableForeignKeyConstraints();
 

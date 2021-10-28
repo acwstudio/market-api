@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\City;
+use Database\Seeders\Traits\ChunkValueSeeder;
 use Illuminate\Database\Seeder;
 use Schema;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -10,6 +11,8 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 class CityDataSeeder extends Seeder
 {
+    use ChunkValueSeeder;
+
     /**
      * Run the database seeds.
      *
@@ -17,8 +20,10 @@ class CityDataSeeder extends Seeder
      */
     public function run()
     {
-        $realCities = \DB::connection('mysql_t')->table('cities')->get();
+        $realCities = \DB::connection('mysql_t')->table('cities');
         $testCities = \DB::connection('mysql')->table('cities');
+
+        $chunk = $this->chunkValue($realCities->count());
 
         Schema::disableForeignKeyConstraints();
 
@@ -32,23 +37,24 @@ class CityDataSeeder extends Seeder
         $this->command->newLine();
         $progressBar->start();
 
-        /** @var City $realCity */
-        foreach ($realCities as $realCity) {
-            $testCities->insert([
-                City::FIELD_ID              => $realCity->id,
-                City::FIELD_NAME            => $realCity->name,
-                City::FIELD_COUNTRY         => $realCity->country,
-                City::FIELD_REGION_NAME     => $realCity->region_name,
-                City::FIELD_CITY_KLADR_ID   => $realCity->city_kladr_id,
-                City::FIELD_REGION_KLADR_ID => $realCity->region_kladr_id,
-                City::FIELD_GEONAME_ID      => $realCity->geoname_id,
-                City::FIELD_GEO_POINT       => $realCity->geo_point,
-                City::FIELD_CREATED_AT      => $realCity->created_at,
-                City::FIELD_UPDATED_AT      => $realCity->updated_at,
-            ]);
-
-            $progressBar->advance();
-        }
+        $realCities->orderBy('id')->chunk($chunk, function ($cities) use ($testCities, $progressBar) {
+            foreach ($cities as $city) {
+                $testCity[] = [
+                    City::FIELD_ID              => $city->id,
+                    City::FIELD_NAME            => $city->name,
+                    City::FIELD_COUNTRY         => $city->country,
+                    City::FIELD_REGION_NAME     => $city->region_name,
+                    City::FIELD_CITY_KLADR_ID   => $city->city_kladr_id,
+                    City::FIELD_REGION_KLADR_ID => $city->region_kladr_id,
+                    City::FIELD_GEONAME_ID      => $city->geoname_id,
+                    City::FIELD_GEO_POINT       => $city->geo_point,
+                    City::FIELD_CREATED_AT      => $city->created_at,
+                    City::FIELD_UPDATED_AT      => $city->updated_at,
+                ];
+            }
+            $testCities->insert($testCity);
+            $progressBar->advance($cities->count());
+        });
 
         Schema::enableForeignKeyConstraints();
 
