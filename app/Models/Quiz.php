@@ -1,12 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Quiz extends Model
+/**
+ * @property int $id
+ * @property int $lead_id
+ * @property int $published
+ * @property string $name
+ * @property int $page
+ * @property string $description
+ * @property string $title
+ * @property string $text
+ * @property string $button
+ * @property string $background_image
+ * @property string $person_image
+ * @property string $created_at
+ * @property string $updated_at
+ * @property string $deleted_at
+ */
+final class Quiz extends Model
 {
     use HasFactory, SoftDeletes;
 
