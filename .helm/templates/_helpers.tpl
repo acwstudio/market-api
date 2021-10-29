@@ -104,4 +104,22 @@ Create chart name and version as used by the chart label.
   value: "null"
 - name: ELASTICSEARCH_URL
   value: "{{ $globals.elasticsearch.url }}"
+{{- if ne .Values.global.env_name "prod" }}
+- name: DB_HOST_PROD_COPY 
+  value: "{{ $globals.mysql.prodCopy.host }}"
+- name: DB_PORT_PROD_COPY 
+  value: "{{ $globals.mysql.prodCopy.port }}"
+- name: DB_DATABASE_PROD_COPY 
+  value: "{{ $globals.mysql.prodCopy.database }}"
+- name: DB_USERNAME_PROD_COPY 
+  valueFrom:
+    secretKeyRef:
+      name: secrets
+      key: mysqlProdCopyUser
+- name: DB_PASSWORD_PROD_COPY 
+  valueFrom:
+    secretKeyRef:
+      name: secrets
+      key: mysqlProdCopyPassword
+{{- end}}
 {{- end -}}

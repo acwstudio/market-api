@@ -17,6 +17,12 @@ global:
       user: marketplace
       password: O7csEBBqu9a6ZaKauiuJ41SN
       database: marketplace
+      prodCopy:
+        host: msk1-backdb01.synergy.local
+        port: "3307"
+        user: sa-mp-dev
+        password: mXj496L6ANcm2Rtk
+        database: msk1_kdb12_marketplace_rc
 
     log:
       host: syslog2.synergy.ru
