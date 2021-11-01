@@ -42,6 +42,8 @@ class Banner extends Model
         FIELD_NAME_SECOND = 'name_second',
         FIELD_DESCRIPTION = 'description',
         FIELD_IMAGE = 'image',
+        FIELD_IMAGE_TABLET = 'image_tablet',
+        FIELD_IMAGE_MOBILE_PHONE = 'image_mobile_phone',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
 
@@ -55,7 +57,9 @@ class Banner extends Model
         self::FIELD_COLOR_BG,
         self::FIELD_COLOR_TEXT,
         self::FIELD_NAME_SECOND,
-        self::FIELD_IMAGE
+        self::FIELD_IMAGE,
+        self::FIELD_IMAGE_TABLET,
+        self::FIELD_IMAGE_MOBILE_PHONE
     ];
 
     public static function getModelName()
@@ -126,6 +130,16 @@ class Banner extends Model
     public function getImage()
     {
         return $this->getAttribute(self::FIELD_IMAGE);
+    }
+
+    public function getImageTablet()
+    {
+        return $this->getAttribute(self::FIELD_IMAGE_TABLET);
+    }
+
+    public function getImageMobilPhone()
+    {
+        return $this->getAttribute(self::FIELD_IMAGE_MOBILE_PHONE);
     }
 
     public function getImageUrl()
