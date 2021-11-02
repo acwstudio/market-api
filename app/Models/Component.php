@@ -16,6 +16,7 @@ class Component extends Model
         FIELD_TITLE = 'title',
         FIELD_KEY = 'key',
         FIELD_VIEW_TYPE = 'view_type',
+        FIELD_SORT = 'sort',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
 
@@ -24,7 +25,8 @@ class Component extends Model
     public $fillable = [
         self::FIELD_TITLE,
         self::FIELD_KEY,
-        self::FIELD_VIEW_TYPE
+        self::FIELD_VIEW_TYPE,
+        self::FIELD_SORT,
     ];
 
     public function getId()

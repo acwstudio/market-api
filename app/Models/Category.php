@@ -23,6 +23,7 @@ class Category extends Model
         FIELD_NAME = 'name',
         FIELD_SLUG = 'slug',
         FIELD_CREATED_AT = 'created_at',
+        FIELD_DELETED_AT = 'deleted_at',
         FIELD_UPDATED_AT = 'updated_at';
 
     public $fillable = [

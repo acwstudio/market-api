@@ -18,9 +18,10 @@ class Question extends Model
     const FIELD_ID = 'id',
         FIELD_PUBLISHED = 'published',
         FIELD_QUESTION = 'question',
+        FIELD_DELETED_AT = 'deleted_at',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
-        
+
     const ENTITY_RELATIVE_ANSWERS = 'answers';
 
     public $fillable = [

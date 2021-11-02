@@ -16,7 +16,7 @@ class Format extends Model
         MODEL_LINK = 'formats';
 
     const FILTER_BY = 'format_ids';
-        
+
     const VALUE_SEARCH = false,
         VALUE_TYPE = 'list';
 
@@ -25,7 +25,8 @@ class Format extends Model
         FIELD_NAME = 'name',
         FIELD_SLUG = 'slug',
         FIELD_CREATED_AT = 'created_at',
-        FIELD_UPDATED_AT = 'updated_at';
+        FIELD_UPDATED_AT = 'updated_at',
+        FIELD_DELETED_AT = 'deleted_at';
 
     public $fillable = [
         self::FIELD_PUBLISHED,

@@ -21,6 +21,7 @@ class Subject extends Model
         FIELD_PUBLISHED = 'published',
         FIELD_NAME = 'name',
         FIELD_SLUG = 'slug',
+        FIELD_DELETED_AT = 'deleted_at',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
 

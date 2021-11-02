@@ -27,6 +27,7 @@ final class Landing extends Model
         FIELD_IS_ALL_CITIES = 'is_all_cities',
         FIELD_IS_ALL_ORGANIZATIONS = 'is_all_organizations',
         FIELD_CREATED_AT = 'created_at',
+        FIELD_DELETED_AT = 'deleted_at',
         FIELD_UPDATED_AT = 'updated_at';
 
     const ENTITY_RELATIVE_FORMATS = 'formats',

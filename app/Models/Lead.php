@@ -20,6 +20,7 @@ class Lead extends Model
         FIELD_DESCRIPTION = 'description',
         FIELD_TITLE = 'title',
         FIELD_TEXT = 'text',
+        FIELD_DELETED_AT = 'deleted_at',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
 

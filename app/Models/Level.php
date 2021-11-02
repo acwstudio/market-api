@@ -17,7 +17,7 @@ class Level extends Model
         MODEL_ENTITY = 'level';
 
     const FILTER_BY = 'level_ids';
-        
+
     const VALUE_SEARCH = false,
         VALUE_TYPE = 'list';
 
@@ -25,6 +25,7 @@ class Level extends Model
         FIELD_PUBLISHED = 'published',
         FIELD_NAME = 'name',
         FIELD_SLUG = 'slug',
+        FIELD_DELETED_AT = 'deleted_at',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
 

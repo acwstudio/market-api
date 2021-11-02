@@ -52,9 +52,10 @@ final class Quiz extends Model
         FIELD_BUTTON = 'button',
         FIELD_BACKGROUND_IMAGE = 'background_image',
         FIELD_PERSON_IMAGE = 'person_image',
+        FIELD_DELETED_AT = 'deleted_at',
         FIELD_CREATED_AT = 'created_at',
         FIELD_UPDATED_AT = 'updated_at';
-        
+
     const ENTITY_RELATIVE_QUESTIONS = 'questions';
 
     public $fillable = [
