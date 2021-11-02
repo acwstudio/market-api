@@ -1418,7 +1418,9 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/banners/list' \
             "color_bg_list": "accent",
             "color_text_list": "default",
             "description": "Good banner",
-            "image": "uploads\/banners\/nSDOUocleJZcOhTtaSbdk1IR5eqAQz5DlBAaov4B.jpg",
+            "image": "uploads/banners/nSDOUocleJZcOhTtaSbdk1IR5eqAQz5DlBAaov4B.jpg",
+            "image_tablet": "uploads/banners/5ZyVYdHxuCI9fxizWZAesIXYzLOfDbFuPfLoSHXa.jpg",
+            "image_mobile_phone": "uploads/banners/OP80clkVMzV9z1c0SY9AgvAC6T9BmGTRyaVYPW12.jpg",
             "created_at": "2021-09-01T17:12:25.000000Z",
             "updated_at": "2021-09-01T17:22:47.000000Z"
         },
@@ -1434,7 +1436,9 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/banners/list' \
             "color_bg_list": "primary",
             "color_text_list": "custom",
             "description": "Excellent banner",
-            "image": "uploads\/banners\/lRfJ0FoRDx2xz9odVM7Hn0BoeDxObc92nXozynfm.jpg",
+            "image": "uploads/banners/nSDOUocleJZcOhTtaSbdk1IR5eqAQz5DlBAaov4B.jpg",
+            "image_tablet": "uploads/banners/5ZyVYdHxuCI9fxizWZAesIXYzLOfDbFuPfLoSHXa.jpg",
+            "image_mobile_phone": "uploads/banners/OP80clkVMzV9z1c0SY9AgvAC6T9BmGTRyaVYPW12.jpg",
             "created_at": "2021-09-01T17:35:12.000000Z",
             "updated_at": "2021-09-02T17:38:01.000000Z"
         }
@@ -1482,7 +1486,9 @@ curl --location --request POST 'https://mp.synergy.ru/api/v1/banners/detail' \
         "color_bg_list": "primary",
         "color_text_list": "custom",
         "description": "Excellent banner",
-        "image": "uploads\/banners\/lRfJ0FoRDx2xz9odVM7Hn0BoeDxObc92nXozynfm.jpg",
+        "image": "uploads/banners/nSDOUocleJZcOhTtaSbdk1IR5eqAQz5DlBAaov4B.jpg",
+        "image_tablet": "uploads/banners/5ZyVYdHxuCI9fxizWZAesIXYzLOfDbFuPfLoSHXa.jpg",
+        "image_mobile_phone": "uploads/banners/OP80clkVMzV9z1c0SY9AgvAC6T9BmGTRyaVYPW12.jpg",
         "created_at": "2021-09-01T17:35:12.000000Z",
         "updated_at": "2021-09-02T17:38:01.000000Z"
     },
