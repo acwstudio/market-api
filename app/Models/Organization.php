@@ -83,7 +83,7 @@ final class Organization extends Model
         FIELD_HTML_BODY = 'html_body',
         FIELD_CLASSES = 'classes',
         FIELD_LOGO_CODE = 'logo_code',
-//        FIELD_LOGO = 'logo',
+        FIELD_LOGO = 'logo',
         FIELD_COLOR_CODE_TITLES = 'color_code_titles',
         FIELD_ADDRESS = 'address',
         FIELD_MAP_LINK = 'map_link',
