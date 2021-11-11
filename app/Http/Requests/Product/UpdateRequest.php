@@ -10,7 +10,7 @@ use App\Models\Product;
 use App\Validation\Rules\Product\ProductDuration;
 use Illuminate\Foundation\Http\FormRequest;
 
-final class CreateRequest extends FormRequest
+final class UpdateRequest extends FormRequest
 {
     /**
      * @todo Жесткий костыль для методов админки,
@@ -24,6 +24,7 @@ final class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            Product::FIELD_ID => 'required|integer',
             Product::FIELD_NAME => 'string|max:255',
             Product::FIELD_SLUG => 'string|max:255',
             Product::FIELD_START_DATE => 'nullable|date_format:d.m.Y H:i',
@@ -53,7 +54,7 @@ final class CreateRequest extends FormRequest
         $beginDuration = $this->get('begin_duration');
 
         return new ProductDto(
-            null,
+            $this->get('id'),
             $this->get('expiration_date'),
             $this->get('sort'),
             (bool)$this->get('published'),

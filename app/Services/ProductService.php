@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Dto\Product\ProductDto;
 use App\Http\Requests\Product\DetailRequest;
 use App\Http\Requests\Product\ListRequest;
 use App\Http\Resources\ProductResource;
@@ -12,11 +13,21 @@ use App\Http\Resources\ProductCollection;
 
 final class ProductService
 {
-    private $productRepository;
+    private ProductRepositoryInterface $productRepository;
 
     public function __construct(ProductRepositoryInterface $productRepository)
     {
         $this->productRepository = $productRepository;
+    }
+
+    public function create(ProductDto $dto): ProductDto
+    {
+        return $this->productRepository->updateOrCreate($dto);
+    }
+
+    public function update(ProductDto $dto): ProductDto
+    {
+
     }
 
     public function list(ListRequest $request): ProductCollection

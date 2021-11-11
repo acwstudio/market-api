@@ -70,3 +70,10 @@ Route::group(['prefix' => '/v1'], function () {
 
     Route::get('products/search', [SearchProductController::class, 'list']);
 });
+
+Route::group(['prefix' => '/admin'], function () {
+
+    Route::group(['prefix' => '/product'], function () {
+        Route::post('create', [ProductController::class, 'create']);
+    });
+});

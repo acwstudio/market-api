@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repositories\Product;
 
+use App\Dto\Product\ProductDto;
 use App\Http\Requests\Product\DetailRequest;
 use App\Http\Requests\Product\ListRequest;
 use App\Http\Resources\ProductResource;
@@ -23,11 +24,27 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 final class ProductRepository implements ProductRepositoryInterface
 {
-    private $productModel;
+    private Product $productModel;
 
     public function __construct(Product $product)
     {
         $this->productModel = $product;
+    }
+
+    public function updateOrCreate(ProductDto $dto): ProductDto
+    {
+        $product = $this->productModel
+            ->newQuery()
+            ->updateOrCreate([
+                'id' => $dto->getId()
+            ], $dto->toArray());
+
+        $dto->setId($product->id)
+            ->setEloquent($product);
+
+        $this->attachRelations($dto);
+
+        return $dto;
     }
 
     public static function dateToDisplayFormat(?string $date): ?string
@@ -104,5 +121,43 @@ final class ProductRepository implements ProductRepositoryInterface
             ->firstOrFail();
 
         return (new ProductResource($query));
+    }
+
+    private function attachRelations(ProductDto $dto): void
+    {
+        /**
+         * @todo не красивая реализации, было бы не плохо отрефакторить саму концепцию
+         */
+        $eloquent = $dto->getEloquent();
+
+        $eloquent->directions()->detach(array_column($eloquent->{Product::ENTITY_RELATIVE_DIRECTIONS}->toArray(), Direction::FIELD_ID));
+        if ($directions = $dto->getDirections()) {
+            $eloquent->directions()->attach($directions);
+        }
+
+        $eloquent->formats()->detach(array_column($eloquent->{Product::ENTITY_RELATIVE_FORMATS}->toArray(), Format::FIELD_ID));
+        if ($formats = $dto->getFormats()) {
+            $eloquent->formats()->attach($formats);
+        }
+
+        $eloquent->levels()->detach(array_column($eloquent->{Product::ENTITY_RELATIVE_LEVELS}->toArray(), Level::FIELD_ID));
+        if ($levels = $dto->getLevels()) {
+            $eloquent->levels()->attach($levels);
+        }
+
+        $eloquent->subjects()->detach(array_column($eloquent->{Product::ENTITY_RELATIVE_SUBJECTS}->toArray(), Subject::FIELD_ID));
+        if ($subjects = $dto->getSubjects()) {
+            $eloquent->subjects()->attach($subjects);
+        }
+
+        $eloquent->persons()->detach(array_column($eloquent->{Product::ENTITY_RELATIVE_PERSONS}->toArray(), Person::FIELD_ID));
+        if ($persons = $dto->getPersons()) {
+            $eloquent->persons()->attach($persons);
+        }
+
+        $eloquent->productplaces()->detach(array_column($eloquent->{Product::ENTITY_RELATIVE_PRODUCT_PLACES}->toArray(), Person::FIELD_ID));
+        if ($productPlaces = $dto->getProductPlaces()) {
+            $eloquent->productplaces()->attach($productPlaces);
+        }
     }
 }

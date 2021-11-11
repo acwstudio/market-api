@@ -11,6 +11,8 @@ use App\Http\Resources\Site\EntitySectionResource;
 
 interface EntitySectionRepositoryInterface
 {
+    public function copyByOriginProduct(string $entityType, int $originEntityId, int $newEntityId): void;
+
     public function getEntitySectionList(ListRequest $request): EntitySectionCollection;
 
     public function getEntitySectionDetail(DetailRequest $request): EntitySectionResource;

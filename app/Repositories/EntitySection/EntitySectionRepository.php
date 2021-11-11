@@ -14,11 +14,26 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 final class EntitySectionRepository implements EntitySectionRepositoryInterface
 {
-    private $entitySectionModel;
+    private EntitySection $entitySectionModel;
 
     public function __construct(EntitySection $entitySectionModel)
     {
         $this->entitySectionModel = $entitySectionModel;
+    }
+
+    public function copyByOriginProduct(string $entityType, int $originEntityId, int $newEntityId): void
+    {
+        $sections = $this->entitySectionModel->newQuery()
+            ->where(EntitySection::FIELD_ENTITY_ID, $originEntityId)
+            ->where(EntitySection::FIELD_ENTITY_TYPE, $entityType)
+            ->get();
+
+        /** @var EntitySection $section */
+        foreach ($sections as $section) {
+            $section->replicate()
+                ->fill([EntitySection::FIELD_ENTITY_ID => $newEntityId])
+                ->save();
+        }
     }
 
     public function getEntitySectionList(ListRequest $request): EntitySectionCollection

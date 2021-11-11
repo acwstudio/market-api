@@ -32,7 +32,10 @@ use App\Repositories\{Banner\BannerRepositoryInterface,
     Quiz\QuizRepositoryInterface,
     Subject\CachedSubjectRepository,
     Subject\SubjectRepository,
-    Subject\SubjectRepositoryInterface
+    Subject\SubjectRepositoryInterface,
+    SeoTag\CachedSeoTagRepository,
+    SeoTag\SeoTagRepository,
+    SeoTag\SeoTagRepositoryInterface,
 };
 
 
@@ -91,5 +94,10 @@ return [
         'interface'      => QuizRepositoryInterface::class,
         'implementation' => QuizRepository::class,
         'cache'          => CachedQuizRepository::class,
+    ],
+    [
+        'interface'      => SeoTagRepositoryInterface::class,
+        'implementation' => SeoTagRepository::class,
+        'cache'          => CachedSeoTagRepository::class,
     ],
 ];

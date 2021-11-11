@@ -13,11 +13,16 @@ use Illuminate\Support\Facades\Cache;
 
 final class CachedEntitySectionRepository extends CachedRepository implements EntitySectionRepositoryInterface
 {
-    private $entitySectionRepository;
+    private EntitySectionRepositoryInterface $entitySectionRepository;
 
     public function __construct(EntitySectionRepositoryInterface $entitySectionRepository)
     {
         $this->entitySectionRepository = $entitySectionRepository;
+    }
+
+    public function copyByOriginProduct(string $entityType, int $originEntityId, int $newEntityId): void
+    {
+        $this->entitySectionRepository->copyByOriginProduct($entityType, $originEntityId, $newEntityId);
     }
 
     public function getEntitySectionList(ListRequest $request): EntitySectionCollection

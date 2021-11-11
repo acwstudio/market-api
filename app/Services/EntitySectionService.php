@@ -12,11 +12,16 @@ use App\Repositories\EntitySection\EntitySectionRepositoryInterface;
 
 final class EntitySectionService
 {
-    private $entitySectionRepository;
+    private EntitySectionRepositoryInterface $entitySectionRepository;
 
     public function __construct(EntitySectionRepositoryInterface $entitySectionRepository)
     {
         $this->entitySectionRepository = $entitySectionRepository;
+    }
+
+    public function copyByOriginProduct(string $entityType, int $originEntityId, int $newEntityId): void
+    {
+        $this->entitySectionRepository->copyByOriginProduct($entityType, $originEntityId, $newEntityId);
     }
 
     public function list(ListRequest $request): EntitySectionCollection
