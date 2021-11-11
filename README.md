@@ -26,6 +26,9 @@
 + [Метод получения секций продукта по фильтру: entities/sections/list](#method_products_sections_list);
 + [Метод получения конкретной секции продукта по фильтру: entities/sections/detail](#method_products_sections_detail);
 + [Метод получения продуктов по поиску: entities/products/search](#method_products_search_list);
++ [Метод создания нового продукта: admin/product/create](#method_products_create)
++ [Метод редактирования продукта: admin/product/update](#method_products_update)
++ [Метод удаления продукта: admin/product/delete](#method_products_delete)
 
 #### Персоны
 + [Метод получения персон по фильтру: persons/list](#method_persons_list);
@@ -2339,3 +2342,282 @@ curl --location --request GET 'https://mp.synergy.ru/api/v1/products/search?quer
 --header 'Accept: application/vnd.api+json' \
 --data-raw ''
  ```
+## <a name="method_products_create"></a> Метод создания нового продукта: admin/product/create
+Адрес: https://mp.synergy.ru/api/v1/admin/product/create
+Тип: POST  
+Формат входных данных: JSON<br>
+
+Входные параметры
+
+| Название поля               | Тип         | Обязательное | Пример                                | Комментарий
+| ----------------------------| ----------- | ------------ | ------------------------------------- | ---------------------------------- |
+| published                   | bool        | -            | true                                  | Опубликован                        |
+| name                        | string      | -            | Веб-дизайн                            | Название                           |
+| slug                        | string      | -            | veb-dizain                            | slug                               |
+| land                        | string      | -            | land                                  | land                               |
+| seo_h1                      | string      | -            | seo_h1                                | seo_h1                             |
+| seo_title                   | string      | -            | seo_title                             | seo_title                          |
+| seo_keywords                | string      | -            | seo_keywords                          | seo_keywords                       |
+| seo_description             | string      | -            | seo_description                       | seo_description                    |
+| color                       | string      | -            | #dcf3ff                               | цвет                               |
+| description                 | string      | -            | some-text                             | Описание                           |
+| start_date                  | string      | -            | 22.01.2021 08:00                      | Дата старта                        |
+| triggers                    | string      | -            | 1|4|5|6                               | Триггеры                           |
+| expiration_date             | datetime    | -            | 24.08.2021 00:00                      | Истечение срока                    |
+| is_document                 | boolean     | -            | true                                  | Наличие диплома по окончании       |
+| is_installment              | boolean     | -            | true                                  | Наличие рассрочки                  |
+| is_employment               | boolean     | -            | true                                  | Трудоустройство после окончания    |
+| organization_id             | int         | -            | [1]                                   | Идентификатор организации          |
+| category_id                 | int         | -            | [2]                                   | Категория                          |
+| id_origin_product           | int         | -            | [2]                                   | ID родительского продукта реплики  |
+| document                    | int         | -            | [3]                                   | Документ об образовании            |
+| installment_months          | int         | -            | [4]                                   | Рассрочка (месяцы)                 |
+| sort                        | int         | -            | [5]                                   | Сортировка                         |
+| price                       | double      | -            | [6]                                   | Стоимость                          |
+| begin_duration_format_value | string      | -            | 4y-8m                                 | Продолжительность курса от         |
+| duration_format_value       | string      | -            | 1y-10m                                | Продолжительность курса до         |
+| subjects                    | array int[] | -            | [97,26,146]                           | Массив идентификаторов предметов   |
+| formats                     | array int[] | -            | [23,26,22]                            | Массив идентификаторов форматов    |
+| levels                      | array int[] | -            | [9,2,3]                               | Массив идентификаторов уровней     |
+| directions                  | array int[] | -            | [3,22,11]                             | Массив идентификаторов направлений |
+| persons                     | array int[] | -            | [59,197]                              | Массив идентификаторов персон      |
+
+
+Пример запроса:
+```bash
+curl --location --request POST 'api.synergy.local/api/admin/product/create' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "expiration_date": null,
+    "sort": 500,
+    "published": true,
+    "start_date": null,
+    "name": "Экономика 3334",
+    "slug": "test-123",
+    "land": "SGAU_market",
+    "description": "Бакалавр экономики готов к профессиональной работе в экономической отрасли.",
+    "price": null,
+    "color": "#dcf3ff",
+    "organization_id": 11,
+    "category_id": 1,
+    "persons": [],
+    "directions": null,
+    "levels": null,
+    "formats": null,
+    "subjects": null,
+    "is_document": true,
+    "document": 1,
+    "is_installment": false,
+    "installment_months": null,
+    "begin_duration_format_value": null,
+    "duration_format_value": "4y-8m",
+    "is_employment": 1,
+    "triggers": "1|4|5|6",
+    "id_origin_product": 1130,
+    "seo_h1": null,
+    "seo_title": null,
+    "seo_keywords": null,
+    "seo_description": null,
+    "product_places": null,
+    "duration": 40320,
+    "begin_duration": 0
+}'
+ ```
+Пример ответа:
+```json
+{
+    "data": {
+        "id": 1201,
+        "expiration_date": null,
+        "sort": 500,
+        "published": true,
+        "start_date": null,
+        "name": "Экономика 3334",
+        "slug": "test-123",
+        "land": "SGAU_market",
+        "description": "Бакалавр экономики готов к профессиональной работе в экономической отрасли.",
+        "price": null,
+        "color": "#dcf3ff",
+        "organization_id": 11,
+        "category_id": 1,
+        "persons": [],
+        "directions": null,
+        "levels": null,
+        "formats": null,
+        "subjects": null,
+        "product_places": null,
+        "is_document": true,
+        "document": 1,
+        "is_installment": false,
+        "installment_months": null,
+        "begin_duration_format_value": null,
+        "duration_format_value": "4y-8m",
+        "is_employment": true,
+        "triggers": "1|4|5|6",
+        "id_origin_product": 1130,
+        "seo_h1": null,
+        "seo_title": null,
+        "seo_keywords": null,
+        "seo_description": null,
+        "duration": 40320,
+        "begin_duration": "0",
+        "preview_image": null,
+        "digital_image": null,
+        "user_id": 5
+    }
+}
+ ```
+## <a name="method_products_update"></a> Метод редактирования продукта: admin/product/update
+Адрес: https://mp.synergy.ru/api/v1/admin/product/update
+Тип: POST  
+Формат входных данных: JSON<br>
+
+Входные параметры
+
+| Название поля               | Тип         | Обязательное | Пример                                | Комментарий
+| ----------------------------| ----------- | ------------ | ------------------------------------- | ---------------------------------- |
+| id                          | int         | -            | 1                                     | ID продукта                        |
+| published                   | bool        | -            | true                                  | Опубликован                        |
+| name                        | string      | -            | Веб-дизайн                            | Название                           |
+| slug                        | string      | -            | veb-dizain                            | slug                               |
+| land                        | string      | -            | land                                  | land                               |
+| seo_h1                      | string      | -            | seo_h1                                | seo_h1                             |
+| seo_title                   | string      | -            | seo_title                             | seo_title                          |
+| seo_keywords                | string      | -            | seo_keywords                          | seo_keywords                       |
+| seo_description             | string      | -            | seo_description                       | seo_description                    |
+| color                       | string      | -            | #dcf3ff                               | цвет                               |
+| description                 | string      | -            | some-text                             | Описание                           |
+| start_date                  | string      | -            | 22.01.2021 08:00                      | Дата старта                        |
+| triggers                    | string      | -            | 1|4|5|6                               | Триггеры                           |
+| expiration_date             | datetime    | -            | 24.08.2021 00:00                      | Истечение срока                    |
+| is_document                 | boolean     | -            | true                                  | Наличие диплома по окончании       |
+| is_installment              | boolean     | -            | true                                  | Наличие рассрочки                  |
+| is_employment               | boolean     | -            | true                                  | Трудоустройство после окончания    |
+| organization_id             | int         | -            | 1                                     | Идентификатор организации          |
+| category_id                 | int         | -            | 2                                     | Категория                          |
+| id_origin_product           | int         | -            | 2                                     | ID родительского продукта реплики  |
+| document                    | int         | -            | 3                                     | Документ об образовании            |
+| installment_months          | int         | -            | 4                                     | Рассрочка (месяцы)                 |
+| sort                        | int         | -            | 5                                     | Сортировка                         |
+| price                       | double      | -            | 6                                     | Стоимость                          |
+| begin_duration_format_value | string      | -            | 4y-8m                                 | Продолжительность курса от         |
+| duration_format_value       | string      | -            | 1y-10m                                | Продолжительность курса до         |
+| subjects                    | array int[] | -            | [97,26,146]                           | Массив идентификаторов предметов   |
+| formats                     | array int[] | -            | [23,26,22]                            | Массив идентификаторов форматов    |
+| levels                      | array int[] | -            | [9,2,3]                               | Массив идентификаторов уровней     |
+| directions                  | array int[] | -            | [3,22,11]                             | Массив идентификаторов направлений |
+| persons                     | array int[] | -            | [59,197]                              | Массив идентификаторов персон      |
+
+
+Пример запроса:
+```bash
+curl --location --request POST 'api.synergy.local/api/admin/product/create' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "id": 1201,
+    "expiration_date": null,
+    "sort": 500,
+    "published": true,
+    "start_date": null,
+    "name": "Экономика 3334",
+    "slug": "test-123",
+    "land": "SGAU_market",
+    "description": "Бакалавр экономики готов к профессиональной работе в экономической отрасли.",
+    "price": null,
+    "color": "#dcf3ff",
+    "organization_id": 11,
+    "category_id": 1,
+    "persons": [],
+    "directions": null,
+    "levels": null,
+    "formats": null,
+    "subjects": null,
+    "is_document": true,
+    "document": 1,
+    "is_installment": false,
+    "installment_months": null,
+    "begin_duration_format_value": null,
+    "duration_format_value": "4y-8m",
+    "is_employment": 1,
+    "triggers": "1|4|5|6",
+    "id_origin_product": 1130,
+    "seo_h1": null,
+    "seo_title": null,
+    "seo_keywords": null,
+    "seo_description": null,
+    "product_places": null,
+    "duration": 40320,
+    "begin_duration": 0
+}'
+ ```
+Пример ответа:
+```json
+{
+    "data": {
+        "id": 1201,
+        "expiration_date": null,
+        "sort": 500,
+        "published": true,
+        "start_date": null,
+        "name": "Экономика 3334",
+        "slug": "test-123",
+        "land": "SGAU_market",
+        "description": "Бакалавр экономики готов к профессиональной работе в экономической отрасли.",
+        "price": null,
+        "color": "#dcf3ff",
+        "organization_id": 11,
+        "category_id": 1,
+        "persons": [],
+        "directions": null,
+        "levels": null,
+        "formats": null,
+        "subjects": null,
+        "product_places": null,
+        "is_document": true,
+        "document": 1,
+        "is_installment": false,
+        "installment_months": null,
+        "begin_duration_format_value": null,
+        "duration_format_value": "4y-8m",
+        "is_employment": true,
+        "triggers": "1|4|5|6",
+        "id_origin_product": 1130,
+        "seo_h1": null,
+        "seo_title": null,
+        "seo_keywords": null,
+        "seo_description": null,
+        "duration": 40320,
+        "begin_duration": "0",
+        "preview_image": null,
+        "digital_image": null,
+        "user_id": 5
+    }
+}
+ ```
+## <a name="method_products_delete"></a> Метод удаления продукта: admin/product/delete
+Адрес: https://mp.synergy.ru/api/v1/admin/product/delete
+Тип: GET  
+Формат входных данных: JSON<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип | Обязательное | Пример | Комментарий
+| ------------- | --- | ------------ | ------ | ------------- |
+| id            | id  | +            | 1      | Идентификатор |
+
+Пример запроса:
+```bash
+curl --location --request GET 'http://api.synergy.local/api/admin/product/delete' \
+--header 'Accept: application/vnd.api+json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "id": 1
+}'
+ ```
+Пример ответа:
+```json
+{
+    "success": true,
+    "message": "Success"
+}
+```

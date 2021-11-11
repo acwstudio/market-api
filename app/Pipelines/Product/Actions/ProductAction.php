@@ -20,7 +20,7 @@ final class ProductAction implements PipelineActionInterface
 
     public function handle(DtoInterface $dto, Closure $next): DtoInterface
     {
-        $dto = $this->productService->create($dto);
+        $dto = $this->productService->update($dto);
 
         return $next($dto);
     }

@@ -41,4 +41,9 @@ final class CachedProductRepository extends CachedRepository implements ProductR
                 return $this->statsRepository->getProductDetailByFilters($request);
             });
     }
+
+    public function delete(int $id): void
+    {
+        $this->statsRepository->delete($id);
+    }
 }

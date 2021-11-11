@@ -27,7 +27,7 @@ final class ProductService
 
     public function update(ProductDto $dto): ProductDto
     {
-
+        return $this->productRepository->updateOrCreate($dto);
     }
 
     public function list(ListRequest $request): ProductCollection
@@ -38,5 +38,10 @@ final class ProductService
     public function detail(DetailRequest $request): ProductResource
     {
         return $this->productRepository->getProductDetailByFilters($request);
+    }
+
+    public function delete(int $id): void
+    {
+        $this->productRepository->delete($id);
     }
 }

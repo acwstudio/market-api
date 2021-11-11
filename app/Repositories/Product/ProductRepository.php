@@ -36,7 +36,7 @@ final class ProductRepository implements ProductRepositoryInterface
         $product = $this->productModel
             ->newQuery()
             ->updateOrCreate([
-                'id' => $dto->getId()
+                Product::FIELD_ID => $dto->getId()
             ], $dto->toArray());
 
         $dto->setId($product->id)
@@ -121,6 +121,14 @@ final class ProductRepository implements ProductRepositoryInterface
             ->firstOrFail();
 
         return (new ProductResource($query));
+    }
+
+    public function delete(int $id): void
+    {
+        $this->productModel
+            ->newQuery()
+            ->where(Product::FIELD_ID, $id)
+            ->delete();
     }
 
     private function attachRelations(ProductDto $dto): void

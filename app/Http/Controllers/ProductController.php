@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Product\CreateRequest;
+use App\Http\Requests\Product\DeleteRequest;
 use App\Http\Requests\Product\DetailRequest;
 use App\Http\Requests\Product\ListRequest;
 use App\Http\Requests\Product\UpdateRequest;
@@ -25,14 +26,14 @@ final class ProductController extends Controller
     {
         $dto = $pipeline->create($request->dto());
 
-       return response()->json($dto->toArray());
+        return response()->json(['data' => $dto->toArray()]);
     }
 
     public function update(UpdateRequest $request, ProductPipeline $pipeline): JsonResponse
     {
         $dto = $pipeline->update($request->dto());
 
-        return response()->json($dto->toArray());
+        return response()->json(['data' => $dto->toArray()]);
     }
 
     public function list(ListRequest $request): JsonResponse
@@ -51,6 +52,16 @@ final class ProductController extends Controller
         return response()->json([
             'success' => true,
             'data' => $this->productService->detail($request)
+        ]);
+    }
+
+    public function delete(DeleteRequest $request, ProductPipeline $pipeline): JsonResponse
+    {
+        $pipeline->delete($request->get('id'));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Success',
         ]);
     }
 }
