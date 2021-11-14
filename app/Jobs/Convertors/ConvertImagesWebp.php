@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs\Convertors;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -65,6 +66,7 @@ final class ConvertImagesWebp implements ShouldQueue
 
     protected function getCacheImagesPath(string $name, string $expansion): string
     {
-        return sprintf(__DIR__ . '/../../storage/framework/cache/images/%s.%s', $name, $expansion);
+        // @todo Внес правку, нужно проверить, будет ли это все корректно работать на тестовом сервере
+        return sprintf(storage_path('framework/cache') . '/images/%s.%s', $name, $expansion);
     }
 }

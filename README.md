@@ -30,6 +30,9 @@
 + [Метод редактирования продукта: admin/product/update](#method_products_update)
 + [Метод удаления продукта: admin/product/delete](#method_products_delete)
 
+#### Файлы
++ [Метод загрузки изображений в админке: admin/file/upload/image](#method_file_upload_image)
+
 #### Персоны
 + [Метод получения персон по фильтру: persons/list](#method_persons_list);
 + [Метод получения конкретной персоны по фильтру: persons/detail](#method_persons_detail);
@@ -2619,5 +2622,38 @@ curl --location --request GET 'http://api.synergy.local/api/admin/product/delete
 {
     "success": true,
     "message": "Success"
+}
+```
+
+## <a name="method_file_upload_image"></a> Метод загрузки изображения в админке: admin/file/upload/image
+Адрес: https://mp.synergy.ru/api/admin/file/upload/image
+Тип: POST  
+Формат входных данных: form-data<br>
+
+Входные параметры для фильтра
+
+| Название поля | Тип    | Обязательное | Пример      | Комментарий
+| ------------- | -------| ------------ | ----------- | ----------------------------------- |
+| image         | file   | +            | изображение | изображение                         |
+| type          | string | +            | products    | тип сущности для которой грузится   |
+
+Список типов сущностей (type):
+```
+products
+```
+
+Пример запроса:
+```bash
+curl --location --request POST 'http://api.synergy.local/api/admin/file/upload/image' \
+--form 'image=@"/home/user/Изображения/123.jpeg"' \
+--form 'type="products"'
+ ```
+Пример ответа:
+```json
+{
+    "success": true,
+    "data": {
+        "path": "uploads/products/tQdr9Jc3GkKfmWI6SBjgbITgoj1K7adfTRYNrgA3.jpg"
+    }
 }
 ```

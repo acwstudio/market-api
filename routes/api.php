@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Site\SearchProductController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Site\AppController;
 use App\Http\Controllers\Site\EntitySectionController;
@@ -19,6 +18,7 @@ use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\FormatController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\PersonController;
+use App\Http\Controllers\FileUploaderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,4 +78,6 @@ Route::group(['prefix' => '/admin'], function () {
         Route::post('update', [ProductController::class, 'update']);
         Route::get('delete', [ProductController::class, 'delete']);
     });
+
+    Route::post('file/upload/image', [FileUploaderController::class, 'image']);
 });
