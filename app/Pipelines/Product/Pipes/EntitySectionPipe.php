@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Pipelines\Product\Actions;
+namespace App\Pipelines\Product\Pipes;
 
 use App\Dto\DtoInterface;
 use App\Models\Product;
-use App\Pipelines\PipelineActionInterface;
+use App\Pipelines\PipeInterface;
 use App\Services\EntitySectionService;
 use Closure;
 
-final class EntitySectionAction implements PipelineActionInterface
+final class EntitySectionPipe implements PipeInterface
 {
     private EntitySectionService $entitySectionService;
 

@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Pipelines\Product\Actions;
+namespace App\Pipelines\Product\Pipes;
 
 use App\Dto\SeoTag\SeoTagDto;
 use App\Models\Product;
 use App\Services\SeoTagService;
 use Closure;
 use App\Dto\DtoInterface;
-use App\Pipelines\PipelineActionInterface;
+use App\Pipelines\PipeInterface;
 
-final class SeoTagAction implements PipelineActionInterface
+final class SeoTagPipe implements PipeInterface
 {
     private SeoTagService $seoTagService;
 

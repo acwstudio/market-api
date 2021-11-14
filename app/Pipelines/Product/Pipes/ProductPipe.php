@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Pipelines\Product\Actions;
+namespace App\Pipelines\Product\Pipes;
 
 use App\Services\ProductService;
 use Closure;
 use App\Dto\DtoInterface;
-use App\Pipelines\PipelineActionInterface;
+use App\Pipelines\PipeInterface;
 
-final class ProductAction implements PipelineActionInterface
+final class ProductPipe implements PipeInterface
 {
     private ProductService $productService;
 

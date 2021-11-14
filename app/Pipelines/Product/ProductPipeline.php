@@ -11,9 +11,9 @@ use Exception;
 use Throwable;
 use App\Dto\Product\ProductDto;
 use App\Pipelines\AbstractPipeline;
-use App\Pipelines\Product\Actions\SeoTagAction;
-use App\Pipelines\Product\Actions\ProductAction;
-use App\Pipelines\Product\Actions\EntitySectionAction;
+use App\Pipelines\Product\Pipes\SeoTagPipe;
+use App\Pipelines\Product\Pipes\ProductPipe;
+use App\Pipelines\Product\Pipes\EntitySectionPipe;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -27,9 +27,9 @@ final class ProductPipeline extends AbstractPipeline
             $dto = $this->pipeline
                 ->send($dto)
                 ->through([
-                    SeoTagAction::class,
-                    ProductAction::class,
-                    EntitySectionAction::class,
+                    SeoTagPipe::class,
+                    ProductPipe::class,
+                    EntitySectionPipe::class,
                 ])
                 ->then(function (ProductDto $newDto) {
                     return $newDto;
@@ -60,8 +60,8 @@ final class ProductPipeline extends AbstractPipeline
             $dto = $this->pipeline
                 ->send($dto)
                 ->through([
-                    SeoTagAction::class,
-                    ProductAction::class,
+                    SeoTagPipe::class,
+                    ProductPipe::class,
                 ])
                 ->then(function (ProductDto $newDto) {
                     return $newDto;

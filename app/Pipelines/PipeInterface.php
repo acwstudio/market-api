@@ -7,7 +7,7 @@ namespace App\Pipelines;
 use Closure;
 use App\Dto\DtoInterface;
 
-interface PipelineActionInterface
+interface PipeInterface
 {
     public function handle(DtoInterface $dto, Closure $next): DtoInterface;
 }
