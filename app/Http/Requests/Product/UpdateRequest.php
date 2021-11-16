@@ -8,6 +8,7 @@ use App\Dto\DtoInterface;
 use App\Dto\Product\ProductDto;
 use App\Models\Product;
 use App\Validation\Rules\Product\ProductDuration;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 final class UpdateRequest extends FormRequest
@@ -51,14 +52,16 @@ final class UpdateRequest extends FormRequest
     public function dto(): DtoInterface
     {
         $beginDurationFormatValue = $this->get('begin_duration_format_value');
-        $beginDuration = $this->get('begin_duration');
+        $durationFormatValue = $this->get('duration_format_value');
+        $startData = $this->get('start_date');
+        $expirationDate = $this->get('expiration_date');
 
         return new ProductDto(
             $this->get('id'),
-            $this->get('expiration_date'),
+            !is_null($expirationDate) ? Carbon::parse($expirationDate)->format('Y-m-d H:i:s') : null,
             $this->get('sort'),
             (bool)$this->get('published'),
-            $this->get('start_date'),
+            !is_null($startData) ? Carbon::parse($startData)->format('Y-m-d H:i:s') : null,
             $this->get('name'),
             $this->get('slug'),
             $this->get('land'),
@@ -77,8 +80,8 @@ final class UpdateRequest extends FormRequest
             $this->get('document'),
             (bool)$this->get('is_installment'),
             $this->get('installment_months'),
-            !is_null($beginDurationFormatValue) ? (string)$beginDurationFormatValue : null,
-            $this->get('duration_format_value'),
+            !is_null($beginDurationFormatValue) ? (string)$beginDurationFormatValue : false,
+            $durationFormatValue,
             (bool)$this->get('is_employment'),
             $this->get('triggers'),
             $this->get('id_origin_product'),
@@ -86,8 +89,8 @@ final class UpdateRequest extends FormRequest
             $this->get('seo_title'),
             $this->get('seo_keywords'),
             $this->get('seo_description'),
-            $this->get('duration'),
-            !is_null($beginDuration) ? (string)$beginDuration : null,
+            !is_null($durationFormatValue) ? $this->durationPrepare($durationFormatValue) : null,
+            !is_null($beginDurationFormatValue) ? $this->durationPrepare($durationFormatValue) : false,
             $this->get('digital_image'),
             $this->get('preview_image'),
 
@@ -96,5 +99,42 @@ final class UpdateRequest extends FormRequest
              */
             5 // user_id
         );
+    }
+
+    private function durationPrepare(string $value): array|float|int|string
+    {
+        $durationList = explode('-', $value);
+
+        $countHours = 0;
+        foreach ($durationList as $itemDuration) {
+
+            if ($this->getTypeValue($itemDuration) === 'y') {
+                $countHours += $this->getNumericValue($itemDuration) * 720 * 12;
+            }
+
+            if ($this->getTypeValue($itemDuration) === 'm') {
+                $countHours += $this->getNumericValue($itemDuration) * 720;
+            }
+
+            if ($this->getTypeValue($itemDuration) === 'd') {
+                $countHours += $this->getNumericValue($itemDuration) * 24;
+            }
+
+            if ($this->getTypeValue($itemDuration) === 'h') {
+                $countHours += $this->getNumericValue($itemDuration);
+            }
+        }
+
+        return $countHours;
+    }
+
+    private function getNumericValue(string $value): int|string
+    {
+        return preg_replace('/[^0-9]/', '', $value);
+    }
+
+    private function getTypeValue(string $value): string
+    {
+        return strtolower(preg_replace('/[^a-zA-Z]/', '', $value));
     }
 }

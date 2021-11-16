@@ -32,7 +32,7 @@ final class ProductDto implements DtoInterface
     private int|null $document;
     private bool|null $isInstallment;
     private int|null $installmentMonths;
-    private string|null $beginDurationFormatValue;
+    private string|bool $beginDurationFormatValue;
     private string|null $durationFormatValue;
     private bool|null $isEmployment;
     private string|null $triggers;
@@ -42,7 +42,7 @@ final class ProductDto implements DtoInterface
     private string|null $seoKeywords;
     private string|null $seoDescription;
     private int|null $duration;
-    private string|null $beginDuration;
+    private string|bool $beginDuration;
     private string|null $previewImage;
     private string|null $digitalImage;
     private int $userId;
@@ -72,7 +72,7 @@ final class ProductDto implements DtoInterface
         ?int $document,
         ?bool $isInstallment,
         ?int $installmentMonths,
-        ?string $beginDurationFormatValue,
+        string|bool $beginDurationFormatValue,
         ?string $durationFormatValue,
         ?bool $isEmployment,
         ?string $triggers,
@@ -82,7 +82,7 @@ final class ProductDto implements DtoInterface
         ?string $seoKeywords,
         ?string $seoDescription,
         ?int $duration,
-        ?string $beginDuration,
+        string|bool $beginDuration,
         ?string $previewImage,
         ?string $digitalImage,
         int $userId
