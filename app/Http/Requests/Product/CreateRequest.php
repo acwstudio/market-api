@@ -102,6 +102,9 @@ final class CreateRequest extends FormRequest
 
     private function durationPrepare(string $value): array|float|int|string
     {
+        /**
+         * @todo необходимо рефакторинг полей БД и чистка данного кода
+         */
         $durationList = explode('-', $value);
 
         $countHours = 0;
