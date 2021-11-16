@@ -22,12 +22,18 @@ final class ProductService
 
     public function create(ProductDto $dto): ProductDto
     {
-        return $this->productRepository->updateOrCreate($dto);
+        $dto = $this->productRepository->updateOrCreate($dto);
+        $this->productRepository->attachRelations($dto);
+
+        return $dto;
     }
 
     public function update(ProductDto $dto): ProductDto
     {
-        return $this->productRepository->updateOrCreate($dto);
+        $dto = $this->productRepository->updateOrCreate($dto);
+        $this->productRepository->attachRelations($dto);
+
+        return $dto;
     }
 
     public function list(ListRequest $request): ProductCollection

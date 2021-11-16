@@ -42,8 +42,6 @@ final class ProductRepository implements ProductRepositoryInterface
         $dto->setId($product->id)
             ->setEloquent($product);
 
-        $this->attachRelations($dto);
-
         return $dto;
     }
 
@@ -131,7 +129,7 @@ final class ProductRepository implements ProductRepositoryInterface
             ->delete();
     }
 
-    private function attachRelations(ProductDto $dto): void
+    public function attachRelations(ProductDto $dto): void
     {
         /**
          * @todo не красивая реализации, было бы не плохо отрефакторить саму концепцию

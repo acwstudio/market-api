@@ -14,23 +14,23 @@ use App\Http\Resources\ProductCollection;
 
 final class CachedProductRepository extends CachedRepository implements ProductRepositoryInterface
 {
-    private ProductRepositoryInterface $statsRepository;
+    private ProductRepositoryInterface $productRepository;
 
-    public function __construct(ProductRepositoryInterface $statsRepository)
+    public function __construct(ProductRepositoryInterface $productRepository)
     {
-        $this->statsRepository = $statsRepository;
+        $this->productRepository = $productRepository;
     }
 
     public function updateOrCreate(ProductDto $dto): ProductDto
     {
-        return $this->statsRepository->updateOrCreate($dto);
+        return $this->productRepository->updateOrCreate($dto);
     }
 
     public function getProductsByFilters(ListRequest $request): ProductCollection
     {
         return Cache::remember($this->getCacheKey($request->all()), $this->getTtl(),
             function () use ($request) {
-                return $this->statsRepository->getProductsByFilters($request);
+                return $this->productRepository->getProductsByFilters($request);
             });
     }
 
@@ -38,12 +38,17 @@ final class CachedProductRepository extends CachedRepository implements ProductR
     {
         return Cache::remember($this->getCacheKey($request->all()), $this->getTtl(),
             function () use ($request) {
-                return $this->statsRepository->getProductDetailByFilters($request);
+                return $this->productRepository->getProductDetailByFilters($request);
             });
     }
 
     public function delete(int $id): void
     {
-        $this->statsRepository->delete($id);
+        $this->productRepository->delete($id);
+    }
+
+    public function attachRelations(ProductDto $dto): void
+    {
+        $this->productRepository->attachRelations($dto);
     }
 }

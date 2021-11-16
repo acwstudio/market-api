@@ -19,4 +19,6 @@ interface ProductRepositoryInterface
     public function getProductDetailByFilters(DetailRequest $request): ProductResource;
 
     public function delete(int $id): void;
+
+    public function attachRelations(ProductDto $dto): void;
 }
